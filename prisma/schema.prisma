@@ -1,0 +1,67 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Admin {
+  id           Int      @id @default(autoincrement())
+  username     String   @unique
+  passwordHash String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model Player {
+  id                  Int           @id @default(autoincrement())
+  name                String
+  nickname            String?
+  position            String
+  number              Int?
+  isActive            Boolean       @default(true)
+  createdAt           DateTime      @default(now())
+  updatedAt           DateTime      @updatedAt
+  matchPlayers        MatchPlayer[]
+  chairmanMvpMatches  Match[]       @relation("ChairmanTeamMvp")
+  managerMvpMatches   Match[]       @relation("ManagerTeamMvp")
+}
+
+model Match {
+  id                 Int           @id @default(autoincrement())
+  matchDate          DateTime
+  location           String
+  teamAName          String
+  teamBName          String
+  teamAScore         Int
+  teamBScore         Int
+  winnerTeam         String?
+  chairmanTeamMvpId  Int?
+  managerTeamMvpId   Int?
+  memo               String?
+  createdAt          DateTime      @default(now())
+  updatedAt          DateTime      @updatedAt
+  chairmanTeamMvp    Player?       @relation("ChairmanTeamMvp", fields: [chairmanTeamMvpId], references: [id])
+  managerTeamMvp     Player?       @relation("ManagerTeamMvp", fields: [managerTeamMvpId], references: [id])
+  matchPlayers       MatchPlayer[]
+}
+
+model MatchPlayer {
+  id        Int      @id @default(autoincrement())
+  matchId   Int
+  playerId  Int
+  teamName  String
+  /// SQLite connector stores MatchResult values as text: WIN, LOSS, DRAW.
+  result    String
+  goals     Int      @default(0)
+  assists   Int      @default(0)
+  isMvp     Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  match     Match    @relation(fields: [matchId], references: [id], onDelete: Cascade)
+  player    Player   @relation(fields: [playerId], references: [id], onDelete: Cascade)
+
+  @@unique([matchId, playerId])
+}
