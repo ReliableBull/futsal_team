@@ -71,6 +71,7 @@ export function AdminMatchForm({ action, players, initialData = defaultInitialDa
   const [participantIds, setParticipantIds] = useState<number[]>([...initialData.teamAPlayerIds, ...initialData.teamBPlayerIds]);
   const [teamAName, setTeamAName] = useState(initialData.teamAName);
   const [teamBName, setTeamBName] = useState(initialData.teamBName);
+  const [status, setStatus] = useState<MatchStatusValue>(initialData.status);
   const [teamAScore, setTeamAScore] = useState(initialData.teamAScore);
   const [teamBScore, setTeamBScore] = useState(initialData.teamBScore);
   const [goalsByPlayerId, setGoalsByPlayerId] = useState<Record<number, number>>(initialData.goalsByPlayerId);
@@ -86,7 +87,8 @@ export function AdminMatchForm({ action, players, initialData = defaultInitialDa
   const teamBPlayers = useMemo(() => players.filter((player) => teamBIds.includes(player.id)), [players, teamBIds]);
   const drawPreviewPlayers = useMemo(() => players.filter((player) => drawPreviewIds.includes(player.id)), [players, drawPreviewIds]);
   const canDrawTeams = participantIds.length >= 2 && participantIds.length % 2 === 0 && !isDrawing;
-  const canSubmit = teamAIds.length > 0 && teamBIds.length > 0 && Boolean(chairmanTeamMvpId) && Boolean(managerTeamMvpId);
+  const isCompleted = status === matchStatus.completed;
+  const canSubmit = teamAIds.length > 0 && teamBIds.length > 0 && (!isCompleted || (Boolean(chairmanTeamMvpId) && Boolean(managerTeamMvpId)));
 
   function sumGoals(playerIds: number[], nextGoalsByPlayerId: Record<number, number>) {
     return playerIds.reduce((sum, playerId) => sum + (nextGoalsByPlayerId[playerId] ?? 0), 0);
@@ -189,7 +191,12 @@ export function AdminMatchForm({ action, players, initialData = defaultInitialDa
         </label>
         <label className="space-y-2 text-sm font-semibold text-slate-200">
           경기 상태
-          <select className="w-full rounded-md border border-arena-line bg-black/30 px-3 py-2" name="status" defaultValue={initialData.status}>
+          <select
+            className="w-full rounded-md border border-arena-line bg-black/30 px-3 py-2"
+            name="status"
+            value={status}
+            onChange={(event) => setStatus(event.target.value as MatchStatusValue)}
+          >
             <option value={matchStatus.inProgress}>경기 진행중</option>
             <option value={matchStatus.completed}>결과 등록 완료</option>
           </select>
@@ -311,7 +318,7 @@ export function AdminMatchForm({ action, players, initialData = defaultInitialDa
           </div>
 
           {!canDrawTeams && !isDrawing ? <p className="text-sm text-slate-400">랜덤 팀 구성은 2명 이상의 짝수 인원을 선택해야 사용할 수 있습니다.</p> : null}
-          {hasRandomTeams ? <p className="text-sm font-semibold text-arena-lime">팀 구성이 완료되었습니다. 아래 MVP와 득점/도움을 확인한 뒤 경기 등록을 누르세요.</p> : null}
+          {hasRandomTeams ? <p className="text-sm font-semibold text-arena-lime">팀 구성이 완료되었습니다. 진행중 경기는 MVP 없이도 먼저 등록할 수 있습니다.</p> : null}
         </div>
       )}
 
@@ -353,9 +360,9 @@ export function AdminMatchForm({ action, players, initialData = defaultInitialDa
             name="chairmanTeamMvpId"
             value={chairmanTeamMvpId}
             onChange={(event) => setChairmanTeamMvpId(event.target.value)}
-            required
+            required={isCompleted}
           >
-            <option value="">A팀 MVP 선택</option>
+            <option value="">A팀 MVP 선택 안 함</option>
             {teamAPlayers.map((player) => (
               <option key={player.id} value={player.id}>
                 {player.name}
@@ -371,9 +378,9 @@ export function AdminMatchForm({ action, players, initialData = defaultInitialDa
             name="managerTeamMvpId"
             value={managerTeamMvpId}
             onChange={(event) => setManagerTeamMvpId(event.target.value)}
-            required
+            required={isCompleted}
           >
-            <option value="">B팀 MVP 선택</option>
+            <option value="">B팀 MVP 선택 안 함</option>
             {teamBPlayers.map((player) => (
               <option key={player.id} value={player.id}>
                 {player.name}
@@ -383,7 +390,9 @@ export function AdminMatchForm({ action, players, initialData = defaultInitialDa
         </label>
       </div>
 
-      <p className="text-sm text-slate-400">저장하려면 양 팀 MVP를 각각 1명씩 선택해야 합니다. 랜덤 구성 시 각 팀 첫 번째 선수가 기본 MVP로 지정됩니다.</p>
+      <p className="text-sm text-slate-400">
+        경기 진행중 상태는 MVP 없이 저장할 수 있습니다. 결과 등록 완료 상태로 바꿀 때만 양 팀 MVP를 각각 1명씩 선택해주세요.
+      </p>
 
       <label className="block space-y-2 text-sm font-semibold text-slate-200">
         경기 메모

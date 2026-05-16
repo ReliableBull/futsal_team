@@ -127,10 +127,19 @@ async function prepareMatchData(payload: MatchPayload) {
     throw new MatchValidationError("같은 선수를 회장팀과 총무팀에 동시에 등록할 수 없습니다.");
   }
 
-  if (!payload.chairmanTeamMvpId || !payload.teamAPlayerIds.includes(payload.chairmanTeamMvpId)) {
+  if (payload.status === matchStatus.completed) {
+    if (!payload.chairmanTeamMvpId || !payload.teamAPlayerIds.includes(payload.chairmanTeamMvpId)) {
+      throw new MatchValidationError("결과 등록 완료 시 회장팀 MVP를 회장팀 선수 중에서 선택해주세요.");
+    }
+    if (!payload.managerTeamMvpId || !payload.teamBPlayerIds.includes(payload.managerTeamMvpId)) {
+      throw new MatchValidationError("결과 등록 완료 시 총무팀 MVP를 총무팀 선수 중에서 선택해주세요.");
+    }
+  }
+
+  if (payload.chairmanTeamMvpId && !payload.teamAPlayerIds.includes(payload.chairmanTeamMvpId)) {
     throw new MatchValidationError("회장팀 MVP를 회장팀 선수 중에서 선택해주세요.");
   }
-  if (!payload.managerTeamMvpId || !payload.teamBPlayerIds.includes(payload.managerTeamMvpId)) {
+  if (payload.managerTeamMvpId && !payload.teamBPlayerIds.includes(payload.managerTeamMvpId)) {
     throw new MatchValidationError("총무팀 MVP를 총무팀 선수 중에서 선택해주세요.");
   }
 

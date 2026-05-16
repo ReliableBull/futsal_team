@@ -23,6 +23,58 @@ npm run dev
 
 실행 후 브라우저에서 `http://localhost:3000`에 접속합니다.
 
+## Raspberry Pi / Jetson Nano 설치
+
+보드 OS는 Raspberry Pi OS, Ubuntu, JetPack 계열처럼 `apt-get`을 사용할 수 있는 Debian/Ubuntu 기반을 권장합니다.
+프로젝트 폴더를 보드에 복사하거나 `git clone` 한 뒤 아래 순서로 실행합니다.
+
+```bash
+chmod +x scripts/*.sh
+./scripts/setup-linux-board.sh
+./scripts/start-production.sh
+```
+
+설치 스크립트는 다음 작업을 수행합니다.
+
+- Node.js 20 설치 확인 및 필요 시 설치
+- `.env`가 없으면 `.env.example`을 복사하고 `AUTH_SECRET` 자동 생성
+- `npm ci` 또는 `npm install`
+- `npx prisma migrate deploy`
+- `npm run build`
+
+같은 네트워크의 다른 기기에서는 아래 주소로 접속합니다.
+
+```bash
+http://<보드 IP>:3000
+```
+
+처음 설치 시 seed 데이터를 넣고 싶으면 다음처럼 실행합니다. 단, seed는 테스트 데이터를 만들기 때문에 실제 운영 DB에는 신중하게 사용하세요.
+
+```bash
+SEED_DB=1 ./scripts/setup-linux-board.sh
+```
+
+보드 재부팅 후에도 자동으로 실행하려면 setup 완료 후 systemd 서비스를 설치합니다.
+
+```bash
+./scripts/install-systemd-service.sh
+```
+
+서비스 확인/재시작 명령은 다음과 같습니다.
+
+```bash
+sudo systemctl status arena-fc
+sudo systemctl restart arena-fc
+sudo journalctl -u arena-fc -f
+```
+
+포트를 바꾸고 싶으면 실행 시 `PORT`를 지정할 수 있습니다.
+
+```bash
+PORT=8080 ./scripts/start-production.sh
+PORT=8080 ./scripts/install-systemd-service.sh
+```
+
 ## 날씨 설정
 
 Home 화면의 대구 10일 날씨는 기본적으로 개발용 mock 데이터를 표시합니다.
@@ -81,13 +133,13 @@ npx prisma db seed
 - `/players/[id]` 선수 상세
 - `/matches` 경기 목록
 - `/matches/[id]` 경기 상세
-- `/admin/login` 관리자 로그인
-- `/admin` 관리자 페이지
-- `/admin/matches/[id]/edit` 경기 수정
+- `/abcd/login` 관리자 로그인
+- `/abcd` 관리자 페이지
+- `/abcd/matches/[id]/edit` 경기 수정
 
 ## 경기 관리
 
-관리자는 `/admin`에서 등록된 경기의 `수정`, `삭제` 버튼을 사용할 수 있습니다. 삭제 시 브라우저 확인창을 거친 뒤 경기와 연결된 참가 기록, 득점, MVP 기록이 함께 삭제됩니다.
+관리자는 `/abcd`에서 등록된 경기의 `수정`, `삭제` 버튼을 사용할 수 있습니다. 삭제 시 브라우저 확인창을 거친 뒤 경기와 연결된 참가 기록, 득점, MVP 기록이 함께 삭제됩니다.
 
 경기 MVP는 2명으로 저장됩니다.
 
