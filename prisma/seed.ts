@@ -30,18 +30,18 @@ async function main() {
   });
 
   const playerSeeds = [
-    "이호준",
-    "이동훈",
-    "강수길",
-    "김대익",
-    "김민규",
-    "박상훈",
-    "안민수",
-    "김상목",
-    "김윤태",
-    "송원섭",
-    "오세현",
-    "정대규"
+    "Lee Hojoon",
+    "Kim Minjae",
+    "Park Sangwoo",
+    "Choi Junseo",
+    "Jung Hyun",
+    "Kang Sumin",
+    "Yoon Taehyun",
+    "Han Jiwon",
+    "Seo Dongmin",
+    "Oh Seungjae",
+    "Lim Gyumin",
+    "Baek Dohyun"
   ];
 
   const positions = ["FW", "MF", "DF", "GK"];
@@ -50,7 +50,7 @@ async function main() {
       prisma.player.create({
         data: {
           name,
-          nickname: name.slice(1),
+          nickname: name.split(" ")[0],
           position: positions[index % positions.length],
           number: index + 7,
           isActive: true
@@ -64,27 +64,27 @@ async function main() {
   await prisma.match.create({
     data: {
       matchDate: new Date("2026-05-01"),
-      location: "동호회 풋살장",
-      teamAName: "회장팀",
-      teamBName: "총무팀",
+      location: "Arena Indoor Futsal",
+      teamAName: "Chairman Team",
+      teamBName: "Manager Team",
       teamAScore: 6,
       teamBScore: 7,
-      winnerTeam: "총무팀",
-      chairmanTeamMvpId: byName["김대익"].id,
-      managerTeamMvpId: byName["안민수"].id,
-      memo: "막판 역전골로 총무팀 승리.",
+      winnerTeam: "Manager Team",
+      chairmanTeamMvpId: byName["Choi Junseo"].id,
+      managerTeamMvpId: byName["Yoon Taehyun"].id,
+      memo: "Manager Team won after a late attacking run.",
       matchPlayers: {
         create: [
-          { playerId: byName["이호준"].id, teamName: "회장팀", result: result.loss, goals: 1, assists: 0 },
-          { playerId: byName["강수길"].id, teamName: "회장팀", result: result.loss, goals: 1, assists: 1 },
-          { playerId: byName["김대익"].id, teamName: "회장팀", result: result.loss, goals: 2, assists: 0, isMvp: true },
-          { playerId: byName["김민규"].id, teamName: "회장팀", result: result.loss, goals: 1, assists: 1 },
-          { playerId: byName["박상훈"].id, teamName: "회장팀", result: result.loss, goals: 1, assists: 0 },
-          { playerId: byName["이동훈"].id, teamName: "총무팀", result: result.win, goals: 1, assists: 2 },
-          { playerId: byName["안민수"].id, teamName: "총무팀", result: result.win, goals: 4, assists: 0, isMvp: true },
-          { playerId: byName["김상목"].id, teamName: "총무팀", result: result.win, goals: 1, assists: 1 },
-          { playerId: byName["김윤태"].id, teamName: "총무팀", result: result.win, goals: 1, assists: 0 },
-          { playerId: byName["송원섭"].id, teamName: "총무팀", result: result.win, goals: 0, assists: 1 }
+          { playerId: byName["Lee Hojoon"].id, teamName: "Chairman Team", result: result.loss, goals: 1, assists: 0 },
+          { playerId: byName["Park Sangwoo"].id, teamName: "Chairman Team", result: result.loss, goals: 1, assists: 1 },
+          { playerId: byName["Choi Junseo"].id, teamName: "Chairman Team", result: result.loss, goals: 2, assists: 0, isMvp: true },
+          { playerId: byName["Jung Hyun"].id, teamName: "Chairman Team", result: result.loss, goals: 1, assists: 1 },
+          { playerId: byName["Kang Sumin"].id, teamName: "Chairman Team", result: result.loss, goals: 1, assists: 0 },
+          { playerId: byName["Kim Minjae"].id, teamName: "Manager Team", result: result.win, goals: 1, assists: 2 },
+          { playerId: byName["Yoon Taehyun"].id, teamName: "Manager Team", result: result.win, goals: 4, assists: 0, isMvp: true },
+          { playerId: byName["Han Jiwon"].id, teamName: "Manager Team", result: result.win, goals: 1, assists: 1 },
+          { playerId: byName["Seo Dongmin"].id, teamName: "Manager Team", result: result.win, goals: 1, assists: 0 },
+          { playerId: byName["Oh Seungjae"].id, teamName: "Manager Team", result: result.win, goals: 0, assists: 1 }
         ]
       }
     }
@@ -93,27 +93,27 @@ async function main() {
   await prisma.match.create({
     data: {
       matchDate: new Date("2026-05-08"),
-      location: "동호회 풋살장",
-      teamAName: "회장팀",
-      teamBName: "총무팀",
+      location: "Arena Indoor Futsal",
+      teamAName: "Chairman Team",
+      teamBName: "Manager Team",
       teamAScore: 5,
       teamBScore: 5,
       winnerTeam: null,
-      chairmanTeamMvpId: byName["이호준"].id,
-      managerTeamMvpId: byName["이동훈"].id,
-      memo: "팽팽한 무승부 경기.",
+      chairmanTeamMvpId: byName["Lee Hojoon"].id,
+      managerTeamMvpId: byName["Kim Minjae"].id,
+      memo: "A balanced draw with chances for both sides.",
       matchPlayers: {
         create: [
-          { playerId: byName["이호준"].id, teamName: "회장팀", result: result.draw, goals: 1, assists: 1, isMvp: true },
-          { playerId: byName["강수길"].id, teamName: "회장팀", result: result.draw, goals: 1, assists: 0 },
-          { playerId: byName["김대익"].id, teamName: "회장팀", result: result.draw, goals: 1, assists: 1 },
-          { playerId: byName["오세현"].id, teamName: "회장팀", result: result.draw, goals: 1, assists: 0 },
-          { playerId: byName["정대규"].id, teamName: "회장팀", result: result.draw, goals: 1, assists: 0 },
-          { playerId: byName["이동훈"].id, teamName: "총무팀", result: result.draw, goals: 2, assists: 1, isMvp: true },
-          { playerId: byName["안민수"].id, teamName: "총무팀", result: result.draw, goals: 1, assists: 0 },
-          { playerId: byName["김상목"].id, teamName: "총무팀", result: result.draw, goals: 1, assists: 1 },
-          { playerId: byName["김윤태"].id, teamName: "총무팀", result: result.draw, goals: 1, assists: 0 },
-          { playerId: byName["송원섭"].id, teamName: "총무팀", result: result.draw, goals: 0, assists: 1 }
+          { playerId: byName["Lee Hojoon"].id, teamName: "Chairman Team", result: result.draw, goals: 1, assists: 1, isMvp: true },
+          { playerId: byName["Park Sangwoo"].id, teamName: "Chairman Team", result: result.draw, goals: 1, assists: 0 },
+          { playerId: byName["Choi Junseo"].id, teamName: "Chairman Team", result: result.draw, goals: 1, assists: 1 },
+          { playerId: byName["Lim Gyumin"].id, teamName: "Chairman Team", result: result.draw, goals: 1, assists: 0 },
+          { playerId: byName["Baek Dohyun"].id, teamName: "Chairman Team", result: result.draw, goals: 1, assists: 0 },
+          { playerId: byName["Kim Minjae"].id, teamName: "Manager Team", result: result.draw, goals: 2, assists: 1, isMvp: true },
+          { playerId: byName["Yoon Taehyun"].id, teamName: "Manager Team", result: result.draw, goals: 1, assists: 0 },
+          { playerId: byName["Han Jiwon"].id, teamName: "Manager Team", result: result.draw, goals: 1, assists: 1 },
+          { playerId: byName["Seo Dongmin"].id, teamName: "Manager Team", result: result.draw, goals: 1, assists: 0 },
+          { playerId: byName["Oh Seungjae"].id, teamName: "Manager Team", result: result.draw, goals: 0, assists: 1 }
         ]
       }
     }
@@ -122,27 +122,27 @@ async function main() {
   await prisma.match.create({
     data: {
       matchDate: new Date("2026-05-15"),
-      location: "동호회 풋살장",
-      teamAName: "회장팀",
-      teamBName: "총무팀",
+      location: "Arena Indoor Futsal",
+      teamAName: "Chairman Team",
+      teamBName: "Manager Team",
       teamAScore: 8,
       teamBScore: 6,
-      winnerTeam: "회장팀",
-      chairmanTeamMvpId: byName["이호준"].id,
-      managerTeamMvpId: byName["김상목"].id,
-      memo: "회장팀이 초반 리드를 끝까지 지킨 경기.",
+      winnerTeam: "Chairman Team",
+      chairmanTeamMvpId: byName["Lee Hojoon"].id,
+      managerTeamMvpId: byName["Han Jiwon"].id,
+      memo: "Chairman Team protected an early lead through the final whistle.",
       matchPlayers: {
         create: [
-          { playerId: byName["이호준"].id, teamName: "회장팀", result: result.win, goals: 2, assists: 1, isMvp: true },
-          { playerId: byName["강수길"].id, teamName: "회장팀", result: result.win, goals: 1, assists: 1 },
-          { playerId: byName["김대익"].id, teamName: "회장팀", result: result.win, goals: 2, assists: 0 },
-          { playerId: byName["김민규"].id, teamName: "회장팀", result: result.win, goals: 2, assists: 1 },
-          { playerId: byName["오세현"].id, teamName: "회장팀", result: result.win, goals: 1, assists: 0 },
-          { playerId: byName["이동훈"].id, teamName: "총무팀", result: result.loss, goals: 1, assists: 2 },
-          { playerId: byName["안민수"].id, teamName: "총무팀", result: result.loss, goals: 2, assists: 0 },
-          { playerId: byName["김상목"].id, teamName: "총무팀", result: result.loss, goals: 2, assists: 1, isMvp: true },
-          { playerId: byName["김윤태"].id, teamName: "총무팀", result: result.loss, goals: 1, assists: 0 },
-          { playerId: byName["정대규"].id, teamName: "총무팀", result: result.loss, goals: 0, assists: 1 }
+          { playerId: byName["Lee Hojoon"].id, teamName: "Chairman Team", result: result.win, goals: 2, assists: 1, isMvp: true },
+          { playerId: byName["Park Sangwoo"].id, teamName: "Chairman Team", result: result.win, goals: 1, assists: 1 },
+          { playerId: byName["Choi Junseo"].id, teamName: "Chairman Team", result: result.win, goals: 2, assists: 0 },
+          { playerId: byName["Jung Hyun"].id, teamName: "Chairman Team", result: result.win, goals: 2, assists: 1 },
+          { playerId: byName["Lim Gyumin"].id, teamName: "Chairman Team", result: result.win, goals: 1, assists: 0 },
+          { playerId: byName["Kim Minjae"].id, teamName: "Manager Team", result: result.loss, goals: 1, assists: 2 },
+          { playerId: byName["Yoon Taehyun"].id, teamName: "Manager Team", result: result.loss, goals: 2, assists: 0 },
+          { playerId: byName["Han Jiwon"].id, teamName: "Manager Team", result: result.loss, goals: 2, assists: 1, isMvp: true },
+          { playerId: byName["Seo Dongmin"].id, teamName: "Manager Team", result: result.loss, goals: 1, assists: 0 },
+          { playerId: byName["Baek Dohyun"].id, teamName: "Manager Team", result: result.loss, goals: 0, assists: 1 }
         ]
       }
     }

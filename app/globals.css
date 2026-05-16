@@ -16,3 +16,22 @@ select,
 textarea {
   color-scheme: dark;
 }
+
+@keyframes lotto-pop {
+  0% {
+    opacity: 0.45;
+    transform: translateY(8px) scale(0.86) rotate(-8deg);
+  }
+  50% {
+    opacity: 1;
+    transform: translateY(-8px) scale(1.04) rotate(8deg);
+  }
+  100% {
+    opacity: 0.9;
+    transform: translateY(0) scale(1) rotate(0deg);
+  }
+}
+
+.lotto-ball {
+  animation: lotto-pop 0.34s ease-in-out infinite alternate;
+}

@@ -1,0 +1,62 @@
+"use client";
+
+import { useState } from "react";
+import type { Player } from "@prisma/client";
+import { PlayerAvatar } from "@/components/PlayerAvatar";
+
+type AdminPlayerEditorProps = {
+  player: Player;
+  action: (formData: FormData) => void | Promise<void>;
+};
+
+export function AdminPlayerEditor({ player, action }: AdminPlayerEditorProps) {
+  const [isOpen, setIsOpen] = useState(false);
+  const [previewUrl, setPreviewUrl] = useState(player.profileImageUrl ?? "");
+
+  return (
+    <div className="rounded-md border border-arena-line bg-black/20 p-3">
+      <button className="flex w-full items-center gap-3 text-left" type="button" onClick={() => setIsOpen((current) => !current)}>
+        <PlayerAvatar playerId={player.id} name={player.name} profileImageUrl={previewUrl || player.profileImageUrl} size="sm" />
+        <span className="min-w-0 flex-1">
+          <span className="block font-bold text-white">{player.name}</span>
+          <span className="text-sm text-slate-400">#{player.number ?? "-"}</span>
+        </span>
+        <span className="text-sm font-bold text-arena-cyan">{isOpen ? "닫기" : "수정"}</span>
+      </button>
+
+      {isOpen ? (
+        <form action={action} className="mt-4 grid gap-3">
+          <label className="space-y-1 text-sm font-semibold text-slate-200">
+            이름
+            <input className="w-full rounded-md border border-arena-line bg-black/30 px-3 py-2" name="name" defaultValue={player.name} required />
+          </label>
+          <label className="space-y-1 text-sm font-semibold text-slate-200">
+            닉네임
+            <input className="w-full rounded-md border border-arena-line bg-black/30 px-3 py-2" name="nickname" defaultValue={player.nickname ?? ""} />
+          </label>
+          <label className="space-y-1 text-sm font-semibold text-slate-200">
+            프로필 이미지 경로
+            <input
+              className="w-full rounded-md border border-arena-line bg-black/30 px-3 py-2"
+              name="profileImageUrl"
+              defaultValue={player.profileImageUrl ?? ""}
+              onChange={(event) => setPreviewUrl(event.target.value)}
+              placeholder={`/images/players/${player.id}.jpg`}
+            />
+          </label>
+          <label className="space-y-1 text-sm font-semibold text-slate-200">
+            등번호
+            <input className="w-full rounded-md border border-arena-line bg-black/30 px-3 py-2" name="number" type="number" min="0" defaultValue={player.number ?? ""} />
+          </label>
+          <label className="flex items-center gap-2 text-sm font-semibold text-slate-200">
+            <input name="isActive" type="checkbox" defaultChecked={player.isActive} />
+            선수 목록 포함
+          </label>
+          <button className="rounded-md bg-arena-lime px-4 py-2 font-black text-arena-black transition hover:bg-white" type="submit">
+            선수 정보 저장
+          </button>
+        </form>
+      ) : null}
+    </div>
+  );
+}

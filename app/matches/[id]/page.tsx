@@ -1,8 +1,10 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { MatchStatusBadge } from "@/components/MatchStatusBadge";
+import { WinnerBadge } from "@/components/WinnerBadge";
 import { matchInclude } from "@/lib/matches";
 import { prisma } from "@/lib/prisma";
-import { formatDate, getWinnerLabel } from "@/lib/stats";
+import { formatDate, matchStatus } from "@/lib/stats";
 
 export default async function MatchDetailPage({ params }: { params: { id: string } }) {
   const match = await prisma.match.findUnique({
@@ -22,9 +24,19 @@ export default async function MatchDetailPage({ params }: { params: { id: string
         <h1 className="mt-2 text-3xl font-black text-white">
           {match.teamAName} {match.teamAScore} : {match.teamBScore} {match.teamBName}
         </h1>
-        <p className="mt-2 text-slate-300">
-          {match.location} · 승리팀 {getWinnerLabel(match)} · 회장팀 MVP {match.chairmanTeamMvp?.name ?? "-"} · 총무팀 MVP{" "}
-          {match.managerTeamMvp?.name ?? "-"}
+        <p className="mt-2 flex flex-wrap items-center gap-2 text-slate-300">
+          <span>{match.location}</span>
+          <span>·</span>
+          <MatchStatusBadge status={match.status} />
+          {match.status === matchStatus.completed ? (
+            <>
+              <span>승리팀</span>
+              <WinnerBadge match={match} />
+            </>
+          ) : null}
+          <span>
+            · 회장팀 MVP {match.chairmanTeamMvp?.name ?? "-"} · 총무팀 MVP {match.managerTeamMvp?.name ?? "-"}
+          </span>
         </p>
       </section>
 

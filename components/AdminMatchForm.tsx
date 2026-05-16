@@ -2,11 +2,15 @@
 
 import { useMemo, useState } from "react";
 import type { Player } from "@prisma/client";
+import { matchStatus, type MatchStatusValue } from "@/lib/stats";
 
 type MatchFormAction = (formData: FormData) => void | Promise<void>;
+type TeamKey = "A" | "B";
+type FormTab = "manual" | "random";
 
 export type MatchFormInitialData = {
   matchDate: string;
+  status: MatchStatusValue;
   location: string;
   teamAName: string;
   teamBName: string;
@@ -30,6 +34,7 @@ type AdminMatchFormProps = {
 
 const defaultInitialData: MatchFormInitialData = {
   matchDate: "",
+  status: matchStatus.inProgress,
   location: "",
   teamAName: "회장팀",
   teamBName: "총무팀",
@@ -44,34 +49,135 @@ const defaultInitialData: MatchFormInitialData = {
   memo: ""
 };
 
+function shuffleIds(ids: number[]) {
+  const copied = [...ids];
+  for (let index = copied.length - 1; index > 0; index -= 1) {
+    const randomIndex = Math.floor(Math.random() * (index + 1));
+    [copied[index], copied[randomIndex]] = [copied[randomIndex], copied[index]];
+  }
+  return copied;
+}
+
+function wait(ms: number) {
+  return new Promise((resolve) => {
+    window.setTimeout(resolve, ms);
+  });
+}
+
 export function AdminMatchForm({ action, players, initialData = defaultInitialData, submitLabel = "경기 등록" }: AdminMatchFormProps) {
+  const [activeTab, setActiveTab] = useState<FormTab>("manual");
   const [teamAIds, setTeamAIds] = useState<number[]>(initialData.teamAPlayerIds);
   const [teamBIds, setTeamBIds] = useState<number[]>(initialData.teamBPlayerIds);
+  const [participantIds, setParticipantIds] = useState<number[]>([...initialData.teamAPlayerIds, ...initialData.teamBPlayerIds]);
   const [teamAName, setTeamAName] = useState(initialData.teamAName);
   const [teamBName, setTeamBName] = useState(initialData.teamBName);
+  const [teamAScore, setTeamAScore] = useState(initialData.teamAScore);
+  const [teamBScore, setTeamBScore] = useState(initialData.teamBScore);
+  const [goalsByPlayerId, setGoalsByPlayerId] = useState<Record<number, number>>(initialData.goalsByPlayerId);
   const [chairmanTeamMvpId, setChairmanTeamMvpId] = useState(initialData.chairmanTeamMvpId?.toString() ?? "");
   const [managerTeamMvpId, setManagerTeamMvpId] = useState(initialData.managerTeamMvpId?.toString() ?? "");
+  const [isDrawing, setIsDrawing] = useState(false);
+  const [drawPreviewIds, setDrawPreviewIds] = useState<number[]>([]);
+  const [hasRandomTeams, setHasRandomTeams] = useState(initialData.teamAPlayerIds.length > 0 && initialData.teamBPlayerIds.length > 0);
 
   const selectedIds = useMemo(() => new Set([...teamAIds, ...teamBIds]), [teamAIds, teamBIds]);
+  const participantSet = useMemo(() => new Set(participantIds), [participantIds]);
   const teamAPlayers = useMemo(() => players.filter((player) => teamAIds.includes(player.id)), [players, teamAIds]);
   const teamBPlayers = useMemo(() => players.filter((player) => teamBIds.includes(player.id)), [players, teamBIds]);
+  const drawPreviewPlayers = useMemo(() => players.filter((player) => drawPreviewIds.includes(player.id)), [players, drawPreviewIds]);
+  const canDrawTeams = participantIds.length >= 2 && participantIds.length % 2 === 0 && !isDrawing;
+  const canSubmit = teamAIds.length > 0 && teamBIds.length > 0 && Boolean(chairmanTeamMvpId) && Boolean(managerTeamMvpId);
 
-  function togglePlayer(team: "A" | "B", playerId: number) {
+  function sumGoals(playerIds: number[], nextGoalsByPlayerId: Record<number, number>) {
+    return playerIds.reduce((sum, playerId) => sum + (nextGoalsByPlayerId[playerId] ?? 0), 0);
+  }
+
+  function syncScores(nextTeamAIds = teamAIds, nextTeamBIds = teamBIds, nextGoalsByPlayerId = goalsByPlayerId) {
+    setTeamAScore(sumGoals(nextTeamAIds, nextGoalsByPlayerId));
+    setTeamBScore(sumGoals(nextTeamBIds, nextGoalsByPlayerId));
+  }
+
+  function setTeams(nextTeamAIds: number[], nextTeamBIds: number[]) {
+    setTeamAIds(nextTeamAIds);
+    setTeamBIds(nextTeamBIds);
+    setChairmanTeamMvpId(nextTeamAIds[0]?.toString() ?? "");
+    setManagerTeamMvpId(nextTeamBIds[0]?.toString() ?? "");
+    syncScores(nextTeamAIds, nextTeamBIds);
+  }
+
+  function togglePlayer(team: TeamKey, playerId: number) {
     const setter = team === "A" ? setTeamAIds : setTeamBIds;
     const otherSetter = team === "A" ? setTeamBIds : setTeamAIds;
     const clearOwnMvp = team === "A" ? setChairmanTeamMvpId : setManagerTeamMvpId;
     const clearOtherMvp = team === "A" ? setManagerTeamMvpId : setChairmanTeamMvpId;
 
+    setHasRandomTeams(false);
     setter((current) => {
       if (current.includes(playerId)) {
         clearOwnMvp((mvpId) => (mvpId === playerId.toString() ? "" : mvpId));
-        return current.filter((id) => id !== playerId);
+        const nextOwnIds = current.filter((id) => id !== playerId);
+        if (team === "A") {
+          syncScores(nextOwnIds, teamBIds);
+        } else {
+          syncScores(teamAIds, nextOwnIds);
+        }
+        return nextOwnIds;
       }
 
-      return [...current, playerId];
+      const nextOwnIds = [...current, playerId];
+      if (team === "A") {
+        syncScores(nextOwnIds, teamBIds.filter((id) => id !== playerId));
+      } else {
+        syncScores(teamAIds.filter((id) => id !== playerId), nextOwnIds);
+      }
+      return nextOwnIds;
     });
     otherSetter((current) => current.filter((id) => id !== playerId));
     clearOtherMvp((mvpId) => (mvpId === playerId.toString() ? "" : mvpId));
+  }
+
+  function toggleParticipant(playerId: number) {
+    setParticipantIds((current) => (current.includes(playerId) ? current.filter((id) => id !== playerId) : [...current, playerId]));
+    setTeams([], []);
+    setHasRandomTeams(false);
+  }
+
+  function updatePlayerGoals(playerId: number, value: string) {
+    const nextGoals = {
+      ...goalsByPlayerId,
+      [playerId]: Math.max(0, Number(value) || 0)
+    };
+    setGoalsByPlayerId(nextGoals);
+    syncScores(teamAIds, teamBIds, nextGoals);
+  }
+
+  function switchTab(tab: FormTab) {
+    if (tab === "random" && selectedIds.size > 0) {
+      setParticipantIds([...teamAIds, ...teamBIds]);
+    }
+    setActiveTab(tab);
+  }
+
+  async function drawRandomTeams() {
+    if (!canDrawTeams) return;
+
+    setIsDrawing(true);
+    setHasRandomTeams(false);
+
+    for (let round = 0; round < 18; round += 1) {
+      setDrawPreviewIds(shuffleIds(participantIds).slice(0, Math.min(6, participantIds.length)));
+      await wait(80 + round * 8);
+    }
+
+    const shuffled = shuffleIds(participantIds);
+    const middle = shuffled.length / 2;
+    const nextTeamAIds = shuffled.slice(0, middle);
+    const nextTeamBIds = shuffled.slice(middle);
+
+    setTeams(nextTeamAIds, nextTeamBIds);
+    setDrawPreviewIds([]);
+    setHasRandomTeams(true);
+    setIsDrawing(false);
   }
 
   return (
@@ -82,59 +188,132 @@ export function AdminMatchForm({ action, players, initialData = defaultInitialDa
           <input className="w-full rounded-md border border-arena-line bg-black/30 px-3 py-2" name="matchDate" type="date" defaultValue={initialData.matchDate} required />
         </label>
         <label className="space-y-2 text-sm font-semibold text-slate-200">
+          경기 상태
+          <select className="w-full rounded-md border border-arena-line bg-black/30 px-3 py-2" name="status" defaultValue={initialData.status}>
+            <option value={matchStatus.inProgress}>경기 진행중</option>
+            <option value={matchStatus.completed}>결과 등록 완료</option>
+          </select>
+        </label>
+        <label className="space-y-2 text-sm font-semibold text-slate-200">
           장소
           <input className="w-full rounded-md border border-arena-line bg-black/30 px-3 py-2" name="location" defaultValue={initialData.location} required />
         </label>
         <label className="space-y-2 text-sm font-semibold text-slate-200">
-          회장팀 이름
+          A팀 이름
           <input className="w-full rounded-md border border-arena-line bg-black/30 px-3 py-2" name="teamAName" value={teamAName} onChange={(event) => setTeamAName(event.target.value)} required />
         </label>
         <label className="space-y-2 text-sm font-semibold text-slate-200">
-          총무팀 이름
+          B팀 이름
           <input className="w-full rounded-md border border-arena-line bg-black/30 px-3 py-2" name="teamBName" value={teamBName} onChange={(event) => setTeamBName(event.target.value)} required />
         </label>
         <label className="space-y-2 text-sm font-semibold text-slate-200">
-          회장팀 점수
-          <input className="w-full rounded-md border border-arena-line bg-black/30 px-3 py-2" name="teamAScore" type="number" min="0" defaultValue={initialData.teamAScore} required />
+          A팀 점수
+          <input className="w-full rounded-md border border-arena-line bg-black/30 px-3 py-2 text-arena-lime" name="teamAScore" type="number" min="0" value={teamAScore} readOnly required />
         </label>
         <label className="space-y-2 text-sm font-semibold text-slate-200">
-          총무팀 점수
-          <input className="w-full rounded-md border border-arena-line bg-black/30 px-3 py-2" name="teamBScore" type="number" min="0" defaultValue={initialData.teamBScore} required />
+          B팀 점수
+          <input className="w-full rounded-md border border-arena-line bg-black/30 px-3 py-2 text-arena-cyan" name="teamBScore" type="number" min="0" value={teamBScore} readOnly required />
         </label>
       </div>
 
-      <div className="grid gap-4 lg:grid-cols-2">
-        {(["A", "B"] as const).map((team) => {
-          const teamIds = team === "A" ? teamAIds : teamBIds;
-          const title = team === "A" ? teamAName || "회장팀" : teamBName || "총무팀";
-
-          return (
-            <div key={team} className="rounded-md border border-arena-line bg-black/20 p-4">
-              <h3 className="font-bold text-white">{title} 선수 선택</h3>
-              <div className="mt-3 grid gap-2 sm:grid-cols-2">
-                {players.map((player) => {
-                  const checked = teamIds.includes(player.id);
-                  const disabled = selectedIds.has(player.id) && !checked;
-
-                  return (
-                    <label key={player.id} className="flex items-center gap-2 rounded-md bg-white/5 px-3 py-2 text-sm text-slate-200">
-                      <input
-                        checked={checked}
-                        disabled={disabled}
-                        name={`team${team}Players`}
-                        type="checkbox"
-                        value={player.id}
-                        onChange={() => togglePlayer(team, player.id)}
-                      />
-                      <span>{player.name}</span>
-                    </label>
-                  );
-                })}
-              </div>
-            </div>
-          );
-        })}
+      <div className="flex rounded-md border border-arena-line bg-black/20 p-1">
+        {[
+          { key: "manual", label: "수동 팀 선택" },
+          { key: "random", label: "랜덤 팀 구성" }
+        ].map((tab) => (
+          <button
+            key={tab.key}
+            className={`flex-1 rounded px-3 py-2 text-sm font-bold transition ${
+              activeTab === tab.key ? "bg-arena-lime text-arena-black" : "text-slate-300 hover:bg-white/5 hover:text-white"
+            }`}
+            type="button"
+            onClick={() => switchTab(tab.key as FormTab)}
+          >
+            {tab.label}
+          </button>
+        ))}
       </div>
+
+      {teamAIds.map((playerId) => (
+        <input key={`team-a-${playerId}`} name="teamAPlayers" type="hidden" value={playerId} />
+      ))}
+      {teamBIds.map((playerId) => (
+        <input key={`team-b-${playerId}`} name="teamBPlayers" type="hidden" value={playerId} />
+      ))}
+
+      {activeTab === "manual" ? (
+        <div className="grid gap-4 lg:grid-cols-2">
+          {(["A", "B"] as const).map((team) => {
+            const teamIds = team === "A" ? teamAIds : teamBIds;
+            const title = team === "A" ? teamAName || "A팀" : teamBName || "B팀";
+
+            return (
+              <div key={team} className="rounded-md border border-arena-line bg-black/20 p-4">
+                <h3 className="font-bold text-white">{title} 선수 선택</h3>
+                <div className="mt-3 grid gap-2 sm:grid-cols-2">
+                  {players.map((player) => {
+                    const checked = teamIds.includes(player.id);
+                    const disabled = selectedIds.has(player.id) && !checked;
+
+                    return (
+                      <label key={player.id} className="flex items-center gap-2 rounded-md bg-white/5 px-3 py-2 text-sm text-slate-200">
+                        <input checked={checked} disabled={disabled} type="checkbox" value={player.id} onChange={() => togglePlayer(team, player.id)} />
+                        <span>{player.name}</span>
+                      </label>
+                    );
+                  })}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      ) : (
+        <div className="space-y-4 rounded-md border border-arena-line bg-black/20 p-4">
+          <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+            <div>
+              <h3 className="font-bold text-white">참가 선수 선택</h3>
+              <p className="mt-1 text-sm text-slate-400">짝수 인원을 선택하면 로또 추첨처럼 섞어서 두 팀으로 나눕니다.</p>
+            </div>
+            <button
+              className="rounded-md bg-arena-cyan px-4 py-2 text-sm font-black text-arena-black transition hover:bg-white disabled:cursor-not-allowed disabled:bg-slate-600 disabled:text-slate-300"
+              disabled={!canDrawTeams}
+              type="button"
+              onClick={drawRandomTeams}
+            >
+              {isDrawing ? "추첨 중..." : "랜덤 팀 뽑기"}
+            </button>
+          </div>
+
+          <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-4">
+            {players.map((player) => (
+              <label key={player.id} className={`flex items-center gap-2 rounded-md px-3 py-2 text-sm transition ${participantSet.has(player.id) ? "bg-arena-lime text-arena-black" : "bg-white/5 text-slate-200"}`}>
+                <input checked={participantSet.has(player.id)} type="checkbox" value={player.id} onChange={() => toggleParticipant(player.id)} />
+                <span className="font-semibold">{player.name}</span>
+              </label>
+            ))}
+          </div>
+
+          <div className="rounded-md border border-dashed border-arena-line bg-black/30 p-4">
+            {isDrawing ? (
+              <div className="flex flex-wrap justify-center gap-3 py-4">
+                {drawPreviewPlayers.map((player, index) => (
+                  <span key={`${player.id}-${index}`} className="lotto-ball grid h-16 w-16 place-items-center rounded-full bg-arena-lime text-xs font-black text-arena-black shadow-lg shadow-arena-lime/20">
+                    {player.name}
+                  </span>
+                ))}
+              </div>
+            ) : (
+              <div className="grid gap-4 lg:grid-cols-2">
+                <TeamPreview title={teamAName || "A팀"} players={teamAPlayers} />
+                <TeamPreview title={teamBName || "B팀"} players={teamBPlayers} />
+              </div>
+            )}
+          </div>
+
+          {!canDrawTeams && !isDrawing ? <p className="text-sm text-slate-400">랜덤 팀 구성은 2명 이상의 짝수 인원을 선택해야 사용할 수 있습니다.</p> : null}
+          {hasRandomTeams ? <p className="text-sm font-semibold text-arena-lime">팀 구성이 완료되었습니다. 아래 MVP와 득점/도움을 확인한 뒤 경기 등록을 누르세요.</p> : null}
+        </div>
+      )}
 
       <div className="rounded-md border border-arena-line bg-black/20 p-4">
         <h3 className="font-bold text-white">선수별 득점 / 도움</h3>
@@ -149,7 +328,8 @@ export function AdminMatchForm({ action, players, initialData = defaultInitialDa
                   name={`goals_${player.id}`}
                   type="number"
                   min="0"
-                  defaultValue={initialData.goalsByPlayerId[player.id] ?? 0}
+                  value={goalsByPlayerId[player.id] ?? 0}
+                  onChange={(event) => updatePlayerGoals(player.id, event.target.value)}
                   aria-label={`${player.name} 득점`}
                 />
                 <input
@@ -167,7 +347,7 @@ export function AdminMatchForm({ action, players, initialData = defaultInitialDa
 
       <div className="grid gap-4 md:grid-cols-2">
         <label className="block space-y-2 text-sm font-semibold text-slate-200">
-          {teamAName || "회장팀"} MVP
+          {teamAName || "A팀"} MVP
           <select
             className="w-full rounded-md border border-arena-line bg-black/30 px-3 py-2"
             name="chairmanTeamMvpId"
@@ -175,7 +355,7 @@ export function AdminMatchForm({ action, players, initialData = defaultInitialDa
             onChange={(event) => setChairmanTeamMvpId(event.target.value)}
             required
           >
-            <option value="">회장팀 MVP 선택</option>
+            <option value="">A팀 MVP 선택</option>
             {teamAPlayers.map((player) => (
               <option key={player.id} value={player.id}>
                 {player.name}
@@ -185,7 +365,7 @@ export function AdminMatchForm({ action, players, initialData = defaultInitialDa
         </label>
 
         <label className="block space-y-2 text-sm font-semibold text-slate-200">
-          {teamBName || "총무팀"} MVP
+          {teamBName || "B팀"} MVP
           <select
             className="w-full rounded-md border border-arena-line bg-black/30 px-3 py-2"
             name="managerTeamMvpId"
@@ -193,7 +373,7 @@ export function AdminMatchForm({ action, players, initialData = defaultInitialDa
             onChange={(event) => setManagerTeamMvpId(event.target.value)}
             required
           >
-            <option value="">총무팀 MVP 선택</option>
+            <option value="">B팀 MVP 선택</option>
             {teamBPlayers.map((player) => (
               <option key={player.id} value={player.id}>
                 {player.name}
@@ -203,16 +383,41 @@ export function AdminMatchForm({ action, players, initialData = defaultInitialDa
         </label>
       </div>
 
-      <p className="text-sm text-slate-400">저장하려면 회장팀 MVP와 총무팀 MVP를 각각 1명씩 선택해야 합니다.</p>
+      <p className="text-sm text-slate-400">저장하려면 양 팀 MVP를 각각 1명씩 선택해야 합니다. 랜덤 구성 시 각 팀 첫 번째 선수가 기본 MVP로 지정됩니다.</p>
 
       <label className="block space-y-2 text-sm font-semibold text-slate-200">
         경기 메모
         <textarea className="min-h-24 w-full rounded-md border border-arena-line bg-black/30 px-3 py-2" name="memo" defaultValue={initialData.memo} />
       </label>
 
-      <button className="w-full rounded-md bg-arena-lime px-4 py-3 font-black text-arena-black transition hover:bg-white" type="submit">
+      <button
+        className="w-full rounded-md bg-arena-lime px-4 py-3 font-black text-arena-black transition hover:bg-white disabled:cursor-not-allowed disabled:bg-slate-600 disabled:text-slate-300"
+        disabled={!canSubmit}
+        type="submit"
+      >
         {submitLabel}
       </button>
     </form>
+  );
+}
+
+function TeamPreview({ title, players }: { title: string; players: Player[] }) {
+  return (
+    <div className="rounded-md border border-arena-line bg-black/20 p-4">
+      <h4 className="font-bold text-white">
+        {title} <span className="text-sm text-slate-400">({players.length}명)</span>
+      </h4>
+      <div className="mt-3 flex flex-wrap gap-2">
+        {players.length > 0 ? (
+          players.map((player) => (
+            <span key={player.id} className="rounded-full bg-white/10 px-3 py-1 text-sm font-semibold text-slate-100">
+              {player.name}
+            </span>
+          ))
+        ) : (
+          <span className="text-sm text-slate-400">아직 구성된 선수가 없습니다.</span>
+        )}
+      </div>
+    </div>
   );
 }

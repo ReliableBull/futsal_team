@@ -23,6 +23,35 @@ npm run dev
 
 실행 후 브라우저에서 `http://localhost:3000`에 접속합니다.
 
+## 날씨 설정
+
+Home 화면의 대구 10일 날씨는 기본적으로 개발용 mock 데이터를 표시합니다.
+실제 예보를 사용하려면 `.env`에 OpenWeather API 키를 설정하세요.
+
+```bash
+WEATHER_API_KEY="your-openweather-api-key"
+```
+
+API 호출이 실패하거나 키가 없으면 화면이 깨지지 않도록 mock 데이터로 대체됩니다.
+
+## 선수 프로필 이미지
+
+선수 이미지는 `public/images/players/` 폴더에 넣습니다.
+기본 규칙은 선수 ID와 같은 파일명입니다.
+
+```text
+public/images/players/1.jpg
+public/images/players/2.jpg
+```
+
+관리자 페이지에서 새 선수를 등록할 때 `프로필 이미지 경로`에 직접 경로를 넣을 수도 있습니다.
+
+```text
+/images/players/kim-minseok.jpg
+```
+
+이미지가 없거나 로딩에 실패하면 선수 이름 첫 글자를 사용한 기본 아바타가 표시됩니다.
+
 ## Prisma migrate 방법
 
 `.env`의 `DATABASE_URL`은 기본값으로 SQLite `dev.db`를 사용합니다.

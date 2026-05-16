@@ -15,17 +15,17 @@ export async function createPlayer(formData: FormData) {
   await requireAdmin();
 
   const name = getString(formData, "name");
-  const position = getString(formData, "position");
 
-  if (!name || !position) {
-    throw new Error("선수 이름과 포지션은 필수입니다.");
+  if (!name) {
+    throw new Error("선수 이름은 필수입니다.");
   }
 
   await prisma.player.create({
     data: {
       name,
       nickname: getString(formData, "nickname") || null,
-      position,
+      profileImageUrl: getString(formData, "profileImageUrl") || null,
+      position: "FP",
       number: getString(formData, "number") ? Number(getString(formData, "number")) : null,
       isActive: formData.get("isActive") === "on"
     }
@@ -33,8 +33,35 @@ export async function createPlayer(formData: FormData) {
 
   revalidatePath("/");
   revalidatePath("/players");
-  revalidatePath("/admin");
-  redirect("/admin");
+  revalidatePath("/abcd");
+  redirect("/abcd");
+}
+
+export async function updatePlayer(playerId: number, formData: FormData) {
+  await requireAdmin();
+
+  const name = getString(formData, "name");
+
+  if (!name) {
+    throw new Error("선수 이름은 필수입니다.");
+  }
+
+  await prisma.player.update({
+    where: { id: playerId },
+    data: {
+      name,
+      nickname: getString(formData, "nickname") || null,
+      profileImageUrl: getString(formData, "profileImageUrl") || null,
+      number: getString(formData, "number") ? Number(getString(formData, "number")) : null,
+      isActive: formData.get("isActive") === "on"
+    }
+  });
+
+  revalidatePath("/");
+  revalidatePath("/players");
+  revalidatePath(`/players/${playerId}`);
+  revalidatePath("/abcd");
+  redirect("/abcd");
 }
 
 export async function createMatch(formData: FormData) {
@@ -45,8 +72,8 @@ export async function createMatch(formData: FormData) {
   revalidatePath("/");
   revalidatePath("/matches");
   revalidatePath("/players");
-  revalidatePath("/admin");
-  redirect("/admin");
+  revalidatePath("/abcd");
+  redirect("/abcd");
 }
 
 export async function updateMatch(matchId: number, formData: FormData) {
@@ -58,8 +85,8 @@ export async function updateMatch(matchId: number, formData: FormData) {
   revalidatePath("/matches");
   revalidatePath(`/matches/${matchId}`);
   revalidatePath("/players");
-  revalidatePath("/admin");
-  redirect("/admin");
+  revalidatePath("/abcd");
+  redirect("/abcd");
 }
 
 export async function deleteMatch(matchId: number) {
@@ -71,8 +98,8 @@ export async function deleteMatch(matchId: number) {
   revalidatePath("/matches");
   revalidatePath(`/matches/${matchId}`);
   revalidatePath("/players");
-  revalidatePath("/admin");
-  redirect("/admin");
+  revalidatePath("/abcd");
+  redirect("/abcd");
 }
 
 export async function loginAdmin(formData: FormData) {
@@ -81,14 +108,14 @@ export async function loginAdmin(formData: FormData) {
 
   const admin = await prisma.admin.findUnique({ where: { username } });
   if (!admin || !verifyPassword(password, admin.passwordHash)) {
-    redirect("/admin/login?error=1");
+    redirect("/abcd/login?error=1");
   }
 
   setAdminSession({ id: admin.id, username: admin.username });
-  redirect("/admin");
+  redirect("/abcd");
 }
 
 export async function logoutAdmin() {
   clearAdminSession();
-  redirect("/admin/login");
+  redirect("/abcd/login");
 }

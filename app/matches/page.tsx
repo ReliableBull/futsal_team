@@ -1,6 +1,8 @@
 import Link from "next/link";
+import { MatchStatusBadge } from "@/components/MatchStatusBadge";
+import { WinnerBadge } from "@/components/WinnerBadge";
 import { prisma } from "@/lib/prisma";
-import { formatDate, getWinnerLabel } from "@/lib/stats";
+import { formatDate, matchStatus } from "@/lib/stats";
 
 export default async function MatchesPage() {
   const matches = await prisma.match.findMany({
@@ -21,7 +23,15 @@ export default async function MatchesPage() {
             <span className="text-lg font-black text-white">
               {match.teamAName} {match.teamAScore} : {match.teamBScore} {match.teamBName}
             </span>
-            <span className="text-sm text-slate-300">승리팀: {getWinnerLabel(match)}</span>
+            <span className="flex flex-wrap items-center gap-2 text-sm text-slate-300">
+              <MatchStatusBadge status={match.status} />
+              {match.status === matchStatus.completed ? (
+                <>
+                  <span>승리팀:</span>
+                  <WinnerBadge match={match} />
+                </>
+              ) : null}
+            </span>
             <span className="text-sm text-slate-300">
               회장팀 MVP: {match.chairmanTeamMvp?.name ?? "-"} · 총무팀 MVP: {match.managerTeamMvp?.name ?? "-"}
             </span>

@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "postinstall": "node scripts/ensure-sqlite-db.mjs && prisma generate",
-    "seed": "prisma db seed"
+    "seed": "prisma db seed",
+    "import:list": "node scripts/import-futsal-list.mjs"
   },
   "prisma": {
     "seed": "tsx prisma/seed.ts"

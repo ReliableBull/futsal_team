@@ -19,6 +19,7 @@ model Player {
   id                  Int           @id @default(autoincrement())
   name                String
   nickname            String?
+  profileImageUrl     String?
   position            String
   number              Int?
   isActive            Boolean       @default(true)
@@ -31,6 +32,7 @@ model Player {
 
 model Match {
   id                 Int           @id @default(autoincrement())
+  status             String        @default("COMPLETED")
   matchDate          DateTime
   location           String
   teamAName          String

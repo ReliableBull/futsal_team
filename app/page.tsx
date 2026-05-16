@@ -1,19 +1,18 @@
 import Link from "next/link";
+import { MatchStatusBadge } from "@/components/MatchStatusBadge";
 import { RankingTable } from "@/components/RankingTable";
-import { formatDate, getDashboardData, getWinnerLabel } from "@/lib/stats";
+import { TeamHeroSection } from "@/components/TeamHeroSection";
+import { WeeklyWeatherCard } from "@/components/WeeklyWeatherCard";
+import { WinnerBadge } from "@/components/WinnerBadge";
+import { formatDate, getDashboardData, matchStatus } from "@/lib/stats";
+import { getWeeklyWeather } from "@/lib/weather";
 
 export default async function HomePage() {
-  const { recentMatches, goalRankings, mvpRankings, winRateRankings } = await getDashboardData();
+  const [{ recentMatches, goalRankings, mvpRankings, winRateRankings }, weeklyWeather] = await Promise.all([getDashboardData(), getWeeklyWeather()]);
 
   return (
     <div className="space-y-8">
-      <section className="rounded-lg border border-arena-line bg-[radial-gradient(circle_at_top_right,#1e3a5f,transparent_36%),#101827] p-6 shadow-2xl shadow-black/30 md:p-8">
-        <p className="text-sm font-bold uppercase text-arena-lime">Local MVP</p>
-        <h1 className="mt-2 text-4xl font-black text-white md:text-5xl">ARENA Futsal Record</h1>
-        <p className="mt-3 max-w-2xl text-slate-300">
-          동호회 풋살 경기 결과, 선수별 기록, 랭킹을 빠르게 확인하는 로컬 테스트용 기록 서비스입니다.
-        </p>
-      </section>
+      <TeamHeroSection />
 
       <section className="rounded-lg border border-arena-line bg-arena-panel p-5">
         <div className="flex items-center justify-between gap-3">
@@ -29,9 +28,15 @@ export default async function HomePage() {
               <span className="font-bold text-white">
                 {match.teamAName} {match.teamAScore} : {match.teamBScore} {match.teamBName}
               </span>
-              <span className="text-sm text-slate-300">
-                승리팀: {getWinnerLabel(match)} · 회장팀 MVP: {match.chairmanTeamMvp?.name ?? "-"} · 총무팀 MVP:{" "}
-                {match.managerTeamMvp?.name ?? "-"}
+              <span className="flex flex-wrap items-center gap-2 text-sm text-slate-300">
+                <MatchStatusBadge status={match.status} />
+                {match.status === matchStatus.completed ? (
+                  <>
+                    <span>승리팀:</span>
+                    <WinnerBadge match={match} />
+                  </>
+                ) : null}
+                <span>· 회장팀 MVP: {match.chairmanTeamMvp?.name ?? "-"} · 총무팀 MVP: {match.managerTeamMvp?.name ?? "-"}</span>
               </span>
             </Link>
           ))}
@@ -39,10 +44,12 @@ export default async function HomePage() {
       </section>
 
       <div className="grid gap-5 lg:grid-cols-3">
-        <RankingTable title="득점 랭킹 TOP 5" players={goalRankings} valueKey="goals" suffix="골" />
-        <RankingTable title="MVP 랭킹 TOP 5" players={mvpRankings} valueKey="mvpCount" suffix="회" />
         <RankingTable title="승률 랭킹 TOP 5" players={winRateRankings} valueKey="winRate" suffix="%" />
+        <RankingTable title="MVP 랭킹 TOP 5" players={mvpRankings} valueKey="mvpCount" suffix="회" />
+        <RankingTable title="득점 랭킹 TOP 5" players={goalRankings} valueKey="goals" suffix="골" />
       </div>
+
+      <WeeklyWeatherCard weather={weeklyWeather} />
     </div>
   );
 }

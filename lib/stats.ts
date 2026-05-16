@@ -9,6 +9,13 @@ export const matchResult = {
 
 export type MatchResultValue = (typeof matchResult)[keyof typeof matchResult];
 
+export const matchStatus = {
+  inProgress: "IN_PROGRESS",
+  completed: "COMPLETED"
+} as const;
+
+export type MatchStatusValue = (typeof matchStatus)[keyof typeof matchStatus];
+
 export type PlayerWithStats = Player & {
   totalMatches: number;
   wins: number;
@@ -50,8 +57,13 @@ export function calculatePlayerStats(player: Player & { matchPlayers: MatchPlaye
 
 export async function getPlayersWithStats() {
   const players = await prisma.player.findMany({
-    include: { matchPlayers: true },
-    orderBy: [{ isActive: "desc" }, { number: "asc" }, { name: "asc" }]
+    where: { isActive: true },
+    include: {
+      matchPlayers: {
+        where: { match: { status: matchStatus.completed } }
+      }
+    },
+    orderBy: [{ number: "asc" }, { name: "asc" }]
   });
 
   return players.map(calculatePlayerStats);
@@ -77,6 +89,11 @@ export async function getDashboardData() {
   return { recentMatches, goalRankings, mvpRankings, winRateRankings };
 }
 
+export function formatPlayerRecord(player: Pick<PlayerWithStats, "wins" | "losses" | "draws">) {
+  const drawText = player.draws > 0 ? ` ${player.draws}무` : "";
+  return `${player.wins}승 ${player.losses}패${drawText}`;
+}
+
 export function getResultLabel(result: string) {
   if (result === matchResult.win) return "승";
   if (result === matchResult.loss) return "패";
@@ -85,6 +102,10 @@ export function getResultLabel(result: string) {
 
 export function getWinnerLabel(match: Pick<Match, "winnerTeam">) {
   return match.winnerTeam ?? "무승부";
+}
+
+export function getMatchStatusLabel(status: string) {
+  return status === matchStatus.inProgress ? "경기 진행중" : "결과 등록 완료";
 }
 
 export function formatDate(date: Date) {

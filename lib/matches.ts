@@ -1,6 +1,6 @@
 import { Prisma } from "@prisma/client";
 import { prisma } from "@/lib/prisma";
-import { matchResult, type MatchResultValue } from "@/lib/stats";
+import { matchResult, matchStatus, type MatchResultValue, type MatchStatusValue } from "@/lib/stats";
 
 export class MatchValidationError extends Error {
   status = 400;
@@ -12,6 +12,7 @@ export class MatchNotFoundError extends Error {
 
 export type MatchPayload = {
   matchDate: string;
+  status: MatchStatusValue;
   location: string;
   teamAName: string;
   teamBName: string;
@@ -45,6 +46,10 @@ function asOptionalNumber(value: unknown) {
   return Number.isFinite(parsed) ? parsed : null;
 }
 
+function asMatchStatus(value: FormDataEntryValue | null): MatchStatusValue {
+  return value === matchStatus.completed ? matchStatus.completed : matchStatus.inProgress;
+}
+
 function uniqueIds(values: unknown[]) {
   return Array.from(new Set(values.map((value) => Number(value)).filter((value) => Number.isInteger(value))));
 }
@@ -61,6 +66,7 @@ export function parseMatchFormData(formData: FormData): MatchPayload {
 
   return {
     matchDate: asString(formData.get("matchDate")),
+    status: asMatchStatus(formData.get("status")),
     location: asString(formData.get("location")),
     teamAName: asString(formData.get("teamAName")) || "회장팀",
     teamBName: asString(formData.get("teamBName")) || "총무팀",
@@ -89,6 +95,7 @@ export function parseMatchJson(input: unknown): MatchPayload {
 
   return {
     matchDate: String(body.matchDate ?? "").trim(),
+    status: body.status === matchStatus.completed ? matchStatus.completed : matchStatus.inProgress,
     location: String(body.location ?? "").trim(),
     teamAName: String(body.teamAName ?? "회장팀").trim() || "회장팀",
     teamBName: String(body.teamBName ?? "총무팀").trim() || "총무팀",
@@ -134,7 +141,13 @@ async function prepareMatchData(payload: MatchPayload) {
   }
 
   const winnerTeam =
-    payload.teamAScore === payload.teamBScore ? null : payload.teamAScore > payload.teamBScore ? payload.teamAName : payload.teamBName;
+    payload.status === matchStatus.inProgress
+      ? null
+      : payload.teamAScore === payload.teamBScore
+        ? null
+        : payload.teamAScore > payload.teamBScore
+          ? payload.teamAName
+          : payload.teamBName;
   const teamAResult: MatchResultValue =
     payload.teamAScore === payload.teamBScore
       ? matchResult.draw
@@ -169,6 +182,7 @@ async function prepareMatchData(payload: MatchPayload) {
 
   return {
     matchDate: new Date(payload.matchDate),
+    status: payload.status,
     location: payload.location,
     teamAName: payload.teamAName,
     teamBName: payload.teamBName,

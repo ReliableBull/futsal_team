@@ -80,7 +80,7 @@ export async function getCurrentAdmin() {
 export async function requireAdmin() {
   const admin = await getCurrentAdmin();
   if (!admin) {
-    redirect("/admin/login");
+    redirect("/abcd/login");
   }
 
   return admin;

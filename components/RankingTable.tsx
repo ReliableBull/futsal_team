@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { PlayerAvatar } from "@/components/PlayerAvatar";
 import type { PlayerWithStats } from "@/lib/stats";
 
 type RankingTableProps = {
@@ -11,7 +12,12 @@ type RankingTableProps = {
 export function RankingTable({ title, players, valueKey, suffix = "" }: RankingTableProps) {
   return (
     <section className="rounded-lg border border-arena-line bg-arena-panel p-5 shadow-xl shadow-black/20">
-      <h2 className="text-lg font-bold text-white">{title}</h2>
+      <div className="flex items-center justify-between gap-3">
+        <h2 className="text-lg font-bold text-white">{title}</h2>
+        <Link href="/players" className="text-sm font-bold text-arena-cyan hover:text-white">
+          전체 보기
+        </Link>
+      </div>
       <div className="mt-4 overflow-hidden rounded-md border border-arena-line">
         <table className="w-full text-sm">
           <thead className="bg-white/5 text-left text-slate-300">
@@ -26,10 +32,12 @@ export function RankingTable({ title, players, valueKey, suffix = "" }: RankingT
               <tr key={player.id}>
                 <td className="px-3 py-3 font-bold text-arena-lime">{index + 1}</td>
                 <td className="px-3 py-3">
-                  <Link className="font-semibold text-white hover:text-arena-cyan" href={`/players/${player.id}`}>
-                    {player.name}
-                  </Link>
-                  <span className="ml-2 text-slate-500">{player.position}</span>
+                  <div className="flex items-center gap-2">
+                    <PlayerAvatar playerId={player.id} name={player.name} profileImageUrl={player.profileImageUrl} size="sm" />
+                    <Link className="font-semibold text-white hover:text-arena-cyan" href={`/players/${player.id}`}>
+                      {player.name}
+                    </Link>
+                  </div>
                 </td>
                 <td className="px-3 py-3 text-right font-bold text-white">
                   {player[valueKey]}

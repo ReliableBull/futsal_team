@@ -1,13 +1,15 @@
 import { notFound } from "next/navigation";
+import { PlayerAvatar } from "@/components/PlayerAvatar";
 import { StatCard } from "@/components/StatCard";
 import { prisma } from "@/lib/prisma";
-import { calculatePlayerStats, formatDate, getResultLabel } from "@/lib/stats";
+import { calculatePlayerStats, formatDate, formatPlayerRecord, getResultLabel, matchStatus } from "@/lib/stats";
 
 export default async function PlayerDetailPage({ params }: { params: { id: string } }) {
-  const player = await prisma.player.findUnique({
-    where: { id: Number(params.id) },
+  const player = await prisma.player.findFirst({
+    where: { id: Number(params.id), isActive: true },
     include: {
       matchPlayers: {
+        where: { match: { status: matchStatus.completed } },
         include: { match: true },
         orderBy: { match: { matchDate: "desc" } }
       }
@@ -21,18 +23,23 @@ export default async function PlayerDetailPage({ params }: { params: { id: strin
   return (
     <div className="space-y-6">
       <section className="rounded-lg border border-arena-line bg-arena-panel p-6">
-        <p className="text-sm font-bold uppercase text-arena-lime">Player</p>
-        <h1 className="mt-1 text-3xl font-black text-white">{player.name}</h1>
-        <p className="mt-2 text-slate-300">
-          {player.nickname ? `${player.nickname} · ` : ""}
-          {player.position} · 등번호 {player.number ?? "-"} · {player.isActive ? "활성" : "비활성"}
-        </p>
+        <div className="flex flex-col gap-5 sm:flex-row sm:items-center">
+          <PlayerAvatar playerId={player.id} name={player.name} profileImageUrl={player.profileImageUrl} size="lg" />
+          <div>
+            <p className="text-sm font-bold uppercase text-arena-lime">Player</p>
+            <h1 className="mt-1 text-3xl font-black text-white">{player.name}</h1>
+            <p className="mt-2 text-slate-300">
+              {player.nickname ? `${player.nickname} · ` : ""}
+              등번호 {player.number ?? "-"}
+            </p>
+          </div>
+        </div>
       </section>
 
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        <StatCard label="누적 경기 수" value={stats.totalMatches} detail={`${stats.wins}승 ${stats.losses}패 ${stats.draws}무`} />
+        <StatCard label="출장 경기 수" value={stats.totalMatches} detail={formatPlayerRecord(stats)} />
         <StatCard label="승률" value={`${stats.winRate}%`} />
-        <StatCard label="누적 득점" value={stats.goals} detail={`${stats.assists} 도움`} />
+        <StatCard label="득점" value={stats.goals} detail={`${stats.assists} 도움`} />
         <StatCard label="MVP" value={stats.mvpCount} detail="선정 횟수" />
       </div>
 
