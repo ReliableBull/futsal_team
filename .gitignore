@@ -1,4 +1,6 @@
 node_modules
+.local-node
+.npm/_cacache
 .next
 out
 dist

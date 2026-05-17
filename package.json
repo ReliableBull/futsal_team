@@ -7,9 +7,10 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "postinstall": "node scripts/ensure-sqlite-db.mjs && prisma generate",
+    "postinstall": "prisma generate",
     "seed": "prisma db seed",
-    "import:list": "node scripts/import-futsal-list.mjs"
+    "import:list": "node scripts/import-futsal-list.mjs",
+    "import:sqlite-export": "node scripts/import-sqlite-export-to-postgres.mjs"
   },
   "prisma": {
     "seed": "tsx prisma/seed.ts"

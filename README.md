@@ -8,20 +8,48 @@
 - TypeScript
 - Tailwind CSS
 - Prisma ORM
-- SQLite
+- PostgreSQL
 - React Server Components
 - Server Actions
 
 ## 로컬 실행 방법
 
+PostgreSQL이 먼저 실행 중이어야 합니다. macOS/Homebrew 기준:
+
+```bash
+brew install postgresql@18
+brew services start postgresql@18
+/usr/local/opt/postgresql@18/bin/createdb futsal_team
+```
+
+`.env`의 `DATABASE_URL`은 로컬 PostgreSQL을 사용합니다.
+
+```bash
+DATABASE_URL="postgresql://futsal_admin:YOUR_PASSWORD@localhost:5432/futsal_team?schema=public"
+```
+
 ```bash
 npm install
 npx prisma migrate dev
-npx prisma db seed
+npm run import:list
 npm run dev
 ```
 
 실행 후 브라우저에서 `http://localhost:3000`에 접속합니다.
+
+## 다른 PC에서 개발 DB 접속
+
+이 PC를 개발 DB 서버로 사용할 때는 같은 LAN에서 아래 주소를 사용합니다.
+
+```bash
+DATABASE_URL="postgresql://futsal_admin:YOUR_PASSWORD@192.168.0.28:5432/futsal_team?schema=public"
+```
+
+PostgreSQL 서버 PC에서는 `postgresql.conf`의 `listen_addresses`가 `*` 또는 LAN IP로 설정되어 있어야 하고, `pg_hba.conf`에는 개발 LAN 대역을 허용하는 규칙이 필요합니다.
+
+```text
+host    futsal_team      futsal_admin    192.168.0.0/24          scram-sha-256
+```
 
 ## Raspberry Pi / Jetson Nano 설치
 
@@ -106,22 +134,29 @@ public/images/players/2.jpg
 
 ## Prisma migrate 방법
 
-`.env`의 `DATABASE_URL`은 기본값으로 SQLite `dev.db`를 사용합니다.
+`.env`의 `DATABASE_URL`은 PostgreSQL DB를 가리킵니다.
 
 ```bash
 npx prisma migrate dev
 ```
 
-새로운 모델 변경 후에는 migration 이름을 입력하면 Prisma가 migration 파일과 SQLite DB를 갱신합니다.
+새로운 모델 변경 후에는 migration 이름을 입력하면 Prisma가 migration 파일과 PostgreSQL DB를 갱신합니다.
 
-## Seed 데이터 입력 방법
+## 데이터 입력 방법
 
 ```bash
-npx prisma db seed
+npm run import:list
 ```
 
-기본 선수 12명과 테스트 경기 3개가 생성됩니다. Seed는 기존 선수, 경기, 참가 기록을 삭제한 뒤 다시 입력합니다.
-관리자 계정도 함께 생성됩니다.
+`scripts/futsal-list-data.json`의 한글 선수/경기 데이터를 PostgreSQL에 입력합니다.
+
+SQLite 백업 JSON을 PostgreSQL로 복원해야 할 때는 다음 명령을 사용합니다.
+
+```bash
+npm run import:sqlite-export -- /path/to/futsal-sqlite-export.json
+```
+
+관리자 계정은 seed 또는 SQLite 이관 데이터에 포함됩니다.
 
 - 아이디: `admin`
 - 비밀번호: `dlGhwns12!`
@@ -154,4 +189,4 @@ npx prisma db seed
 
 ## 다음 단계
 
-local MVP가 안정화되면 PostgreSQL 전환, Naver Cloud 배포, Nginx/PM2 운영 설정을 다음 단계로 확장할 수 있습니다.
+local MVP가 안정화되면 PostgreSQL 백업 자동화, Naver Cloud 배포, Nginx/PM2 운영 설정을 다음 단계로 확장할 수 있습니다.
