@@ -1,13 +1,13 @@
 import Link from "next/link";
 import { WinnerBadge } from "@/components/WinnerBadge";
 import { prisma } from "@/lib/prisma";
-import { formatDate, matchStatus } from "@/lib/stats";
+import { formatDate, getTeamMvpNames, matchStatus } from "@/lib/stats";
 
 export const dynamic = "force-dynamic";
 
 export default async function MatchesPage() {
   const matches = await prisma.match.findMany({
-    include: { chairmanTeamMvp: true, managerTeamMvp: true },
+    include: { matchPlayers: { include: { player: true } } },
     orderBy: { matchDate: "desc" }
   });
 
@@ -29,7 +29,8 @@ export default async function MatchesPage() {
               {match.status === matchStatus.completed ? <WinnerBadge match={match} /> : <span className="font-bold text-white">-</span>}
             </span>
             <span className="text-sm text-slate-300">
-              {match.teamAName} MVP: {match.chairmanTeamMvp?.name ?? "-"} · {match.teamBName} MVP: {match.managerTeamMvp?.name ?? "-"}
+              {match.teamAName} MVP: {getTeamMvpNames(match.matchPlayers, match.teamAName)} · {match.teamBName} MVP:{" "}
+              {getTeamMvpNames(match.matchPlayers, match.teamBName)}
             </span>
           </Link>
         ))}

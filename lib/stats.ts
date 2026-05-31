@@ -73,7 +73,11 @@ export async function getDashboardData() {
   const [players, recentMatches] = await Promise.all([
     getPlayersWithStats(),
     prisma.match.findMany({
-      include: { chairmanTeamMvp: true, managerTeamMvp: true },
+      include: {
+        chairmanTeamMvp: true,
+        managerTeamMvp: true,
+        matchPlayers: { include: { player: true } }
+      },
       orderBy: { matchDate: "desc" },
       take: 5
     })
@@ -106,6 +110,17 @@ export function getWinnerLabel(match: Pick<Match, "winnerTeam">) {
 
 export function getMatchStatusLabel(status: string) {
   return status === matchStatus.inProgress ? "경기 진행중" : "결과 등록 완료";
+}
+
+export function getTeamMvpNames(
+  matchPlayers: Array<Pick<MatchPlayer, "teamName" | "isMvp"> & { player: Pick<Player, "name"> }>,
+  teamName: string
+) {
+  const names = matchPlayers
+    .filter((record) => record.teamName === teamName && record.isMvp)
+    .map((record) => record.player.name);
+
+  return names.length > 0 ? names.join(", ") : "-";
 }
 
 export function formatDate(date: Date) {

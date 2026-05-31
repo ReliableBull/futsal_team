@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import { WinnerBadge } from "@/components/WinnerBadge";
 import { matchInclude } from "@/lib/matches";
 import { prisma } from "@/lib/prisma";
-import { formatDate, matchStatus } from "@/lib/stats";
+import { formatDate, getTeamMvpNames, matchStatus } from "@/lib/stats";
 
 export default async function MatchDetailPage({ params }: { params: { id: string } }) {
   const match = await prisma.match.findUnique({
@@ -29,7 +29,8 @@ export default async function MatchDetailPage({ params }: { params: { id: string
           <span>승리팀</span>
           {match.status === matchStatus.completed ? <WinnerBadge match={match} /> : <span className="font-bold text-white">-</span>}
           <span>
-            · {match.teamAName} MVP {match.chairmanTeamMvp?.name ?? "-"} · {match.teamBName} MVP {match.managerTeamMvp?.name ?? "-"}
+            · {match.teamAName} MVP {getTeamMvpNames(match.matchPlayers, match.teamAName)} · {match.teamBName} MVP{" "}
+            {getTeamMvpNames(match.matchPlayers, match.teamBName)}
           </span>
         </p>
       </section>

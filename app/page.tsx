@@ -3,7 +3,7 @@ import { RankingTable } from "@/components/RankingTable";
 import { TeamHeroSection } from "@/components/TeamHeroSection";
 import { WeeklyWeatherCard } from "@/components/WeeklyWeatherCard";
 import { WinnerBadge } from "@/components/WinnerBadge";
-import { formatDate, getDashboardData, matchStatus } from "@/lib/stats";
+import { formatDate, getDashboardData, getTeamMvpNames, matchStatus } from "@/lib/stats";
 import { getWeeklyWeather } from "@/lib/weather";
 
 export const dynamic = "force-dynamic";
@@ -34,10 +34,10 @@ export default async function HomePage() {
                 {match.status === matchStatus.completed ? <WinnerBadge match={match} /> : <span className="font-bold text-white">-</span>}
                 <span className="text-slate-500">·</span>
                 <span className="font-semibold text-slate-400">{match.teamAName} MVP</span>
-                <span className="font-black text-arena-lime">{match.chairmanTeamMvp?.name ?? "-"}</span>
+                <span className="font-black text-arena-lime">{getTeamMvpNames(match.matchPlayers, match.teamAName)}</span>
                 <span className="text-slate-500">·</span>
                 <span className="font-semibold text-slate-400">{match.teamBName} MVP</span>
-                <span className="font-black text-arena-cyan">{match.managerTeamMvp?.name ?? "-"}</span>
+                <span className="font-black text-arena-cyan">{getTeamMvpNames(match.matchPlayers, match.teamBName)}</span>
               </span>
             </Link>
           ))}

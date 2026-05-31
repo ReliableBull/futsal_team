@@ -6,7 +6,7 @@ import { MatchStatusBadge } from "@/components/MatchStatusBadge";
 import { createMatch, createPlayer, deleteMatch, deletePlayer, logoutAdmin, updatePlayer } from "@/lib/actions";
 import { requireAdmin } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
-import { formatDate, matchStatus } from "@/lib/stats";
+import { formatDate, getTeamMvpNames, matchStatus } from "@/lib/stats";
 
 function toInputDate(date: Date) {
   return date.toISOString().slice(0, 10);
@@ -20,7 +20,7 @@ export default async function AdminPage() {
       orderBy: [{ isActive: "desc" }, { number: "asc" }, { name: "asc" }]
     }),
     prisma.match.findMany({
-      include: { chairmanTeamMvp: true, managerTeamMvp: true },
+      include: { matchPlayers: { include: { player: true } } },
       orderBy: { matchDate: "desc" }
     })
   ]);
@@ -103,8 +103,8 @@ export default async function AdminPage() {
             teamBPlayerIds: [],
             goalsByPlayerId: {},
             assistsByPlayerId: {},
-            chairmanTeamMvpId: null,
-            managerTeamMvpId: null,
+            chairmanTeamMvpIds: [],
+            managerTeamMvpIds: [],
             memo: ""
           }}
         />
@@ -125,7 +125,8 @@ export default async function AdminPage() {
                     <MatchStatusBadge status={match.status} />
                   </div>
                   <p className="text-sm text-slate-400">
-                    {match.teamAName} MVP: {match.chairmanTeamMvp?.name ?? "-"} · {match.teamBName} MVP: {match.managerTeamMvp?.name ?? "-"}
+                    {match.teamAName} MVP: {getTeamMvpNames(match.matchPlayers, match.teamAName)} · {match.teamBName} MVP:{" "}
+                    {getTeamMvpNames(match.matchPlayers, match.teamBName)}
                   </p>
                 </Link>
                 <div className="flex gap-2">

@@ -22,8 +22,8 @@ export type MatchPayload = {
   teamBPlayerIds: number[];
   goalsByPlayerId: Record<number, number>;
   assistsByPlayerId: Record<number, number>;
-  chairmanTeamMvpId: number | null;
-  managerTeamMvpId: number | null;
+  chairmanTeamMvpIds: number[];
+  managerTeamMvpIds: number[];
   memo: string | null;
 };
 
@@ -80,8 +80,8 @@ export function parseMatchFormData(formData: FormData): MatchPayload {
     assistsByPlayerId: Object.fromEntries(
       selectedIds.map((playerId) => [playerId, Math.max(0, asOptionalNumber(asString(formData.get(`assists_${playerId}`))) ?? 0)])
     ),
-    chairmanTeamMvpId: asOptionalNumber(asString(formData.get("chairmanTeamMvpId"))),
-    managerTeamMvpId: asOptionalNumber(asString(formData.get("managerTeamMvpId"))),
+    chairmanTeamMvpIds: uniqueIds(formData.getAll("chairmanTeamMvpIds")),
+    managerTeamMvpIds: uniqueIds(formData.getAll("managerTeamMvpIds")),
     memo: asString(formData.get("memo")) || null
   };
 }
@@ -105,8 +105,20 @@ export function parseMatchJson(input: unknown): MatchPayload {
     teamBPlayerIds: uniqueIds(Array.isArray(body.teamBPlayerIds) ? body.teamBPlayerIds : []),
     goalsByPlayerId: normalizeRecord(body.goalsByPlayerId),
     assistsByPlayerId: normalizeRecord(body.assistsByPlayerId),
-    chairmanTeamMvpId: asOptionalNumber(body.chairmanTeamMvpId),
-    managerTeamMvpId: asOptionalNumber(body.managerTeamMvpId),
+    chairmanTeamMvpIds: uniqueIds(
+      Array.isArray(body.chairmanTeamMvpIds)
+        ? body.chairmanTeamMvpIds
+        : body.chairmanTeamMvpId
+          ? [body.chairmanTeamMvpId]
+          : []
+    ),
+    managerTeamMvpIds: uniqueIds(
+      Array.isArray(body.managerTeamMvpIds)
+        ? body.managerTeamMvpIds
+        : body.managerTeamMvpId
+          ? [body.managerTeamMvpId]
+          : []
+    ),
     memo: typeof body.memo === "string" && body.memo.trim() ? body.memo.trim() : null
   };
 }
@@ -127,10 +139,10 @@ async function prepareMatchData(payload: MatchPayload) {
     throw new MatchValidationError("같은 선수를 회장팀과 총무팀에 동시에 등록할 수 없습니다.");
   }
 
-  if (payload.chairmanTeamMvpId && !payload.teamAPlayerIds.includes(payload.chairmanTeamMvpId)) {
+  if (payload.chairmanTeamMvpIds.some((playerId) => !payload.teamAPlayerIds.includes(playerId))) {
     throw new MatchValidationError(`${payload.teamAName} MVP를 ${payload.teamAName} 선수 중에서 선택해주세요.`);
   }
-  if (payload.managerTeamMvpId && !payload.teamBPlayerIds.includes(payload.managerTeamMvpId)) {
+  if (payload.managerTeamMvpIds.some((playerId) => !payload.teamBPlayerIds.includes(playerId))) {
     throw new MatchValidationError(`${payload.teamBName} MVP를 ${payload.teamBName} 선수 중에서 선택해주세요.`);
   }
 
@@ -168,7 +180,7 @@ async function prepareMatchData(payload: MatchPayload) {
       result: teamAResult,
       goals: payload.goalsByPlayerId[playerId] ?? 0,
       assists: payload.assistsByPlayerId[playerId] ?? 0,
-      isMvp: payload.chairmanTeamMvpId === playerId
+      isMvp: payload.chairmanTeamMvpIds.includes(playerId)
     })),
     ...payload.teamBPlayerIds.map((playerId) => ({
       playerId,
@@ -176,7 +188,7 @@ async function prepareMatchData(payload: MatchPayload) {
       result: teamBResult,
       goals: payload.goalsByPlayerId[playerId] ?? 0,
       assists: payload.assistsByPlayerId[playerId] ?? 0,
-      isMvp: payload.managerTeamMvpId === playerId
+      isMvp: payload.managerTeamMvpIds.includes(playerId)
     }))
   ];
 
@@ -189,8 +201,8 @@ async function prepareMatchData(payload: MatchPayload) {
     teamAScore: payload.teamAScore,
     teamBScore: payload.teamBScore,
     winnerTeam,
-    chairmanTeamMvpId: payload.chairmanTeamMvpId,
-    managerTeamMvpId: payload.managerTeamMvpId,
+    chairmanTeamMvpId: payload.chairmanTeamMvpIds[0] ?? null,
+    managerTeamMvpId: payload.managerTeamMvpIds[0] ?? null,
     memo: payload.memo,
     matchPlayers
   };

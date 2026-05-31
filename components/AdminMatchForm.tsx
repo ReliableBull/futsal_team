@@ -21,8 +21,8 @@ export type MatchFormInitialData = {
   teamBPlayerIds: number[];
   goalsByPlayerId: Record<number, number>;
   assistsByPlayerId: Record<number, number>;
-  chairmanTeamMvpId: number | null;
-  managerTeamMvpId: number | null;
+  chairmanTeamMvpIds: number[];
+  managerTeamMvpIds: number[];
   memo: string;
 };
 
@@ -45,8 +45,8 @@ const defaultInitialData: MatchFormInitialData = {
   teamBPlayerIds: [],
   goalsByPlayerId: {},
   assistsByPlayerId: {},
-  chairmanTeamMvpId: null,
-  managerTeamMvpId: null,
+  chairmanTeamMvpIds: [],
+  managerTeamMvpIds: [],
   memo: ""
 };
 
@@ -82,8 +82,8 @@ export function AdminMatchForm({ action, players, initialData = defaultInitialDa
 
     return initialTeamAGoals === initialData.teamAScore && initialTeamBGoals === initialData.teamBScore ? "goals" : "manual";
   });
-  const [chairmanTeamMvpId, setChairmanTeamMvpId] = useState(initialData.chairmanTeamMvpId?.toString() ?? "");
-  const [managerTeamMvpId, setManagerTeamMvpId] = useState(initialData.managerTeamMvpId?.toString() ?? "");
+  const [chairmanTeamMvpIds, setChairmanTeamMvpIds] = useState<number[]>(initialData.chairmanTeamMvpIds);
+  const [managerTeamMvpIds, setManagerTeamMvpIds] = useState<number[]>(initialData.managerTeamMvpIds);
   const [isDrawing, setIsDrawing] = useState(false);
   const [drawPreviewIds, setDrawPreviewIds] = useState<number[]>([]);
   const [hasRandomTeams, setHasRandomTeams] = useState(initialData.teamAPlayerIds.length > 0 && initialData.teamBPlayerIds.length > 0);
@@ -119,21 +119,21 @@ export function AdminMatchForm({ action, players, initialData = defaultInitialDa
   function setTeams(nextTeamAIds: number[], nextTeamBIds: number[]) {
     setTeamAIds(nextTeamAIds);
     setTeamBIds(nextTeamBIds);
-    setChairmanTeamMvpId(nextTeamAIds[0]?.toString() ?? "");
-    setManagerTeamMvpId(nextTeamBIds[0]?.toString() ?? "");
+    setChairmanTeamMvpIds([]);
+    setManagerTeamMvpIds([]);
     syncScores(nextTeamAIds, nextTeamBIds);
   }
 
   function togglePlayer(team: TeamKey, playerId: number) {
     const setter = team === "A" ? setTeamAIds : setTeamBIds;
     const otherSetter = team === "A" ? setTeamBIds : setTeamAIds;
-    const clearOwnMvp = team === "A" ? setChairmanTeamMvpId : setManagerTeamMvpId;
-    const clearOtherMvp = team === "A" ? setManagerTeamMvpId : setChairmanTeamMvpId;
+    const clearOwnMvp = team === "A" ? setChairmanTeamMvpIds : setManagerTeamMvpIds;
+    const clearOtherMvp = team === "A" ? setManagerTeamMvpIds : setChairmanTeamMvpIds;
 
     setHasRandomTeams(false);
     setter((current) => {
       if (current.includes(playerId)) {
-        clearOwnMvp((mvpId) => (mvpId === playerId.toString() ? "" : mvpId));
+        clearOwnMvp((mvpIds) => mvpIds.filter((mvpId) => mvpId !== playerId));
         const nextOwnIds = current.filter((id) => id !== playerId);
         if (team === "A") {
           syncScores(nextOwnIds, teamBIds);
@@ -152,7 +152,12 @@ export function AdminMatchForm({ action, players, initialData = defaultInitialDa
       return nextOwnIds;
     });
     otherSetter((current) => current.filter((id) => id !== playerId));
-    clearOtherMvp((mvpId) => (mvpId === playerId.toString() ? "" : mvpId));
+    clearOtherMvp((mvpIds) => mvpIds.filter((mvpId) => mvpId !== playerId));
+  }
+
+  function toggleMvp(team: TeamKey, playerId: number) {
+    const setter = team === "A" ? setChairmanTeamMvpIds : setManagerTeamMvpIds;
+    setter((current) => (current.includes(playerId) ? current.filter((id) => id !== playerId) : [...current, playerId]));
   }
 
   function toggleParticipant(playerId: number) {
@@ -408,43 +413,36 @@ export function AdminMatchForm({ action, players, initialData = defaultInitialDa
       </div>
 
       <div className="grid gap-4 md:grid-cols-2">
-        <label className="block space-y-2 text-sm font-semibold text-slate-200">
-          {teamAName || "A팀"} MVP
-          <select
-            className="w-full rounded-md border border-arena-line bg-black/30 px-3 py-2"
-            name="chairmanTeamMvpId"
-            value={chairmanTeamMvpId}
-            onChange={(event) => setChairmanTeamMvpId(event.target.value)}
-          >
-            <option value="">{teamAName || "A팀"} MVP 선택 안 함</option>
-            {teamAPlayers.map((player) => (
-              <option key={player.id} value={player.id}>
-                {player.name}
-              </option>
-            ))}
-          </select>
-        </label>
-
-        <label className="block space-y-2 text-sm font-semibold text-slate-200">
-          {teamBName || "B팀"} MVP
-          <select
-            className="w-full rounded-md border border-arena-line bg-black/30 px-3 py-2"
-            name="managerTeamMvpId"
-            value={managerTeamMvpId}
-            onChange={(event) => setManagerTeamMvpId(event.target.value)}
-          >
-            <option value="">{teamBName || "B팀"} MVP 선택 안 함</option>
-            {teamBPlayers.map((player) => (
-              <option key={player.id} value={player.id}>
-                {player.name}
-              </option>
-            ))}
-          </select>
-        </label>
+        {[
+          { team: "A" as const, title: teamAName || "A팀", players: teamAPlayers, mvpIds: chairmanTeamMvpIds },
+          { team: "B" as const, title: teamBName || "B팀", players: teamBPlayers, mvpIds: managerTeamMvpIds }
+        ].map(({ team, title, players: teamPlayers, mvpIds }) => (
+          <fieldset key={team} className="rounded-md border border-arena-line bg-black/20 p-4">
+            <legend className="px-1 text-sm font-semibold text-slate-200">{title} MVP</legend>
+            <div className="mt-2 grid gap-2 sm:grid-cols-2">
+              {teamPlayers.length > 0 ? (
+                teamPlayers.map((player) => (
+                  <label key={player.id} className="flex items-center gap-2 rounded-md bg-white/5 px-3 py-2 text-sm text-slate-200">
+                    <input
+                      checked={mvpIds.includes(player.id)}
+                      name={team === "A" ? "chairmanTeamMvpIds" : "managerTeamMvpIds"}
+                      type="checkbox"
+                      value={player.id}
+                      onChange={() => toggleMvp(team, player.id)}
+                    />
+                    <span>{player.name}</span>
+                  </label>
+                ))
+              ) : (
+                <p className="text-sm text-slate-400">팀 선수를 먼저 선택해주세요.</p>
+              )}
+            </div>
+          </fieldset>
+        ))}
       </div>
 
       <p className="text-sm text-slate-400">
-        MVP는 선택사항입니다. 선택하지 않으면 경기 결과에는 MVP가 없음으로 표시됩니다.
+        MVP는 선택사항이며 팀별로 여러 명을 선정할 수 있습니다. 선택하지 않으면 경기 결과에는 MVP가 없음으로 표시됩니다.
       </p>
 
       <label className="block space-y-2 text-sm font-semibold text-slate-200">
