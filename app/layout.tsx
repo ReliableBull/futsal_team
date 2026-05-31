@@ -3,16 +3,22 @@ import Link from "next/link";
 import { MobileNavMenu } from "@/components/MobileNavMenu";
 import "./globals.css";
 
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
+const ogImageUrl = new URL("/images/arena-team.jpg", siteUrl).toString();
+
 export const metadata: Metadata = {
-  metadataBase: new URL("http://127.0.0.1:3000"),
+  metadataBase: new URL(siteUrl),
   title: "ARENA FC",
   description: "함께 뛰는 시간, 하나가 되는 ARENA FC",
   openGraph: {
     title: "ARENA FC",
     description: "함께 뛰는 시간, 하나가 되는 ARENA FC",
+    url: siteUrl,
+    siteName: "ARENA FC",
+    type: "website",
     images: [
       {
-        url: "/images/arena-team.jpg",
+        url: ogImageUrl,
         width: 1200,
         height: 630,
         alt: "ARENA FC team group photo"
@@ -23,7 +29,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "ARENA FC",
     description: "함께 뛰는 시간, 하나가 되는 ARENA FC",
-    images: ["/images/arena-team.jpg"]
+    images: [ogImageUrl]
   }
 };
 

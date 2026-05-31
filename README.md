@@ -26,6 +26,7 @@ brew services start postgresql@18
 
 ```bash
 DATABASE_URL="postgresql://futsal_admin:YOUR_PASSWORD@localhost:5432/futsal_team?schema=public"
+NEXT_PUBLIC_SITE_URL="http://localhost:3000"
 ```
 
 ```bash
@@ -36,6 +37,8 @@ npm run dev
 ```
 
 실행 후 브라우저에서 `http://localhost:3000`에 접속합니다.
+
+링크 공유 미리보기 이미지를 노출하려면 `NEXT_PUBLIC_SITE_URL`을 공유받는 기기에서 접근 가능한 주소로 설정해야 합니다. 같은 LAN에서는 예를 들어 `http://192.168.0.28:3000`, 외부 공개 도메인이 있다면 `https://your-domain.com`처럼 설정합니다.
 
 ## 다른 PC에서 개발 DB 접속
 

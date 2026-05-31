@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { MatchStatusBadge } from "@/components/MatchStatusBadge";
 import { WinnerBadge } from "@/components/WinnerBadge";
 import { matchInclude } from "@/lib/matches";
 import { prisma } from "@/lib/prisma";
@@ -27,15 +26,10 @@ export default async function MatchDetailPage({ params }: { params: { id: string
         <p className="mt-2 flex flex-wrap items-center gap-2 text-slate-300">
           <span>{match.location}</span>
           <span>·</span>
-          <MatchStatusBadge status={match.status} />
-          {match.status === matchStatus.completed ? (
-            <>
-              <span>승리팀</span>
-              <WinnerBadge match={match} />
-            </>
-          ) : null}
+          <span>승리팀</span>
+          {match.status === matchStatus.completed ? <WinnerBadge match={match} /> : <span className="font-bold text-white">-</span>}
           <span>
-            · 회장팀 MVP {match.chairmanTeamMvp?.name ?? "-"} · 총무팀 MVP {match.managerTeamMvp?.name ?? "-"}
+            · {match.teamAName} MVP {match.chairmanTeamMvp?.name ?? "-"} · {match.teamBName} MVP {match.managerTeamMvp?.name ?? "-"}
           </span>
         </p>
       </section>
@@ -70,7 +64,9 @@ export default async function MatchDetailPage({ params }: { params: { id: string
                       </td>
                       <td className="px-3 py-3 text-right">{record.goals}</td>
                       <td className="px-3 py-3 text-right">{record.assists}</td>
-                      <td className="px-3 py-3 text-right">{record.isMvp ? "Yes" : "-"}</td>
+                      <td className="px-3 py-3 text-right" aria-label={record.isMvp ? "MVP" : "MVP 아님"}>
+                        {record.isMvp ? "🏆" : "-"}
+                      </td>
                     </tr>
                   ))}
                 </tbody>

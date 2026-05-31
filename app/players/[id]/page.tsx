@@ -45,7 +45,31 @@ export default async function PlayerDetailPage({ params }: { params: { id: strin
 
       <section className="rounded-lg border border-arena-line bg-arena-panel p-5">
         <h2 className="text-xl font-bold text-white">최근 경기 기록</h2>
-        <div className="mt-4 overflow-hidden rounded-md border border-arena-line">
+        <div className="mt-4 grid gap-3 md:hidden">
+          {player.matchPlayers.map((record) => (
+            <article key={record.id} className="rounded-md border border-arena-line bg-black/20 p-4">
+              <div className="flex items-start justify-between gap-3">
+                <div className="min-w-0">
+                  <p className="text-xs font-semibold text-slate-400">{formatDate(record.match.matchDate)}</p>
+                  <p className="mt-1 text-sm font-bold leading-snug text-white">
+                    {record.match.teamAName} {record.match.teamAScore} : {record.match.teamBScore} {record.match.teamBName}
+                  </p>
+                </div>
+                <span className="shrink-0 rounded-md border border-arena-line bg-white/5 px-2.5 py-1 text-sm font-black text-arena-lime">
+                  {getResultLabel(record.result)}
+                </span>
+              </div>
+
+              <div className="mt-4 grid grid-cols-3 gap-2">
+                <MobileRecordStat label="득점" value={`${record.goals}`} />
+                <MobileRecordStat label="도움" value={`${record.assists}`} />
+                <MobileRecordStat label="MVP" value={record.isMvp ? "🏆" : "-"} />
+              </div>
+            </article>
+          ))}
+        </div>
+
+        <div className="mt-4 hidden overflow-hidden rounded-md border border-arena-line md:block">
           <table className="w-full min-w-[680px] text-sm">
             <thead className="bg-white/5 text-left text-slate-300">
               <tr>
@@ -67,13 +91,24 @@ export default async function PlayerDetailPage({ params }: { params: { id: strin
                   <td className="px-3 py-3">{getResultLabel(record.result)}</td>
                   <td className="px-3 py-3 text-right">{record.goals}</td>
                   <td className="px-3 py-3 text-right">{record.assists}</td>
-                  <td className="px-3 py-3 text-right">{record.isMvp ? "Yes" : "-"}</td>
+                  <td className="px-3 py-3 text-right" aria-label={record.isMvp ? "MVP" : "MVP 아님"}>
+                    {record.isMvp ? "🏆" : "-"}
+                  </td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
       </section>
+    </div>
+  );
+}
+
+function MobileRecordStat({ label, value }: { label: string; value: string }) {
+  return (
+    <div className="rounded-md bg-white/5 px-3 py-2 text-center">
+      <p className="text-[11px] font-semibold text-slate-400">{label}</p>
+      <p className="mt-1 text-base font-black text-white">{value}</p>
     </div>
   );
 }

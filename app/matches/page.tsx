@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { MatchStatusBadge } from "@/components/MatchStatusBadge";
 import { WinnerBadge } from "@/components/WinnerBadge";
 import { prisma } from "@/lib/prisma";
 import { formatDate, matchStatus } from "@/lib/stats";
@@ -24,16 +23,11 @@ export default async function MatchesPage() {
               {match.teamAName} {match.teamAScore} : {match.teamBScore} {match.teamBName}
             </span>
             <span className="flex flex-wrap items-center gap-2 text-sm text-slate-300">
-              <MatchStatusBadge status={match.status} />
-              {match.status === matchStatus.completed ? (
-                <>
-                  <span>승리팀:</span>
-                  <WinnerBadge match={match} />
-                </>
-              ) : null}
+              <span>승리팀:</span>
+              {match.status === matchStatus.completed ? <WinnerBadge match={match} /> : <span className="font-bold text-white">-</span>}
             </span>
             <span className="text-sm text-slate-300">
-              회장팀 MVP: {match.chairmanTeamMvp?.name ?? "-"} · 총무팀 MVP: {match.managerTeamMvp?.name ?? "-"}
+              {match.teamAName} MVP: {match.chairmanTeamMvp?.name ?? "-"} · {match.teamBName} MVP: {match.managerTeamMvp?.name ?? "-"}
             </span>
           </Link>
         ))}

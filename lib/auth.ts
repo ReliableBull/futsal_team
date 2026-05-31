@@ -9,6 +9,7 @@ const passwordIterations = 120000;
 const passwordKeyLength = 64;
 const passwordDigest = "sha512";
 const sessionSecret = process.env.AUTH_SECRET ?? "arena-futsal-record-local-secret";
+const useSecureCookies = process.env.NEXT_PUBLIC_SITE_URL?.startsWith("https://") ?? false;
 
 export function hashPassword(password: string) {
   const salt = randomBytes(16).toString("hex");
@@ -92,7 +93,7 @@ export function setAdminSession(admin: { id: number; username: string }) {
   cookies().set(sessionCookieName, signSession(admin.id, admin.username, expiresAt), {
     httpOnly: true,
     sameSite: "lax",
-    secure: process.env.NODE_ENV === "production",
+    secure: useSecureCookies,
     path: "/",
     maxAge: sessionMaxAge
   });

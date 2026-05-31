@@ -7,6 +7,7 @@ import { matchStatus, type MatchStatusValue } from "@/lib/stats";
 type MatchFormAction = (formData: FormData) => void | Promise<void>;
 type TeamKey = "A" | "B";
 type FormTab = "manual" | "random";
+type ScoreMode = "goals" | "manual";
 
 export type MatchFormInitialData = {
   matchDate: string;
@@ -75,6 +76,12 @@ export function AdminMatchForm({ action, players, initialData = defaultInitialDa
   const [teamAScore, setTeamAScore] = useState(initialData.teamAScore);
   const [teamBScore, setTeamBScore] = useState(initialData.teamBScore);
   const [goalsByPlayerId, setGoalsByPlayerId] = useState<Record<number, number>>(initialData.goalsByPlayerId);
+  const [scoreMode, setScoreMode] = useState<ScoreMode>(() => {
+    const initialTeamAGoals = sumGoals(initialData.teamAPlayerIds, initialData.goalsByPlayerId);
+    const initialTeamBGoals = sumGoals(initialData.teamBPlayerIds, initialData.goalsByPlayerId);
+
+    return initialTeamAGoals === initialData.teamAScore && initialTeamBGoals === initialData.teamBScore ? "goals" : "manual";
+  });
   const [chairmanTeamMvpId, setChairmanTeamMvpId] = useState(initialData.chairmanTeamMvpId?.toString() ?? "");
   const [managerTeamMvpId, setManagerTeamMvpId] = useState(initialData.managerTeamMvpId?.toString() ?? "");
   const [isDrawing, setIsDrawing] = useState(false);
@@ -87,16 +94,26 @@ export function AdminMatchForm({ action, players, initialData = defaultInitialDa
   const teamBPlayers = useMemo(() => players.filter((player) => teamBIds.includes(player.id)), [players, teamBIds]);
   const drawPreviewPlayers = useMemo(() => players.filter((player) => drawPreviewIds.includes(player.id)), [players, drawPreviewIds]);
   const canDrawTeams = participantIds.length >= 2 && participantIds.length % 2 === 0 && !isDrawing;
-  const isCompleted = status === matchStatus.completed;
-  const canSubmit = teamAIds.length > 0 && teamBIds.length > 0 && (!isCompleted || (Boolean(chairmanTeamMvpId) && Boolean(managerTeamMvpId)));
+  const canSubmit = teamAIds.length > 0 && teamBIds.length > 0;
 
   function sumGoals(playerIds: number[], nextGoalsByPlayerId: Record<number, number>) {
     return playerIds.reduce((sum, playerId) => sum + (nextGoalsByPlayerId[playerId] ?? 0), 0);
   }
 
   function syncScores(nextTeamAIds = teamAIds, nextTeamBIds = teamBIds, nextGoalsByPlayerId = goalsByPlayerId) {
+    if (scoreMode === "manual") return;
+
     setTeamAScore(sumGoals(nextTeamAIds, nextGoalsByPlayerId));
     setTeamBScore(sumGoals(nextTeamBIds, nextGoalsByPlayerId));
+  }
+
+  function switchScoreMode(nextScoreMode: ScoreMode) {
+    setScoreMode(nextScoreMode);
+
+    if (nextScoreMode === "goals") {
+      setTeamAScore(sumGoals(teamAIds, goalsByPlayerId));
+      setTeamBScore(sumGoals(teamBIds, goalsByPlayerId));
+    }
   }
 
   function setTeams(nextTeamAIds: number[], nextTeamBIds: number[]) {
@@ -213,13 +230,51 @@ export function AdminMatchForm({ action, players, initialData = defaultInitialDa
           B팀 이름
           <input className="w-full rounded-md border border-arena-line bg-black/30 px-3 py-2" name="teamBName" value={teamBName} onChange={(event) => setTeamBName(event.target.value)} required />
         </label>
+        <div className="space-y-2 md:col-span-2">
+          <span className="block text-sm font-semibold text-slate-200">점수 입력 방식</span>
+          <div className="grid gap-2 rounded-md border border-arena-line bg-black/20 p-1 sm:grid-cols-2">
+            {[
+              { key: "goals", label: "선수 득점 합산" },
+              { key: "manual", label: "팀 점수 직접 입력" }
+            ].map((mode) => (
+              <button
+                key={mode.key}
+                className={`rounded px-3 py-2 text-sm font-bold transition ${
+                  scoreMode === mode.key ? "bg-arena-lime text-arena-black" : "text-slate-300 hover:bg-white/5 hover:text-white"
+                }`}
+                type="button"
+                onClick={() => switchScoreMode(mode.key as ScoreMode)}
+              >
+                {mode.label}
+              </button>
+            ))}
+          </div>
+        </div>
         <label className="space-y-2 text-sm font-semibold text-slate-200">
           A팀 점수
-          <input className="w-full rounded-md border border-arena-line bg-black/30 px-3 py-2 text-arena-lime" name="teamAScore" type="number" min="0" value={teamAScore} readOnly required />
+          <input
+            className="w-full rounded-md border border-arena-line bg-black/30 px-3 py-2 text-arena-lime"
+            name="teamAScore"
+            type="number"
+            min="0"
+            value={teamAScore}
+            readOnly={scoreMode === "goals"}
+            onChange={(event) => setTeamAScore(Math.max(0, Number(event.target.value) || 0))}
+            required
+          />
         </label>
         <label className="space-y-2 text-sm font-semibold text-slate-200">
           B팀 점수
-          <input className="w-full rounded-md border border-arena-line bg-black/30 px-3 py-2 text-arena-cyan" name="teamBScore" type="number" min="0" value={teamBScore} readOnly required />
+          <input
+            className="w-full rounded-md border border-arena-line bg-black/30 px-3 py-2 text-arena-cyan"
+            name="teamBScore"
+            type="number"
+            min="0"
+            value={teamBScore}
+            readOnly={scoreMode === "goals"}
+            onChange={(event) => setTeamBScore(Math.max(0, Number(event.target.value) || 0))}
+            required
+          />
         </label>
       </div>
 
@@ -360,9 +415,8 @@ export function AdminMatchForm({ action, players, initialData = defaultInitialDa
             name="chairmanTeamMvpId"
             value={chairmanTeamMvpId}
             onChange={(event) => setChairmanTeamMvpId(event.target.value)}
-            required={isCompleted}
           >
-            <option value="">A팀 MVP 선택 안 함</option>
+            <option value="">{teamAName || "A팀"} MVP 선택 안 함</option>
             {teamAPlayers.map((player) => (
               <option key={player.id} value={player.id}>
                 {player.name}
@@ -378,9 +432,8 @@ export function AdminMatchForm({ action, players, initialData = defaultInitialDa
             name="managerTeamMvpId"
             value={managerTeamMvpId}
             onChange={(event) => setManagerTeamMvpId(event.target.value)}
-            required={isCompleted}
           >
-            <option value="">B팀 MVP 선택 안 함</option>
+            <option value="">{teamBName || "B팀"} MVP 선택 안 함</option>
             {teamBPlayers.map((player) => (
               <option key={player.id} value={player.id}>
                 {player.name}
@@ -391,7 +444,7 @@ export function AdminMatchForm({ action, players, initialData = defaultInitialDa
       </div>
 
       <p className="text-sm text-slate-400">
-        경기 진행중 상태는 MVP 없이 저장할 수 있습니다. 결과 등록 완료 상태로 바꿀 때만 양 팀 MVP를 각각 1명씩 선택해주세요.
+        MVP는 선택사항입니다. 선택하지 않으면 경기 결과에는 MVP가 없음으로 표시됩니다.
       </p>
 
       <label className="block space-y-2 text-sm font-semibold text-slate-200">

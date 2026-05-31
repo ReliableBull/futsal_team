@@ -18,8 +18,7 @@ export default async function AdminPage() {
     prisma.player.findMany({ orderBy: [{ isActive: "desc" }, { number: "asc" }, { name: "asc" }] }),
     prisma.match.findMany({
       include: { chairmanTeamMvp: true, managerTeamMvp: true },
-      orderBy: { matchDate: "desc" },
-      take: 10
+      orderBy: { matchDate: "desc" }
     })
   ]);
 
@@ -117,7 +116,7 @@ export default async function AdminPage() {
                     <MatchStatusBadge status={match.status} />
                   </div>
                   <p className="text-sm text-slate-400">
-                    회장팀 MVP: {match.chairmanTeamMvp?.name ?? "-"} · 총무팀 MVP: {match.managerTeamMvp?.name ?? "-"}
+                    {match.teamAName} MVP: {match.chairmanTeamMvp?.name ?? "-"} · {match.teamBName} MVP: {match.managerTeamMvp?.name ?? "-"}
                   </p>
                 </Link>
                 <div className="flex gap-2">
