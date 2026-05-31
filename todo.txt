@@ -1,0 +1,99 @@
+다른 PC 개발 환경 설정 작업
+
+목표
+- 이 저장소를 내려받은 PC에서 개발 환경을 준비한다.
+- PostgreSQL을 새로 설치하거나 로컬 DB를 만들지 않는다.
+- 기존 개발 서버 노트북의 PostgreSQL DB를 Tailscale 사설망으로 사용한다.
+- Node.js와 npm은 이미 설치되어 있다.
+
+개발 서버 정보
+- Tailscale IP: 100.109.214.111
+- PostgreSQL 포트: 5432
+- DB 이름: futsal_team
+- DB 사용자: futsal_admin
+- DB 비밀번호: 서버 노트북 소유자에게 별도로 확인할 것
+
+작업 순서
+
+1. 현재 PC의 OS를 확인한다.
+
+2. Tailscale이 설치되어 있지 않다면 공식 클라이언트를 설치한다.
+- macOS: https://tailscale.com/kb/1016/install-mac
+- Windows: https://tailscale.com/docs/install/windows
+- Linux: https://tailscale.com/docs/install/linux
+
+3. Tailscale 로그인 또는 VPN 권한 승인이 필요하면 사용자에게 요청한다.
+- 서버 노트북과 같은 Tailscale 계정으로 로그인하거나 같은 tailnet에 참여해야 한다.
+
+4. Tailscale 연결을 확인한다.
+
+macOS / Linux / Tailscale CLI 사용 가능 환경:
+
+  tailscale status
+  tailscale ping 100.109.214.111
+
+5. PostgreSQL 포트 연결을 확인한다.
+
+macOS / Linux:
+
+  nc -vz 100.109.214.111 5432
+
+Windows PowerShell:
+
+  Test-NetConnection 100.109.214.111 -Port 5432
+
+6. 이 저장소의 루트 폴더에서 의존성을 설치한다.
+
+  npm ci
+
+7. .env.example을 복사하여 .env를 만든다.
+
+macOS / Linux:
+
+  cp .env.example .env
+
+Windows PowerShell:
+
+  Copy-Item .env.example .env
+
+8. 사용자에게 DB 비밀번호를 별도로 확인하고 .env를 아래 형식으로 설정한다.
+- DB 비밀번호를 Git, todo.txt 또는 채팅 응답에 노출하지 않는다.
+- AUTH_SECRET은 이 PC에서 사용할 새로운 긴 임의 문자열로 설정한다.
+
+  DATABASE_URL="postgresql://futsal_admin:<사용자에게 별도로 확인한 DB 비밀번호>@100.109.214.111:5432/futsal_team?schema=public"
+  AUTH_SECRET="<새로운 긴 임의 문자열>"
+  WEATHER_API_KEY=""
+  NEXT_PUBLIC_SITE_URL="http://localhost:3000"
+
+9. DB 연결을 읽기 전용 SQL로 검증한다.
+- 기존 선수와 경기 개수를 조회한다.
+- 데이터 생성, 수정, 삭제는 하지 않는다.
+- psql이 설치되어 있지 않다면 Prisma를 이용한 읽기 전용 조회로 검증한다.
+
+10. 프로젝트를 검증한다.
+
+  npm run lint
+  npm run build
+
+11. 사용자에게 아래 실행 명령과 접속 URL을 안내한다.
+- 개발 서버는 사용자가 직접 실행한다.
+
+  npm run dev
+
+  http://localhost:3000
+
+금지 사항
+- npm run seed 실행 금지
+- npm run import:list 실행 금지
+- npm run import:sqlite-export 실행 금지
+- npx prisma migrate reset 실행 금지
+- 기존 PostgreSQL 데이터 삭제 또는 초기화 금지
+- .env 파일 Git 커밋 금지
+- DB 비밀번호 Git 커밋 금지
+- 사용자 승인 없이 테이블 구조 변경 금지
+- 사용자 승인 없이 Prisma migration 실행 금지
+
+참고
+- 공유기에서 PostgreSQL 5432 포트를 외부에 포트포워딩할 필요는 없다.
+- 서버 노트북의 Tailscale과 PostgreSQL이 실행 중이어야 원격 PC에서 DB에 접속할 수 있다.
+- 테이블 구조를 변경해야 한다면 먼저 사용자에게 변경 내용과 migration 실행 여부를 확인한다.
