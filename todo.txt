@@ -7,7 +7,8 @@
 - Node.js와 npm은 이미 설치되어 있다.
 
 개발 서버 정보
-- Tailscale IP: 100.109.214.111
+- Tailscale MagicDNS 이름: futsal-db-server
+- 현재 Tailscale IP: tailscale ip -4 명령으로 확인할 것
 - PostgreSQL 포트: 5432
 - DB 이름: futsal_team
 - DB 사용자: futsal_admin
@@ -30,17 +31,17 @@
 macOS / Linux / Tailscale CLI 사용 가능 환경:
 
   tailscale status
-  tailscale ping 100.109.214.111
+  tailscale ping futsal-db-server
 
 5. PostgreSQL 포트 연결을 확인한다.
 
 macOS / Linux:
 
-  nc -vz 100.109.214.111 5432
+  nc -vz futsal-db-server 5432
 
 Windows PowerShell:
 
-  Test-NetConnection 100.109.214.111 -Port 5432
+  Test-NetConnection futsal-db-server -Port 5432
 
 6. 이 저장소의 루트 폴더에서 의존성을 설치한다.
 
@@ -60,7 +61,7 @@ Windows PowerShell:
 - DB 비밀번호를 Git, todo.txt 또는 채팅 응답에 노출하지 않는다.
 - AUTH_SECRET은 이 PC에서 사용할 새로운 긴 임의 문자열로 설정한다.
 
-  DATABASE_URL="postgresql://futsal_admin:<사용자에게 별도로 확인한 DB 비밀번호>@100.109.214.111:5432/futsal_team?schema=public"
+  DATABASE_URL="postgresql://futsal_admin:<사용자에게 별도로 확인한 DB 비밀번호>@futsal-db-server:5432/futsal_team?schema=public"
   AUTH_SECRET="<새로운 긴 임의 문자열>"
   WEATHER_API_KEY=""
   NEXT_PUBLIC_SITE_URL="http://localhost:3000"
