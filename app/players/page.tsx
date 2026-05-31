@@ -1,6 +1,8 @@
 import { PlayersSortableList, type SortablePlayer } from "@/components/PlayersSortableList";
 import { getPlayersWithStats } from "@/lib/stats";
 
+export const dynamic = "force-dynamic";
+
 export default async function PlayersPage() {
   const players = await getPlayersWithStats();
   const sortablePlayers: SortablePlayer[] = players.map((player) => ({

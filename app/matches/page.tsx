@@ -3,6 +3,8 @@ import { WinnerBadge } from "@/components/WinnerBadge";
 import { prisma } from "@/lib/prisma";
 import { formatDate, matchStatus } from "@/lib/stats";
 
+export const dynamic = "force-dynamic";
+
 export default async function MatchesPage() {
   const matches = await prisma.match.findMany({
     include: { chairmanTeamMvp: true, managerTeamMvp: true },

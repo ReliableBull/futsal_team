@@ -6,6 +6,8 @@ import { WinnerBadge } from "@/components/WinnerBadge";
 import { formatDate, getDashboardData, matchStatus } from "@/lib/stats";
 import { getWeeklyWeather } from "@/lib/weather";
 
+export const dynamic = "force-dynamic";
+
 export default async function HomePage() {
   const [{ recentMatches, goalRankings, mvpRankings, winRateRankings }, weeklyWeather] = await Promise.all([getDashboardData(), getWeeklyWeather()]);
 
