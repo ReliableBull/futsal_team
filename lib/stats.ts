@@ -70,7 +70,7 @@ export async function getPlayersWithStats() {
 }
 
 export async function getDashboardData() {
-  const [players, recentMatches] = await Promise.all([
+  const [players, recentMatches, posters] = await Promise.all([
     getPlayersWithStats(),
     prisma.match.findMany({
       include: {
@@ -80,6 +80,19 @@ export async function getDashboardData() {
       },
       orderBy: { matchDate: "desc" },
       take: 5
+    }),
+    prisma.matchPoster.findMany({
+      include: {
+        match: {
+          select: {
+            id: true,
+            matchDate: true,
+            teamAName: true,
+            teamBName: true
+          }
+        }
+      },
+      orderBy: { createdAt: "desc" }
     })
   ]);
 
@@ -90,7 +103,7 @@ export async function getDashboardData() {
     .sort((a, b) => b.winRate - a.winRate || b.totalMatches - a.totalMatches || b.goals - a.goals)
     .slice(0, 5);
 
-  return { recentMatches, goalRankings, mvpRankings, winRateRankings };
+  return { recentMatches, goalRankings, mvpRankings, winRateRankings, posters };
 }
 
 export function formatPlayerRecord(player: Pick<PlayerWithStats, "wins" | "losses" | "draws">) {

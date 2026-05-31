@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { MatchPosterGallery } from "@/components/MatchPosterGallery";
 import { RankingTable } from "@/components/RankingTable";
 import { TeamHeroSection } from "@/components/TeamHeroSection";
 import { WeeklyWeatherCard } from "@/components/WeeklyWeatherCard";
@@ -9,7 +10,10 @@ import { getWeeklyWeather } from "@/lib/weather";
 export const dynamic = "force-dynamic";
 
 export default async function HomePage() {
-  const [{ recentMatches, goalRankings, mvpRankings, winRateRankings }, weeklyWeather] = await Promise.all([getDashboardData(), getWeeklyWeather()]);
+  const [{ recentMatches, goalRankings, mvpRankings, winRateRankings, posters }, weeklyWeather] = await Promise.all([
+    getDashboardData(),
+    getWeeklyWeather()
+  ]);
 
   return (
     <div className="space-y-8">
@@ -49,6 +53,8 @@ export default async function HomePage() {
         <RankingTable title="MVP 랭킹 TOP 5" players={mvpRankings} valueKey="mvpCount" suffix="회" />
         <RankingTable title="득점 랭킹 TOP 5" players={goalRankings} valueKey="goals" suffix="골" />
       </div>
+
+      <MatchPosterGallery posters={posters} />
 
       <WeeklyWeatherCard weather={weeklyWeather} />
     </div>
