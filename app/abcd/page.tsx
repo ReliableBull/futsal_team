@@ -3,7 +3,7 @@ import { AdminMatchForm } from "@/components/AdminMatchForm";
 import { AdminPlayerEditor } from "@/components/AdminPlayerEditor";
 import { DeleteMatchButton } from "@/components/DeleteMatchButton";
 import { MatchStatusBadge } from "@/components/MatchStatusBadge";
-import { createMatch, createPlayer, deleteMatch, logoutAdmin, updatePlayer } from "@/lib/actions";
+import { createMatch, createPlayer, deleteMatch, deletePlayer, logoutAdmin, updatePlayer } from "@/lib/actions";
 import { requireAdmin } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { formatDate, matchStatus } from "@/lib/stats";
@@ -15,7 +15,10 @@ function toInputDate(date: Date) {
 export default async function AdminPage() {
   const admin = await requireAdmin();
   const [players, matches] = await Promise.all([
-    prisma.player.findMany({ orderBy: [{ isActive: "desc" }, { number: "asc" }, { name: "asc" }] }),
+    prisma.player.findMany({
+      include: { _count: { select: { matchPlayers: true } } },
+      orderBy: [{ isActive: "desc" }, { number: "asc" }, { name: "asc" }]
+    }),
     prisma.match.findMany({
       include: { chairmanTeamMvp: true, managerTeamMvp: true },
       orderBy: { matchDate: "desc" }
@@ -71,7 +74,13 @@ export default async function AdminPage() {
           <h2 className="text-xl font-bold text-white">등록된 선수</h2>
           <div className="mt-4 grid gap-3">
             {players.map((player) => (
-              <AdminPlayerEditor key={player.id} player={player} action={updatePlayer.bind(null, player.id)} />
+              <AdminPlayerEditor
+                key={player.id}
+                player={player}
+                action={updatePlayer.bind(null, player.id)}
+                deleteAction={deletePlayer.bind(null, player.id)}
+                matchCount={player._count.matchPlayers}
+              />
             ))}
           </div>
         </section>

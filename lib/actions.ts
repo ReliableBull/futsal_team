@@ -64,6 +64,35 @@ export async function updatePlayer(playerId: number, formData: FormData) {
   redirect("/abcd");
 }
 
+export async function deletePlayer(playerId: number) {
+  await requireAdmin();
+
+  const player = await prisma.player.findUnique({
+    where: { id: playerId },
+    select: {
+      id: true,
+      _count: {
+        select: { matchPlayers: true }
+      }
+    }
+  });
+
+  if (!player) {
+    throw new Error("존재하지 않는 선수입니다.");
+  }
+
+  if (player._count.matchPlayers > 0) {
+    throw new Error("경기 이력이 있는 선수는 삭제할 수 없습니다. 선수 목록 포함을 해제해주세요.");
+  }
+
+  await prisma.player.delete({ where: { id: playerId } });
+
+  revalidatePath("/");
+  revalidatePath("/players");
+  revalidatePath("/abcd");
+  redirect("/abcd");
+}
+
 export async function createMatch(formData: FormData) {
   await requireAdmin();
 
