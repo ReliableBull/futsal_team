@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { WinnerBadge } from "@/components/WinnerBadge";
@@ -33,6 +34,28 @@ export default async function MatchDetailPage({ params }: { params: { id: string
             {getTeamMvpNames(match.matchPlayers, match.teamBName)}
           </span>
         </p>
+      </section>
+
+      <section className="rounded-lg border border-arena-line bg-arena-panel p-5">
+        <h2 className="text-xl font-bold text-white">경기 포스터</h2>
+        {match.posters.length > 0 ? (
+          <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {match.posters.map((poster) => (
+              <a key={poster.id} className="overflow-hidden rounded-md border border-arena-line bg-black/20" href={poster.imageUrl} target="_blank" rel="noreferrer">
+                <Image
+                  alt="경기 포스터"
+                  className="h-56 w-full object-cover transition hover:scale-[1.02]"
+                  height={640}
+                  src={poster.imageUrl}
+                  unoptimized
+                  width={960}
+                />
+              </a>
+            ))}
+          </div>
+        ) : (
+          <p className="mt-3 text-sm text-slate-400">등록된 포스터가 없습니다.</p>
+        )}
       </section>
 
       <div className="grid gap-5 lg:grid-cols-2">

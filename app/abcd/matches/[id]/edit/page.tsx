@@ -1,7 +1,9 @@
+import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { AdminMatchForm, type MatchFormInitialData } from "@/components/AdminMatchForm";
-import { updateMatch } from "@/lib/actions";
+import { DeletePosterButton } from "@/components/DeletePosterButton";
+import { deleteMatchPoster, updateMatch, uploadMatchPoster } from "@/lib/actions";
 import { requireAdmin } from "@/lib/auth";
 import { matchInclude } from "@/lib/matches";
 import { prisma } from "@/lib/prisma";
@@ -63,6 +65,46 @@ export default async function EditMatchPage({ params }: { params: { id: string }
         players={players}
         submitLabel="수정 완료"
       />
+
+      <section className="rounded-lg border border-arena-line bg-arena-panel p-5">
+        <h2 className="text-xl font-bold text-white">경기 포스터</h2>
+        <p className="mt-2 text-sm text-slate-400">경기별 홍보 이미지를 여러 장 업로드할 수 있습니다.</p>
+
+        <form action={uploadMatchPoster.bind(null, match.id)} className="mt-4 flex flex-col gap-3 sm:flex-row sm:items-center">
+          <input
+            className="w-full rounded-md border border-arena-line bg-black/30 px-3 py-2 text-sm text-slate-200 file:mr-3 file:rounded file:border-0 file:bg-arena-cyan file:px-3 file:py-1.5 file:font-bold file:text-arena-black"
+            accept="image/*"
+            name="posterImage"
+            type="file"
+            required
+          />
+          <button className="rounded-md bg-arena-lime px-4 py-2 text-sm font-black text-arena-black transition hover:bg-white" type="submit">
+            포스터 업로드
+          </button>
+        </form>
+
+        <div className="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {match.posters.length > 0 ? (
+            match.posters.map((poster) => (
+              <div key={poster.id} className="overflow-hidden rounded-md border border-arena-line bg-black/20">
+                <Image
+                  alt="경기 포스터"
+                  className="h-56 w-full object-cover"
+                  height={640}
+                  src={poster.imageUrl}
+                  unoptimized
+                  width={960}
+                />
+                <div className="p-3">
+                  <DeletePosterButton action={deleteMatchPoster.bind(null, match.id, poster.id)} />
+                </div>
+              </div>
+            ))
+          ) : (
+            <p className="text-sm text-slate-400">등록된 포스터가 없습니다.</p>
+          )}
+        </div>
+      </section>
     </div>
   );
 }

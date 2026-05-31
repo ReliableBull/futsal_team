@@ -255,6 +255,7 @@ export async function deleteMatchRecord(matchId: number) {
 export const matchInclude = Prisma.validator<Prisma.MatchInclude>()({
   chairmanTeamMvp: true,
   managerTeamMvp: true,
+  posters: { orderBy: { createdAt: "desc" } },
   matchPlayers: {
     include: { player: true },
     orderBy: [{ teamName: "asc" }, { player: { name: "asc" } }]
