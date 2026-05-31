@@ -19,10 +19,11 @@ export type SortablePlayer = {
   mvpCount: number;
 };
 
-type SortKey = "totalMatches" | "wins" | "losses" | "draws" | "winRate" | "goals" | "mvpCount";
+type SortKey = "name" | "totalMatches" | "wins" | "losses" | "draws" | "winRate" | "goals" | "mvpCount";
 type SortDirection = "asc" | "desc";
 
 const sortOptions: Array<{ key: SortKey; label: string }> = [
+  { key: "name", label: "선수 이름" },
   { key: "totalMatches", label: "경기" },
   { key: "wins", label: "승" },
   { key: "losses", label: "패" },
@@ -31,6 +32,8 @@ const sortOptions: Array<{ key: SortKey; label: string }> = [
   { key: "goals", label: "득점" },
   { key: "mvpCount", label: "MVP" }
 ];
+
+const statSortOptions = sortOptions.filter((option) => option.key !== "name");
 
 function PlayerIdentity({ player }: { player: SortablePlayer }) {
   return (
@@ -58,12 +61,12 @@ function MobileStat({ label, value }: { label: string; value: string | number })
   );
 }
 
-function SortButton({ sortKey, label, activeKey, direction, onClick }: { sortKey: SortKey; label: string; activeKey: SortKey; direction: SortDirection; onClick: (key: SortKey) => void }) {
+function SortButton({ sortKey, label, activeKey, direction, align = "right", onClick }: { sortKey: SortKey; label: string; activeKey: SortKey; direction: SortDirection; align?: "left" | "right"; onClick: (key: SortKey) => void }) {
   const isActive = activeKey === sortKey;
 
   return (
     <button
-      className={`inline-flex w-full items-center justify-end gap-1 text-right font-bold transition ${isActive ? "text-arena-lime" : "text-slate-300 hover:text-white"}`}
+      className={`inline-flex w-full items-center gap-1 font-bold transition ${align === "left" ? "justify-start text-left" : "justify-end text-right"} ${isActive ? "text-arena-lime" : "text-slate-300 hover:text-white"}`}
       type="button"
       onClick={() => onClick(sortKey)}
     >
@@ -81,7 +84,7 @@ export function PlayersSortableList({ players }: { players: SortablePlayer[] }) 
     const multiplier = direction === "asc" ? 1 : -1;
 
     return [...players].sort((a, b) => {
-      const diff = (a[sortKey] - b[sortKey]) * multiplier;
+      const diff = sortKey === "name" ? a.name.localeCompare(b.name, "ko") * multiplier : (a[sortKey] - b[sortKey]) * multiplier;
       if (diff !== 0) return diff;
 
       return (a.number ?? 9999) - (b.number ?? 9999) || a.name.localeCompare(b.name, "ko");
@@ -95,7 +98,7 @@ export function PlayersSortableList({ players }: { players: SortablePlayer[] }) 
     }
 
     setSortKey(nextKey);
-    setDirection("desc");
+    setDirection(nextKey === "name" ? "asc" : "desc");
   }
 
   return (
@@ -168,8 +171,10 @@ export function PlayersSortableList({ players }: { players: SortablePlayer[] }) 
         <table className="w-full text-sm">
           <thead className="bg-white/5 text-left">
             <tr>
-              <th className="px-4 py-3 text-slate-300">선수</th>
-              {sortOptions.map((option) => (
+              <th className="px-4 py-3">
+                <SortButton sortKey="name" label="선수 이름" activeKey={sortKey} direction={direction} align="left" onClick={handleSort} />
+              </th>
+              {statSortOptions.map((option) => (
                 <th key={option.key} className="px-3 py-3 text-right">
                   <SortButton sortKey={option.key} label={option.label} activeKey={sortKey} direction={direction} onClick={handleSort} />
                 </th>
