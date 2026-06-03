@@ -160,8 +160,8 @@ export async function uploadMatchPoster(matchId: number, formData: FormData) {
   if (file.size <= 0) {
     throw new Error("빈 파일은 업로드할 수 없습니다.");
   }
-  if (file.size > 10 * 1024 * 1024) {
-    throw new Error("이미지 용량은 10MB 이하만 업로드할 수 있습니다.");
+  if (file.size > 20 * 1024 * 1024) {
+    throw new Error("이미지 용량은 20MB 이하만 업로드할 수 있습니다.");
   }
 
   const uploadDir = getUploadPath(matchId);
