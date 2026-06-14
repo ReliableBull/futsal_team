@@ -34,11 +34,19 @@ export default async function AdminPage() {
             <h1 className="text-3xl font-black text-white">관리자 페이지</h1>
             <p className="mt-2 text-sm text-slate-400">{admin.username} 계정으로 로그인됨</p>
           </div>
-          <form action={logoutAdmin}>
-            <button className="rounded-md border border-arena-line px-4 py-2 text-sm font-bold text-slate-200 transition hover:border-arena-cyan hover:text-white" type="submit">
-              로그아웃
-            </button>
-          </form>
+          <div className="flex flex-wrap gap-2">
+            <a className="rounded-md bg-arena-lime px-4 py-2 text-sm font-black text-arena-black transition hover:bg-white" href="/api/export/matches">
+              엑셀 다운로드
+            </a>
+            <a className="rounded-md border border-arena-cyan px-4 py-2 text-sm font-bold text-arena-cyan transition hover:bg-arena-cyan hover:text-arena-black" href="/api/export/analysis-text">
+              분석 텍스트 다운로드
+            </a>
+            <form action={logoutAdmin}>
+              <button className="rounded-md border border-arena-line px-4 py-2 text-sm font-bold text-slate-200 transition hover:border-arena-cyan hover:text-white" type="submit">
+                로그아웃
+              </button>
+            </form>
+          </div>
         </div>
       </div>
 
