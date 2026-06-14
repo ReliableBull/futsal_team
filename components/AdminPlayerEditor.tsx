@@ -3,6 +3,7 @@
 import { useState } from "react";
 import type { Player } from "@prisma/client";
 import { PlayerAvatar } from "@/components/PlayerAvatar";
+import { parsePlayerPosition, playerPositions } from "@/lib/player-position";
 
 type AdminPlayerEditorProps = {
   player: Player;
@@ -14,14 +15,17 @@ type AdminPlayerEditorProps = {
 export function AdminPlayerEditor({ player, action, deleteAction, matchCount }: AdminPlayerEditorProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [previewUrl, setPreviewUrl] = useState(player.profileImageUrl ?? "");
+  const position = parsePlayerPosition(player.position);
 
   return (
     <div className="rounded-md border border-arena-line bg-black/20 p-3">
       <button className="flex w-full items-center gap-3 text-left" type="button" onClick={() => setIsOpen((current) => !current)}>
         <PlayerAvatar playerId={player.id} name={player.name} profileImageUrl={previewUrl || player.profileImageUrl} size="sm" />
-        <span className="min-w-0 flex-1">
+          <span className="min-w-0 flex-1">
           <span className="block font-bold text-white">{player.name}</span>
-          <span className="text-sm text-slate-400">#{player.number ?? "-"}</span>
+          <span className="text-sm text-slate-400">
+            {position} · #{player.number ?? "-"}
+          </span>
         </span>
         <span className="text-sm font-bold text-arena-cyan">{isOpen ? "닫기" : "수정"}</span>
       </button>
@@ -36,6 +40,16 @@ export function AdminPlayerEditor({ player, action, deleteAction, matchCount }: 
             <label className="space-y-1 text-sm font-semibold text-slate-200">
               닉네임
               <input className="w-full rounded-md border border-arena-line bg-black/30 px-3 py-2" name="nickname" defaultValue={player.nickname ?? ""} />
+            </label>
+            <label className="space-y-1 text-sm font-semibold text-slate-200">
+              포지션
+              <select className="w-full rounded-md border border-arena-line bg-black/30 px-3 py-2" name="position" defaultValue={position}>
+                {playerPositions.map((position) => (
+                  <option key={position} value={position}>
+                    {position}
+                  </option>
+                ))}
+              </select>
             </label>
             <label className="space-y-1 text-sm font-semibold text-slate-200">
               프로필 이미지 경로

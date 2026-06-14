@@ -8,6 +8,7 @@ export type SortablePlayer = {
   id: number;
   name: string;
   nickname: string | null;
+  position: string;
   profileImageUrl: string | null;
   number: number | null;
   totalMatches: number;
@@ -45,7 +46,7 @@ function PlayerIdentity({ player }: { player: SortablePlayer }) {
         </Link>
         <p className="truncate text-xs text-slate-500">
           {player.nickname ? `${player.nickname} · ` : ""}
-          #{player.number ?? "-"}
+          {player.position} · #{player.number ?? "-"}
         </p>
       </div>
     </div>
@@ -148,7 +149,7 @@ export function PlayersSortableList({ players }: { players: SortablePlayer[] }) 
               </Link>
               <p className="mt-1 text-sm text-slate-400">
                 {player.nickname ? `${player.nickname} · ` : ""}
-                #{player.number ?? "-"}
+                {player.position} · #{player.number ?? "-"}
               </p>
             </div>
 

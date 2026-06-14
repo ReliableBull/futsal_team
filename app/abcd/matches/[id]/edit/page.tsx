@@ -42,6 +42,7 @@ export default async function EditMatchPage({ params }: { params: { id: string }
     teamBPlayerIds: teamBRecords.map((record) => record.playerId),
     goalsByPlayerId: Object.fromEntries(match.matchPlayers.map((record) => [record.playerId, record.goals])),
     assistsByPlayerId: Object.fromEntries(match.matchPlayers.map((record) => [record.playerId, record.assists])),
+    goalAssistPlayerIdsByScorerId: {},
     chairmanTeamMvpIds: teamARecords.filter((record) => record.isMvp).map((record) => record.playerId),
     managerTeamMvpIds: teamBRecords.filter((record) => record.isMvp).map((record) => record.playerId),
     memo: match.memo ?? ""

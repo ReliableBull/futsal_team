@@ -21,6 +21,7 @@ export type MatchFormInitialData = {
   teamBPlayerIds: number[];
   goalsByPlayerId: Record<number, number>;
   assistsByPlayerId: Record<number, number>;
+  goalAssistPlayerIdsByScorerId: Record<number, Array<number | null>>;
   chairmanTeamMvpIds: number[];
   managerTeamMvpIds: number[];
   memo: string;
@@ -45,6 +46,7 @@ const defaultInitialData: MatchFormInitialData = {
   teamBPlayerIds: [],
   goalsByPlayerId: {},
   assistsByPlayerId: {},
+  goalAssistPlayerIdsByScorerId: {},
   chairmanTeamMvpIds: [],
   managerTeamMvpIds: [],
   memo: ""
@@ -65,6 +67,34 @@ function wait(ms: number) {
   });
 }
 
+function buildInitialGoalAssists(initialData: MatchFormInitialData) {
+  if (Object.keys(initialData.goalAssistPlayerIdsByScorerId).length > 0) {
+    return initialData.goalAssistPlayerIdsByScorerId;
+  }
+
+  function distribute(teamIds: number[]) {
+    const result: Record<number, Array<number | null>> = {};
+    const assistQueue = teamIds.flatMap((playerId) => Array.from({ length: initialData.assistsByPlayerId[playerId] ?? 0 }, () => playerId));
+
+    teamIds.forEach((scorerId) => {
+      const goalCount = initialData.goalsByPlayerId[scorerId] ?? 0;
+      result[scorerId] = Array.from({ length: goalCount }, () => {
+        const assistIndex = assistQueue.findIndex((assistPlayerId) => assistPlayerId !== scorerId);
+        if (assistIndex === -1) return null;
+        const [assistPlayerId] = assistQueue.splice(assistIndex, 1);
+        return assistPlayerId;
+      });
+    });
+
+    return result;
+  }
+
+  return {
+    ...distribute(initialData.teamAPlayerIds),
+    ...distribute(initialData.teamBPlayerIds)
+  };
+}
+
 export function AdminMatchForm({ action, players, initialData = defaultInitialData, submitLabel = "경기 등록" }: AdminMatchFormProps) {
   const [activeTab, setActiveTab] = useState<FormTab>("manual");
   const [teamAIds, setTeamAIds] = useState<number[]>(initialData.teamAPlayerIds);
@@ -76,6 +106,7 @@ export function AdminMatchForm({ action, players, initialData = defaultInitialDa
   const [teamAScore, setTeamAScore] = useState(initialData.teamAScore);
   const [teamBScore, setTeamBScore] = useState(initialData.teamBScore);
   const [goalsByPlayerId, setGoalsByPlayerId] = useState<Record<number, number>>(initialData.goalsByPlayerId);
+  const [initialGoalAssistPlayerIdsByScorerId] = useState(() => buildInitialGoalAssists(initialData));
   const [scoreMode, setScoreMode] = useState<ScoreMode>(() => {
     const initialTeamAGoals = sumGoals(initialData.teamAPlayerIds, initialData.goalsByPlayerId);
     const initialTeamBGoals = sumGoals(initialData.teamBPlayerIds, initialData.goalsByPlayerId);
@@ -384,31 +415,65 @@ export function AdminMatchForm({ action, players, initialData = defaultInitialDa
 
       <div className="rounded-md border border-arena-line bg-black/20 p-4">
         <h3 className="font-bold text-white">선수별 득점 / 도움</h3>
-        <div className="mt-3 grid gap-3 md:grid-cols-2">
-          {players
-            .filter((player) => selectedIds.has(player.id))
-            .map((player) => (
-              <div key={player.id} className="grid grid-cols-[1fr_80px_80px] items-center gap-2 rounded-md bg-white/5 p-3">
-                <span className="text-sm font-semibold text-white">{player.name}</span>
-                <input
-                  className="min-w-0 rounded-md border border-arena-line bg-black/30 px-2 py-2 text-sm"
-                  name={`goals_${player.id}`}
-                  type="number"
-                  min="0"
-                  value={goalsByPlayerId[player.id] ?? 0}
-                  onChange={(event) => updatePlayerGoals(player.id, event.target.value)}
-                  aria-label={`${player.name} 득점`}
-                />
-                <input
-                  className="min-w-0 rounded-md border border-arena-line bg-black/30 px-2 py-2 text-sm"
-                  name={`assists_${player.id}`}
-                  type="number"
-                  min="0"
-                  defaultValue={initialData.assistsByPlayerId[player.id] ?? 0}
-                  aria-label={`${player.name} 도움`}
-                />
+        <div className="mt-3 grid gap-4 lg:grid-cols-2">
+          {[
+            { title: teamAName || "A팀", players: teamAPlayers, accentClass: "text-arena-lime" },
+            { title: teamBName || "B팀", players: teamBPlayers, accentClass: "text-arena-cyan" }
+          ].map((team) => (
+            <div key={team.title} className="rounded-md border border-arena-line bg-black/20 p-3">
+              <div className="grid grid-cols-[1fr_80px] items-center gap-2 border-b border-arena-line pb-2 text-xs font-bold uppercase text-slate-400">
+                <span className={team.accentClass}>{team.title}</span>
+                <span className="text-center">득점</span>
               </div>
-            ))}
+              <div className="mt-3 grid gap-2">
+                {team.players.length > 0 ? (
+                  team.players.map((player) => (
+                    <div key={player.id} className="rounded-md bg-white/5 p-3">
+                      <div className="grid grid-cols-[1fr_80px] items-center gap-2">
+                        <span className="truncate text-sm font-semibold text-white">{player.name}</span>
+                        <input
+                          className="min-w-0 rounded-md border border-arena-line bg-black/30 px-2 py-2 text-center text-sm"
+                          name={`goals_${player.id}`}
+                          type="number"
+                          min="0"
+                          value={goalsByPlayerId[player.id] ?? 0}
+                          onChange={(event) => updatePlayerGoals(player.id, event.target.value)}
+                          aria-label={`${player.name} 득점`}
+                        />
+                      </div>
+
+                      {(goalsByPlayerId[player.id] ?? 0) > 0 ? (
+                        <div className="mt-3 grid gap-2">
+                          {Array.from({ length: goalsByPlayerId[player.id] ?? 0 }, (_, goalIndex) => (
+                            <label key={`${player.id}-${goalIndex}`} className="grid gap-1 text-xs font-semibold text-slate-300 sm:grid-cols-[86px_1fr] sm:items-center">
+                              <span>{goalIndex + 1}번째 골 도움</span>
+                              <select
+                                className="w-full rounded-md border border-arena-line bg-black/30 px-2 py-2 text-sm text-slate-100"
+                                name={`goalAssist_${player.id}_${goalIndex}`}
+                                defaultValue={initialGoalAssistPlayerIdsByScorerId[player.id]?.[goalIndex] ?? ""}
+                                aria-label={`${player.name} ${goalIndex + 1}번째 골 도움`}
+                              >
+                                <option value="">도움 없음</option>
+                                {team.players
+                                  .filter((assistPlayer) => assistPlayer.id !== player.id)
+                                  .map((assistPlayer) => (
+                                    <option key={assistPlayer.id} value={assistPlayer.id}>
+                                      {assistPlayer.name}
+                                    </option>
+                                  ))}
+                              </select>
+                            </label>
+                          ))}
+                        </div>
+                      ) : null}
+                    </div>
+                  ))
+                ) : (
+                  <p className="rounded-md bg-white/5 p-3 text-sm text-slate-400">팀 선수를 먼저 선택해주세요.</p>
+                )}
+              </div>
+            </div>
+          ))}
         </div>
       </div>
 

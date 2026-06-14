@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import { PlayerAvatar } from "@/components/PlayerAvatar";
 import { StatCard } from "@/components/StatCard";
+import { parsePlayerPosition } from "@/lib/player-position";
 import { prisma } from "@/lib/prisma";
 import { calculatePlayerStats, formatDate, formatPlayerRecord, getResultLabel, matchStatus } from "@/lib/stats";
 
@@ -19,6 +20,7 @@ export default async function PlayerDetailPage({ params }: { params: { id: strin
   if (!player) notFound();
 
   const stats = calculatePlayerStats(player);
+  const position = parsePlayerPosition(player.position);
 
   return (
     <div className="space-y-6">
@@ -30,7 +32,7 @@ export default async function PlayerDetailPage({ params }: { params: { id: strin
             <h1 className="mt-1 text-3xl font-black text-white">{player.name}</h1>
             <p className="mt-2 text-slate-300">
               {player.nickname ? `${player.nickname} · ` : ""}
-              등번호 {player.number ?? "-"}
+              {position} · 등번호 {player.number ?? "-"}
             </p>
           </div>
         </div>
@@ -54,6 +56,7 @@ export default async function PlayerDetailPage({ params }: { params: { id: strin
                   <p className="mt-1 text-sm font-bold leading-snug text-white">
                     {record.match.teamAName} {record.match.teamAScore} : {record.match.teamBScore} {record.match.teamBName}
                   </p>
+                  <p className="mt-1 text-xs font-semibold text-arena-cyan">소속팀: {record.teamName}</p>
                 </div>
                 <span className="shrink-0 rounded-md border border-arena-line bg-white/5 px-2.5 py-1 text-sm font-black text-arena-lime">
                   {getResultLabel(record.result)}
@@ -75,6 +78,7 @@ export default async function PlayerDetailPage({ params }: { params: { id: strin
               <tr>
                 <th className="px-3 py-2">날짜</th>
                 <th className="px-3 py-2">경기</th>
+                <th className="px-3 py-2">소속팀</th>
                 <th className="px-3 py-2">결과</th>
                 <th className="px-3 py-2 text-right">득점</th>
                 <th className="px-3 py-2 text-right">도움</th>
@@ -88,6 +92,7 @@ export default async function PlayerDetailPage({ params }: { params: { id: strin
                   <td className="px-3 py-3 text-white">
                     {record.match.teamAName} {record.match.teamAScore} : {record.match.teamBScore} {record.match.teamBName}
                   </td>
+                  <td className="px-3 py-3 font-semibold text-arena-cyan">{record.teamName}</td>
                   <td className="px-3 py-3">{getResultLabel(record.result)}</td>
                   <td className="px-3 py-3 text-right">{record.goals}</td>
                   <td className="px-3 py-3 text-right">{record.assists}</td>

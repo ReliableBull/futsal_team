@@ -7,6 +7,7 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { clearAdminSession, requireAdmin, setAdminSession, verifyPassword } from "@/lib/auth";
 import { createMatchRecord, deleteMatchRecord, parseMatchFormData, updateMatchRecord } from "@/lib/matches";
+import { parsePlayerPosition } from "@/lib/player-position";
 import { prisma } from "@/lib/prisma";
 
 function getString(formData: FormData, key: string) {
@@ -28,7 +29,7 @@ export async function createPlayer(formData: FormData) {
       name,
       nickname: getString(formData, "nickname") || null,
       profileImageUrl: getString(formData, "profileImageUrl") || null,
-      position: "FP",
+      position: parsePlayerPosition(getString(formData, "position")),
       number: getString(formData, "number") ? Number(getString(formData, "number")) : null,
       isActive: formData.get("isActive") === "on"
     }
@@ -55,6 +56,7 @@ export async function updatePlayer(playerId: number, formData: FormData) {
       name,
       nickname: getString(formData, "nickname") || null,
       profileImageUrl: getString(formData, "profileImageUrl") || null,
+      position: parsePlayerPosition(getString(formData, "position")),
       number: getString(formData, "number") ? Number(getString(formData, "number")) : null,
       isActive: formData.get("isActive") === "on"
     }

@@ -5,6 +5,7 @@ import { DeleteMatchButton } from "@/components/DeleteMatchButton";
 import { MatchStatusBadge } from "@/components/MatchStatusBadge";
 import { createMatch, createPlayer, deleteMatch, deletePlayer, logoutAdmin, updatePlayer } from "@/lib/actions";
 import { requireAdmin } from "@/lib/auth";
+import { defaultPlayerPosition, playerPositions } from "@/lib/player-position";
 import { prisma } from "@/lib/prisma";
 import { formatDate, getTeamMvpNames, matchStatus } from "@/lib/stats";
 
@@ -62,6 +63,16 @@ export default async function AdminPage() {
             <input className="w-full rounded-md border border-arena-line bg-black/30 px-3 py-2" name="nickname" />
           </label>
           <label className="block space-y-2 text-sm font-semibold text-slate-200">
+            포지션
+            <select className="w-full rounded-md border border-arena-line bg-black/30 px-3 py-2" name="position" defaultValue={defaultPlayerPosition}>
+              {playerPositions.map((position) => (
+                <option key={position} value={position}>
+                  {position}
+                </option>
+              ))}
+            </select>
+          </label>
+          <label className="block space-y-2 text-sm font-semibold text-slate-200">
             프로필 이미지 경로
             <input className="w-full rounded-md border border-arena-line bg-black/30 px-3 py-2" name="profileImageUrl" placeholder="/images/players/kim-minseok.jpg" />
           </label>
@@ -111,6 +122,7 @@ export default async function AdminPage() {
             teamBPlayerIds: [],
             goalsByPlayerId: {},
             assistsByPlayerId: {},
+            goalAssistPlayerIdsByScorerId: {},
             chairmanTeamMvpIds: [],
             managerTeamMvpIds: [],
             memo: ""

@@ -22,6 +22,7 @@ export type MatchPayload = {
   teamBPlayerIds: number[];
   goalsByPlayerId: Record<number, number>;
   assistsByPlayerId: Record<number, number>;
+  goalAssistPlayerIdsByScorerId: Record<number, Array<number | null>>;
   chairmanTeamMvpIds: number[];
   managerTeamMvpIds: number[];
   memo: string | null;
@@ -61,8 +62,38 @@ function normalizeRecord(input: unknown) {
   );
 }
 
+function countGoalAssists(
+  selectedIds: number[],
+  goalsByPlayerId: Record<number, number>,
+  goalAssistPlayerIdsByScorerId: Record<number, Array<number | null>>
+) {
+  const assistsByPlayerId: Record<number, number> = Object.fromEntries(selectedIds.map((playerId) => [playerId, 0]));
+
+  Object.entries(goalAssistPlayerIdsByScorerId).forEach(([scorerIdValue, assistPlayerIds]) => {
+    const scorerId = Number(scorerIdValue);
+    const goalCount = goalsByPlayerId[scorerId] ?? 0;
+
+    assistPlayerIds.slice(0, goalCount).forEach((assistPlayerId) => {
+      if (assistPlayerId && selectedIds.includes(assistPlayerId)) {
+        assistsByPlayerId[assistPlayerId] = (assistsByPlayerId[assistPlayerId] ?? 0) + 1;
+      }
+    });
+  });
+
+  return assistsByPlayerId;
+}
+
 export function parseMatchFormData(formData: FormData): MatchPayload {
   const selectedIds = uniqueIds([...formData.getAll("teamAPlayers"), ...formData.getAll("teamBPlayers")]);
+  const goalsByPlayerId = Object.fromEntries(
+    selectedIds.map((playerId) => [playerId, Math.max(0, asOptionalNumber(asString(formData.get(`goals_${playerId}`))) ?? 0)])
+  );
+  const goalAssistPlayerIdsByScorerId = Object.fromEntries(
+    selectedIds.map((playerId) => [
+      playerId,
+      Array.from({ length: goalsByPlayerId[playerId] ?? 0 }, (_, index) => asOptionalNumber(asString(formData.get(`goalAssist_${playerId}_${index}`))))
+    ])
+  );
 
   return {
     matchDate: asString(formData.get("matchDate")),
@@ -74,12 +105,9 @@ export function parseMatchFormData(formData: FormData): MatchPayload {
     teamBScore: asNumber(asString(formData.get("teamBScore")), "총무팀 점수"),
     teamAPlayerIds: uniqueIds(formData.getAll("teamAPlayers")),
     teamBPlayerIds: uniqueIds(formData.getAll("teamBPlayers")),
-    goalsByPlayerId: Object.fromEntries(
-      selectedIds.map((playerId) => [playerId, Math.max(0, asOptionalNumber(asString(formData.get(`goals_${playerId}`))) ?? 0)])
-    ),
-    assistsByPlayerId: Object.fromEntries(
-      selectedIds.map((playerId) => [playerId, Math.max(0, asOptionalNumber(asString(formData.get(`assists_${playerId}`))) ?? 0)])
-    ),
+    goalsByPlayerId,
+    assistsByPlayerId: countGoalAssists(selectedIds, goalsByPlayerId, goalAssistPlayerIdsByScorerId),
+    goalAssistPlayerIdsByScorerId,
     chairmanTeamMvpIds: uniqueIds(formData.getAll("chairmanTeamMvpIds")),
     managerTeamMvpIds: uniqueIds(formData.getAll("managerTeamMvpIds")),
     memo: asString(formData.get("memo")) || null
@@ -105,6 +133,7 @@ export function parseMatchJson(input: unknown): MatchPayload {
     teamBPlayerIds: uniqueIds(Array.isArray(body.teamBPlayerIds) ? body.teamBPlayerIds : []),
     goalsByPlayerId: normalizeRecord(body.goalsByPlayerId),
     assistsByPlayerId: normalizeRecord(body.assistsByPlayerId),
+    goalAssistPlayerIdsByScorerId: {},
     chairmanTeamMvpIds: uniqueIds(
       Array.isArray(body.chairmanTeamMvpIds)
         ? body.chairmanTeamMvpIds
@@ -145,6 +174,30 @@ async function prepareMatchData(payload: MatchPayload) {
   if (payload.managerTeamMvpIds.some((playerId) => !payload.teamBPlayerIds.includes(playerId))) {
     throw new MatchValidationError(`${payload.teamBName} MVP를 ${payload.teamBName} 선수 중에서 선택해주세요.`);
   }
+
+  const teamByPlayerId = new Map<number, string>([
+    ...payload.teamAPlayerIds.map((playerId) => [playerId, payload.teamAName] as const),
+    ...payload.teamBPlayerIds.map((playerId) => [playerId, payload.teamBName] as const)
+  ]);
+
+  Object.entries(payload.goalAssistPlayerIdsByScorerId).forEach(([scorerIdValue, assistPlayerIds]) => {
+    const scorerId = Number(scorerIdValue);
+    const scorerTeam = teamByPlayerId.get(scorerId);
+    const goalCount = payload.goalsByPlayerId[scorerId] ?? 0;
+
+    assistPlayerIds.slice(0, goalCount).forEach((assistPlayerId) => {
+      if (!assistPlayerId) return;
+      if (!teamByPlayerId.has(assistPlayerId)) {
+        throw new MatchValidationError("도움 선수는 경기 참가 선수 중에서 선택해주세요.");
+      }
+      if (assistPlayerId === scorerId) {
+        throw new MatchValidationError("득점 선수 본인을 도움 선수로 선택할 수 없습니다.");
+      }
+      if (teamByPlayerId.get(assistPlayerId) !== scorerTeam) {
+        throw new MatchValidationError("도움 선수는 같은 팀 선수 중에서 선택해주세요.");
+      }
+    });
+  });
 
   const allPlayerIds = [...payload.teamAPlayerIds, ...payload.teamBPlayerIds];
   const existingPlayers = await prisma.player.count({ where: { id: { in: allPlayerIds } } });

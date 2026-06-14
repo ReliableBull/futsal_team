@@ -1,4 +1,5 @@
 import type { Match, MatchPlayer, Player } from "@prisma/client";
+import type { DateRange } from "@/lib/date-range";
 import { prisma } from "@/lib/prisma";
 
 export const matchResult = {
@@ -55,12 +56,17 @@ export function calculatePlayerStats(player: Player & { matchPlayers: MatchPlaye
   };
 }
 
-export async function getPlayersWithStats() {
+export async function getPlayersWithStats(dateRange?: Pick<DateRange, "start" | "end">) {
   const players = await prisma.player.findMany({
     where: { isActive: true },
     include: {
       matchPlayers: {
-        where: { match: { status: matchStatus.completed } }
+        where: {
+          match: {
+            status: matchStatus.completed,
+            ...(dateRange ? { matchDate: { gte: dateRange.start, lte: dateRange.end } } : {})
+          }
+        }
       }
     },
     orderBy: [{ number: "asc" }, { name: "asc" }]
