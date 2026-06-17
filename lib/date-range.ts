@@ -1,6 +1,12 @@
 export const defaultStartDate = "2026-01-01";
 export const defaultEndDate = "2026-12-31";
 
+export const quickDateRanges = [
+  { label: "전체", startDate: "2026-01-01", endDate: "2026-12-31" },
+  { label: "상반기", startDate: "2026-01-01", endDate: "2026-05-31" },
+  { label: "하반기", startDate: "2026-06-01", endDate: "2026-11-30" }
+] as const;
+
 export type DateRange = {
   startDate: string;
   endDate: string;

@@ -22,6 +22,7 @@ export default async function PlayersPage({ searchParams }: { searchParams: { st
     draws: player.draws,
     winRate: player.winRate,
     goals: player.goals,
+    assists: player.assists,
     mvpCount: player.mvpCount
   }));
 

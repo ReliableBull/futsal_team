@@ -5,7 +5,7 @@ import type { PlayerWithStats } from "@/lib/stats";
 type RankingTableProps = {
   title: string;
   players: PlayerWithStats[];
-  valueKey: "goals" | "mvpCount" | "winRate";
+  valueKey: "goals" | "assists" | "mvpCount" | "winRate";
   suffix?: string;
 };
 

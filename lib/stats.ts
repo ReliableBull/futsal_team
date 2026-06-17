@@ -103,13 +103,14 @@ export async function getDashboardData() {
   ]);
 
   const goalRankings = [...players].sort((a, b) => b.goals - a.goals || b.totalMatches - a.totalMatches).slice(0, 5);
+  const assistRankings = [...players].sort((a, b) => b.assists - a.assists || b.goals - a.goals || b.totalMatches - a.totalMatches).slice(0, 5);
   const mvpRankings = [...players].sort((a, b) => b.mvpCount - a.mvpCount || b.goals - a.goals).slice(0, 5);
   const winRateRankings = [...players]
     .filter((player) => player.totalMatches > 0)
     .sort((a, b) => b.winRate - a.winRate || b.totalMatches - a.totalMatches || b.goals - a.goals)
     .slice(0, 5);
 
-  return { recentMatches, goalRankings, mvpRankings, winRateRankings, posters };
+  return { recentMatches, goalRankings, assistRankings, mvpRankings, winRateRankings, posters };
 }
 
 export function formatPlayerRecord(player: Pick<PlayerWithStats, "wins" | "losses" | "draws">) {

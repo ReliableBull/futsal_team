@@ -38,10 +38,11 @@ export default async function PlayerDetailPage({ params }: { params: { id: strin
         </div>
       </section>
 
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
         <StatCard label="출장 경기 수" value={stats.totalMatches} detail={formatPlayerRecord(stats)} />
         <StatCard label="승률" value={`${stats.winRate}%`} />
-        <StatCard label="득점" value={stats.goals} detail={`${stats.assists} 도움`} />
+        <StatCard label="득점" value={stats.goals} />
+        <StatCard label="도움" value={stats.assists} />
         <StatCard label="MVP" value={stats.mvpCount} detail="선정 횟수" />
       </div>
 

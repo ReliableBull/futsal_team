@@ -17,10 +17,11 @@ export type SortablePlayer = {
   draws: number;
   winRate: number;
   goals: number;
+  assists: number;
   mvpCount: number;
 };
 
-type SortKey = "name" | "totalMatches" | "wins" | "losses" | "draws" | "winRate" | "goals" | "mvpCount";
+type SortKey = "name" | "totalMatches" | "wins" | "losses" | "draws" | "winRate" | "goals" | "assists" | "mvpCount";
 type SortDirection = "asc" | "desc";
 
 const sortOptions: Array<{ key: SortKey; label: string }> = [
@@ -31,6 +32,7 @@ const sortOptions: Array<{ key: SortKey; label: string }> = [
   { key: "draws", label: "무" },
   { key: "winRate", label: "승률" },
   { key: "goals", label: "득점" },
+  { key: "assists", label: "도움" },
   { key: "mvpCount", label: "MVP" }
 ];
 
@@ -159,9 +161,10 @@ export function PlayersSortableList({ players }: { players: SortablePlayer[] }) 
               <MobileStat label="무" value={player.draws} />
               <MobileStat label="승률" value={`${player.winRate}%`} />
             </div>
-            <div className="mt-2 grid grid-cols-3 gap-2">
+            <div className="mt-2 grid grid-cols-4 gap-2">
               <MobileStat label="경기" value={player.totalMatches} />
               <MobileStat label="득점" value={player.goals} />
+              <MobileStat label="도움" value={player.assists} />
               <MobileStat label="MVP" value={player.mvpCount} />
             </div>
           </article>
@@ -194,6 +197,7 @@ export function PlayersSortableList({ players }: { players: SortablePlayer[] }) 
                 <td className="px-3 py-3 text-right">{player.draws}</td>
                 <td className="px-3 py-3 text-right font-bold text-white">{player.winRate}%</td>
                 <td className="px-3 py-3 text-right">{player.goals}</td>
+                <td className="px-3 py-3 text-right">{player.assists}</td>
                 <td className="px-3 py-3 text-right">{player.mvpCount}</td>
               </tr>
             ))}

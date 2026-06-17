@@ -10,7 +10,7 @@ import { getWeeklyWeather } from "@/lib/weather";
 export const dynamic = "force-dynamic";
 
 export default async function HomePage() {
-  const [{ recentMatches, goalRankings, mvpRankings, winRateRankings, posters }, weeklyWeather] = await Promise.all([
+  const [{ recentMatches, goalRankings, assistRankings, mvpRankings, winRateRankings, posters }, weeklyWeather] = await Promise.all([
     getDashboardData(),
     getWeeklyWeather()
   ]);
@@ -48,10 +48,11 @@ export default async function HomePage() {
         </div>
       </section>
 
-      <div className="grid gap-5 lg:grid-cols-3">
+      <div className="grid gap-5 lg:grid-cols-4">
         <RankingTable title="승률 랭킹 TOP 5" players={winRateRankings} valueKey="winRate" suffix="%" />
         <RankingTable title="MVP 랭킹 TOP 5" players={mvpRankings} valueKey="mvpCount" suffix="회" />
         <RankingTable title="득점 랭킹 TOP 5" players={goalRankings} valueKey="goals" suffix="골" />
+        <RankingTable title="도움 랭킹 TOP 5" players={assistRankings} valueKey="assists" suffix="개" />
       </div>
 
       <MatchPosterGallery posters={posters} />
