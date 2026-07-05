@@ -76,7 +76,7 @@ export function AdminPlayerEditor({ player, action, deleteAction, matchCount }: 
                 type="file"
                 onChange={(event) => handleProfileImageChange(event.target.files?.[0])}
               />
-              <span className="block text-xs font-normal text-slate-500">새 파일을 선택하면 기존 프로필 이미지보다 우선 적용됩니다.</span>
+              <span className="block text-xs font-normal text-slate-500">새 파일을 선택하면 DB에 저장되어 다른 PC에서도 표시됩니다. 최대 2MB.</span>
             </label>
             <label className="space-y-1 text-sm font-semibold text-slate-200">
               등번호

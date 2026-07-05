@@ -84,7 +84,7 @@ export default async function AdminPage() {
               name="profileImage"
               type="file"
             />
-            <span className="block text-xs font-normal text-slate-500">파일을 선택하면 이미지 경로보다 우선 적용됩니다.</span>
+            <span className="block text-xs font-normal text-slate-500">파일을 선택하면 DB에 저장되어 다른 PC에서도 표시됩니다. 최대 2MB.</span>
           </label>
           <label className="block space-y-2 text-sm font-semibold text-slate-200">
             등번호
