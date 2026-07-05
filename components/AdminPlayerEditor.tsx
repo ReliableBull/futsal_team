@@ -17,11 +17,17 @@ export function AdminPlayerEditor({ player, action, deleteAction, matchCount }: 
   const [previewUrl, setPreviewUrl] = useState(player.profileImageUrl ?? "");
   const position = parsePlayerPosition(player.position);
 
+  function handleProfileImageChange(file: File | undefined) {
+    if (!file) return;
+
+    setPreviewUrl(URL.createObjectURL(file));
+  }
+
   return (
     <div className="rounded-md border border-arena-line bg-black/20 p-3">
       <button className="flex w-full items-center gap-3 text-left" type="button" onClick={() => setIsOpen((current) => !current)}>
         <PlayerAvatar playerId={player.id} name={player.name} profileImageUrl={previewUrl || player.profileImageUrl} size="sm" />
-          <span className="min-w-0 flex-1">
+        <span className="min-w-0 flex-1">
           <span className="block font-bold text-white">{player.name}</span>
           <span className="text-sm text-slate-400">
             {position} · #{player.number ?? "-"}
@@ -32,7 +38,7 @@ export function AdminPlayerEditor({ player, action, deleteAction, matchCount }: 
 
       {isOpen ? (
         <div className="mt-4 grid gap-3">
-          <form action={action} className="grid gap-3">
+          <form action={action} className="grid gap-3" encType="multipart/form-data">
             <label className="space-y-1 text-sm font-semibold text-slate-200">
               이름
               <input className="w-full rounded-md border border-arena-line bg-black/30 px-3 py-2" name="name" defaultValue={player.name} required />
@@ -52,7 +58,7 @@ export function AdminPlayerEditor({ player, action, deleteAction, matchCount }: 
               </select>
             </label>
             <label className="space-y-1 text-sm font-semibold text-slate-200">
-              프로필 이미지 경로
+              프로필 이미지 경로 또는 URL
               <input
                 className="w-full rounded-md border border-arena-line bg-black/30 px-3 py-2"
                 name="profileImageUrl"
@@ -60,6 +66,17 @@ export function AdminPlayerEditor({ player, action, deleteAction, matchCount }: 
                 onChange={(event) => setPreviewUrl(event.target.value)}
                 placeholder={`/images/players/${player.id}.jpg`}
               />
+            </label>
+            <label className="space-y-1 text-sm font-semibold text-slate-200">
+              프로필 사진 업로드
+              <input
+                accept="image/*"
+                className="w-full rounded-md border border-arena-line bg-black/30 px-3 py-2 text-sm file:mr-3 file:rounded-md file:border-0 file:bg-arena-lime file:px-3 file:py-1.5 file:font-bold file:text-arena-black"
+                name="profileImage"
+                type="file"
+                onChange={(event) => handleProfileImageChange(event.target.files?.[0])}
+              />
+              <span className="block text-xs font-normal text-slate-500">새 파일을 선택하면 기존 프로필 이미지보다 우선 적용됩니다.</span>
             </label>
             <label className="space-y-1 text-sm font-semibold text-slate-200">
               등번호

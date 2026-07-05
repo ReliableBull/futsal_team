@@ -52,7 +52,7 @@ export default async function AdminPage() {
       </div>
 
       <section className="grid gap-5 lg:grid-cols-[380px_1fr]">
-        <form action={createPlayer} className="space-y-4 rounded-lg border border-arena-line bg-arena-panel p-5">
+        <form action={createPlayer} className="space-y-4 rounded-lg border border-arena-line bg-arena-panel p-5" encType="multipart/form-data">
           <h2 className="text-xl font-bold text-white">선수 등록</h2>
           <label className="block space-y-2 text-sm font-semibold text-slate-200">
             이름
@@ -73,8 +73,18 @@ export default async function AdminPage() {
             </select>
           </label>
           <label className="block space-y-2 text-sm font-semibold text-slate-200">
-            프로필 이미지 경로
+            프로필 이미지 경로 또는 URL
             <input className="w-full rounded-md border border-arena-line bg-black/30 px-3 py-2" name="profileImageUrl" placeholder="/images/players/kim-minseok.jpg" />
+          </label>
+          <label className="block space-y-2 text-sm font-semibold text-slate-200">
+            프로필 사진 업로드
+            <input
+              accept="image/*"
+              className="w-full rounded-md border border-arena-line bg-black/30 px-3 py-2 text-sm file:mr-3 file:rounded-md file:border-0 file:bg-arena-lime file:px-3 file:py-1.5 file:font-bold file:text-arena-black"
+              name="profileImage"
+              type="file"
+            />
+            <span className="block text-xs font-normal text-slate-500">파일을 선택하면 이미지 경로보다 우선 적용됩니다.</span>
           </label>
           <label className="block space-y-2 text-sm font-semibold text-slate-200">
             등번호

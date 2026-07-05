@@ -15,6 +15,48 @@ function getString(formData: FormData, key: string) {
   return typeof value === "string" ? value.trim() : "";
 }
 
+function getPlayerUploadPath(playerId: number) {
+  return join(process.cwd(), "public", "uploads", "players", String(playerId));
+}
+
+function getPlayerPublicUrl(playerId: number, fileName: string) {
+  return `/uploads/players/${playerId}/${fileName}`;
+}
+
+async function uploadPlayerProfileImage(playerId: number, formData: FormData) {
+  const file = formData.get("profileImage");
+  if (!(file instanceof File) || file.size <= 0) {
+    return null;
+  }
+  if (!file.type.startsWith("image/")) {
+    throw new Error("프로필 사진은 이미지 파일만 업로드할 수 있습니다.");
+  }
+  if (file.size > 10 * 1024 * 1024) {
+    throw new Error("프로필 사진 용량은 10MB 이하만 업로드할 수 있습니다.");
+  }
+
+  const uploadDir = getPlayerUploadPath(playerId);
+  await mkdir(uploadDir, { recursive: true });
+
+  const originalExt = extname(file.name).toLowerCase();
+  const ext = originalExt && originalExt.length <= 10 ? originalExt : ".jpg";
+  const fileName = `${Date.now()}-${randomUUID()}${ext}`;
+  const destination = join(uploadDir, fileName);
+  const bytes = await file.arrayBuffer();
+
+  await writeFile(destination, Buffer.from(bytes));
+
+  return getPlayerPublicUrl(playerId, fileName);
+}
+
+async function deleteLocalUpload(publicUrl: string | null | undefined) {
+  if (!publicUrl?.startsWith("/uploads/")) return;
+
+  const relativePath = publicUrl.replace(/^\//, "");
+  const absolutePath = join(process.cwd(), "public", relativePath);
+  await unlink(absolutePath).catch(() => undefined);
+}
+
 export async function createPlayer(formData: FormData) {
   await requireAdmin();
 
@@ -24,7 +66,7 @@ export async function createPlayer(formData: FormData) {
     throw new Error("선수 이름은 필수입니다.");
   }
 
-  await prisma.player.create({
+  const player = await prisma.player.create({
     data: {
       name,
       nickname: getString(formData, "nickname") || null,
@@ -34,6 +76,14 @@ export async function createPlayer(formData: FormData) {
       isActive: formData.get("isActive") === "on"
     }
   });
+  const uploadedImageUrl = await uploadPlayerProfileImage(player.id, formData);
+
+  if (uploadedImageUrl) {
+    await prisma.player.update({
+      where: { id: player.id },
+      data: { profileImageUrl: uploadedImageUrl }
+    });
+  }
 
   revalidatePath("/");
   revalidatePath("/players");
@@ -50,17 +100,27 @@ export async function updatePlayer(playerId: number, formData: FormData) {
     throw new Error("선수 이름은 필수입니다.");
   }
 
+  const currentPlayer = await prisma.player.findUnique({
+    where: { id: playerId },
+    select: { profileImageUrl: true }
+  });
+  const uploadedImageUrl = await uploadPlayerProfileImage(playerId, formData);
+  const profileImageUrl = uploadedImageUrl ?? (getString(formData, "profileImageUrl") || null);
+
   await prisma.player.update({
     where: { id: playerId },
     data: {
       name,
       nickname: getString(formData, "nickname") || null,
-      profileImageUrl: getString(formData, "profileImageUrl") || null,
+      profileImageUrl,
       position: parsePlayerPosition(getString(formData, "position")),
       number: getString(formData, "number") ? Number(getString(formData, "number")) : null,
       isActive: formData.get("isActive") === "on"
     }
   });
+  if (uploadedImageUrl && currentPlayer?.profileImageUrl !== uploadedImageUrl) {
+    await deleteLocalUpload(currentPlayer?.profileImageUrl);
+  }
 
   revalidatePath("/");
   revalidatePath("/players");
@@ -76,6 +136,7 @@ export async function deletePlayer(playerId: number) {
     where: { id: playerId },
     select: {
       id: true,
+      profileImageUrl: true,
       _count: {
         select: { matchPlayers: true }
       }
@@ -91,6 +152,7 @@ export async function deletePlayer(playerId: number) {
   }
 
   await prisma.player.delete({ where: { id: playerId } });
+  await deleteLocalUpload(player.profileImageUrl);
 
   revalidatePath("/");
   revalidatePath("/players");

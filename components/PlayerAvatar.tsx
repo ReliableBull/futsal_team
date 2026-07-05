@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 type PlayerAvatarProps = {
   playerId: number;
@@ -23,10 +23,17 @@ function getInitial(name: string) {
 export function PlayerAvatar({ playerId, name, profileImageUrl, size = "md" }: PlayerAvatarProps) {
   const [imageFailed, setImageFailed] = useState(false);
   const imageSrc = profileImageUrl || `/images/players/${playerId}.jpg`;
+  const isLocalPreview = imageSrc.startsWith("blob:") || imageSrc.startsWith("data:");
+
+  useEffect(() => {
+    setImageFailed(false);
+  }, [imageSrc]);
 
   return (
     <span className={`relative inline-grid shrink-0 place-items-center overflow-hidden rounded-full border border-arena-line bg-[radial-gradient(circle_at_30%_20%,rgba(64,217,255,0.35),transparent_34%),#111827] font-black text-arena-lime shadow-lg shadow-black/20 ${sizeClass[size]}`}>
-      {!imageFailed ? (
+      {!imageFailed && isLocalPreview ? (
+        <span className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: `url("${imageSrc}")` }} />
+      ) : !imageFailed ? (
         <Image
           fill
           alt={`${name} 프로필 사진`}
