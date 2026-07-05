@@ -169,10 +169,10 @@ async function prepareMatchData(payload: MatchPayload) {
   }
 
   if (payload.chairmanTeamMvpIds.some((playerId) => !payload.teamAPlayerIds.includes(playerId))) {
-    throw new MatchValidationError(`${payload.teamAName} MVP를 ${payload.teamAName} 선수 중에서 선택해주세요.`);
+    throw new MatchValidationError(`${payload.teamAName} MOM을 ${payload.teamAName} 선수 중에서 선택해주세요.`);
   }
   if (payload.managerTeamMvpIds.some((playerId) => !payload.teamBPlayerIds.includes(playerId))) {
-    throw new MatchValidationError(`${payload.teamBName} MVP를 ${payload.teamBName} 선수 중에서 선택해주세요.`);
+    throw new MatchValidationError(`${payload.teamBName} MOM을 ${payload.teamBName} 선수 중에서 선택해주세요.`);
   }
 
   const teamByPlayerId = new Map<number, string>([

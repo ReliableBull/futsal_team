@@ -409,7 +409,7 @@ export function AdminMatchForm({ action, players, initialData = defaultInitialDa
           </div>
 
           {!canDrawTeams && !isDrawing ? <p className="text-sm text-slate-400">랜덤 팀 구성은 2명 이상의 짝수 인원을 선택해야 사용할 수 있습니다.</p> : null}
-          {hasRandomTeams ? <p className="text-sm font-semibold text-arena-lime">팀 구성이 완료되었습니다. 진행중 경기는 MVP 없이도 먼저 등록할 수 있습니다.</p> : null}
+          {hasRandomTeams ? <p className="text-sm font-semibold text-arena-lime">팀 구성이 완료되었습니다. 진행중 경기는 MOM 없이도 먼저 등록할 수 있습니다.</p> : null}
         </div>
       )}
 
@@ -483,7 +483,7 @@ export function AdminMatchForm({ action, players, initialData = defaultInitialDa
           { team: "B" as const, title: teamBName || "B팀", players: teamBPlayers, mvpIds: managerTeamMvpIds }
         ].map(({ team, title, players: teamPlayers, mvpIds }) => (
           <fieldset key={team} className="rounded-md border border-arena-line bg-black/20 p-4">
-            <legend className="px-1 text-sm font-semibold text-slate-200">{title} MVP</legend>
+            <legend className="px-1 text-sm font-semibold text-slate-200">{title} MOM</legend>
             <div className="mt-2 grid gap-2 sm:grid-cols-2">
               {teamPlayers.length > 0 ? (
                 teamPlayers.map((player) => (
@@ -507,7 +507,7 @@ export function AdminMatchForm({ action, players, initialData = defaultInitialDa
       </div>
 
       <p className="text-sm text-slate-400">
-        MVP는 선택사항이며 팀별로 여러 명을 선정할 수 있습니다. 선택하지 않으면 경기 결과에는 MVP가 없음으로 표시됩니다.
+        MOM은 선택사항이며 팀별로 여러 명을 선정할 수 있습니다. 선택하지 않으면 경기 결과에는 MOM이 없음으로 표시됩니다.
       </p>
 
       <label className="block space-y-2 text-sm font-semibold text-slate-200">

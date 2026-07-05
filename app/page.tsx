@@ -10,7 +10,10 @@ import { getWeeklyWeather } from "@/lib/weather";
 export const dynamic = "force-dynamic";
 
 export default async function HomePage() {
-  const [{ recentMatches, goalRankings, assistRankings, mvpRankings, winRateRankings, posters }, weeklyWeather] = await Promise.all([
+  const [
+    { recentMatches, goalRankings, assistRankings, mvpRankings, winRateRankings, winStreakRankings, goalStreakRankings, assistStreakRankings, posters },
+    weeklyWeather
+  ] = await Promise.all([
     getDashboardData(),
     getWeeklyWeather()
   ]);
@@ -37,10 +40,10 @@ export default async function HomePage() {
                 <span>승리팀:</span>
                 {match.status === matchStatus.completed ? <WinnerBadge match={match} /> : <span className="font-bold text-white">-</span>}
                 <span className="text-slate-500">·</span>
-                <span className="font-semibold text-slate-400">{match.teamAName} MVP</span>
+                <span className="font-semibold text-slate-400">{match.teamAName} MOM</span>
                 <span className="font-black text-arena-lime">{getTeamMvpNames(match.matchPlayers, match.teamAName)}</span>
                 <span className="text-slate-500">·</span>
-                <span className="font-semibold text-slate-400">{match.teamBName} MVP</span>
+                <span className="font-semibold text-slate-400">{match.teamBName} MOM</span>
                 <span className="font-black text-arena-cyan">{getTeamMvpNames(match.matchPlayers, match.teamBName)}</span>
               </span>
             </Link>
@@ -50,10 +53,22 @@ export default async function HomePage() {
 
       <div className="grid gap-5 lg:grid-cols-4">
         <RankingTable title="승률 랭킹 TOP 5" players={winRateRankings} valueKey="winRate" suffix="%" />
-        <RankingTable title="MVP 랭킹 TOP 5" players={mvpRankings} valueKey="mvpCount" suffix="회" />
+        <RankingTable title="MOM 랭킹 TOP 5" players={mvpRankings} valueKey="mvpCount" suffix="회" />
         <RankingTable title="득점 랭킹 TOP 5" players={goalRankings} valueKey="goals" suffix="골" />
         <RankingTable title="도움 랭킹 TOP 5" players={assistRankings} valueKey="assists" suffix="개" />
       </div>
+
+      <section>
+        <div className="mb-4">
+          <h2 className="text-xl font-bold text-white">최근 흐름</h2>
+          <p className="mt-1 text-sm text-slate-400">각 선수의 최근 출전 경기부터 끊기지 않고 이어진 기록입니다.</p>
+        </div>
+        <div className="grid gap-5 lg:grid-cols-3">
+          <RankingTable title="최근 연승 선수 TOP 5" players={winStreakRankings} valueKey="currentWinStreak" suffix="연승" />
+          <RankingTable title="연속 경기 득점 TOP 5" players={goalStreakRankings} valueKey="currentGoalStreak" suffix="경기" />
+          <RankingTable title="연속 경기 도움 TOP 5" players={assistStreakRankings} valueKey="currentAssistStreak" suffix="경기" />
+        </div>
+      </section>
 
       <MatchPosterGallery posters={posters} />
 

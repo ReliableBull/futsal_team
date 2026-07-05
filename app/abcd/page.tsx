@@ -145,7 +145,7 @@ export default async function AdminPage() {
                     <MatchStatusBadge status={match.status} />
                   </div>
                   <p className="text-sm text-slate-400">
-                    {match.teamAName} MVP: {getTeamMvpNames(match.matchPlayers, match.teamAName)} · {match.teamBName} MVP:{" "}
+                    {match.teamAName} MOM: {getTeamMvpNames(match.matchPlayers, match.teamAName)} · {match.teamBName} MOM:{" "}
                     {getTeamMvpNames(match.matchPlayers, match.teamBName)}
                   </p>
                 </Link>

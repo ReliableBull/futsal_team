@@ -98,8 +98,8 @@ export function buildMatchRows(matches: ExportMatch[]) {
       "총무팀 점수",
       "승리팀",
       "승리 결과",
-      "회장팀 MVP",
-      "총무팀 MVP",
+      "회장팀 MOM",
+      "총무팀 MOM",
       "메모"
     ],
     ...matches.map((match) => [
@@ -124,7 +124,7 @@ export function buildMatchRows(matches: ExportMatch[]) {
 
 export function buildHistoryRows(matches: ExportMatch[]) {
   return [
-    ["경기 ID", "경기일", "상태", "팀", "선수 ID", "선수명", "닉네임", "등번호", "결과", "득점", "도움", "MVP"],
+    ["경기 ID", "경기일", "상태", "팀", "선수 ID", "선수명", "닉네임", "등번호", "결과", "득점", "도움", "MOM"],
     ...matches.flatMap((match) =>
       match.matchPlayers.map((record) => [
         match.id,
@@ -146,7 +146,7 @@ export function buildHistoryRows(matches: ExportMatch[]) {
 
 export function buildPlayerRows(players: ExportPlayer[]) {
   return [
-    ["선수 ID", "선수명", "닉네임", "등번호", "활성 여부", "경기 수", "승", "패", "무", "승률", "득점", "도움", "MVP 횟수"],
+    ["선수 ID", "선수명", "닉네임", "등번호", "활성 여부", "경기 수", "승", "패", "무", "승률", "득점", "도움", "MOM 횟수"],
     ...players.map((player) => {
       const stats = calculatePlayerStats(player);
 

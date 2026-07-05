@@ -30,7 +30,7 @@ export default async function MatchDetailPage({ params }: { params: { id: string
           <span>승리팀</span>
           {match.status === matchStatus.completed ? <WinnerBadge match={match} /> : <span className="font-bold text-white">-</span>}
           <span>
-            · {match.teamAName} MVP {getTeamMvpNames(match.matchPlayers, match.teamAName)} · {match.teamBName} MVP{" "}
+            · {match.teamAName} MOM {getTeamMvpNames(match.matchPlayers, match.teamAName)} · {match.teamBName} MOM{" "}
             {getTeamMvpNames(match.matchPlayers, match.teamBName)}
           </span>
         </p>
@@ -53,7 +53,7 @@ export default async function MatchDetailPage({ params }: { params: { id: string
                     <th className="px-3 py-2">선수</th>
                     <th className="px-3 py-2 text-right">득점</th>
                     <th className="px-3 py-2 text-right">도움</th>
-                    <th className="px-3 py-2 text-right">MVP</th>
+                    <th className="px-3 py-2 text-right">MOM</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-arena-line">
@@ -66,7 +66,7 @@ export default async function MatchDetailPage({ params }: { params: { id: string
                       </td>
                       <td className="px-3 py-3 text-right">{record.goals}</td>
                       <td className="px-3 py-3 text-right">{record.assists}</td>
-                      <td className="px-3 py-3 text-right" aria-label={record.isMvp ? "MVP" : "MVP 아님"}>
+                      <td className="px-3 py-3 text-right" aria-label={record.isMvp ? "MOM" : "MOM 아님"}>
                         {record.isMvp ? "🏆" : "-"}
                       </td>
                     </tr>

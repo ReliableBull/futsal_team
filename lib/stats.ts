@@ -26,6 +26,9 @@ export type PlayerWithStats = Player & {
   goals: number;
   assists: number;
   mvpCount: number;
+  currentWinStreak: number;
+  currentGoalStreak: number;
+  currentAssistStreak: number;
 };
 
 export type MatchWithDetails = Match & {
@@ -34,7 +37,100 @@ export type MatchWithDetails = Match & {
   matchPlayers: Array<MatchPlayer & { player: Player }>;
 };
 
-export function calculatePlayerStats(player: Player & { matchPlayers: MatchPlayer[] }): PlayerWithStats {
+type MatchPlayerForStats = MatchPlayer & { match?: Pick<Match, "matchDate" | "id"> };
+
+export type PlayerStreakRecord = {
+  length: number;
+  startDate: Date;
+  endDate: Date;
+  startMatchId: number;
+  endMatchId: number;
+};
+
+export type PlayerStreakHistories = {
+  win: PlayerStreakRecord[];
+  goal: PlayerStreakRecord[];
+  assist: PlayerStreakRecord[];
+};
+
+function getRecentRecords(matchPlayers: MatchPlayerForStats[]) {
+  return [...matchPlayers].sort((a, b) => {
+    const dateDiff = (b.match?.matchDate.getTime() ?? 0) - (a.match?.matchDate.getTime() ?? 0);
+    if (dateDiff !== 0) return dateDiff;
+
+    return (b.match?.id ?? b.matchId) - (a.match?.id ?? a.matchId);
+  });
+}
+
+function countCurrentStreak(records: MatchPlayerForStats[], predicate: (record: MatchPlayerForStats) => boolean) {
+  let streak = 0;
+
+  for (const record of records) {
+    if (!predicate(record)) break;
+    streak += 1;
+  }
+
+  return streak;
+}
+
+function getChronologicalRecords(matchPlayers: MatchPlayerForStats[]) {
+  return [...matchPlayers].sort((a, b) => {
+    const dateDiff = (a.match?.matchDate.getTime() ?? 0) - (b.match?.matchDate.getTime() ?? 0);
+    if (dateDiff !== 0) return dateDiff;
+
+    return (a.match?.id ?? a.matchId) - (b.match?.id ?? b.matchId);
+  });
+}
+
+function buildBestStreakHistory(records: MatchPlayerForStats[], predicate: (record: MatchPlayerForStats) => boolean) {
+  const streaks: PlayerStreakRecord[] = [];
+  let current: MatchPlayerForStats[] = [];
+
+  function flushCurrentStreak() {
+    if (current.length === 0) return;
+
+    const first = current[0];
+    const last = current[current.length - 1];
+
+    streaks.push({
+      length: current.length,
+      startDate: first.match?.matchDate ?? new Date(0),
+      endDate: last.match?.matchDate ?? new Date(0),
+      startMatchId: first.match?.id ?? first.matchId,
+      endMatchId: last.match?.id ?? last.matchId
+    });
+    current = [];
+  }
+
+  for (const record of records) {
+    if (predicate(record)) {
+      current.push(record);
+      continue;
+    }
+
+    flushCurrentStreak();
+  }
+
+  flushCurrentStreak();
+
+  const bestLength = Math.max(0, ...streaks.map((streak) => streak.length));
+
+  return streaks
+    .filter((streak) => streak.length === bestLength && streak.length > 0)
+    .sort((a, b) => b.endDate.getTime() - a.endDate.getTime() || b.endMatchId - a.endMatchId);
+}
+
+export function calculatePlayerStreakHistories(matchPlayers: MatchPlayerForStats[]): PlayerStreakHistories {
+  const records = getChronologicalRecords(matchPlayers);
+
+  return {
+    win: buildBestStreakHistory(records, (record) => record.result === matchResult.win),
+    goal: buildBestStreakHistory(records, (record) => record.goals > 0),
+    assist: buildBestStreakHistory(records, (record) => record.assists > 0)
+  };
+}
+
+export function calculatePlayerStats(player: Player & { matchPlayers: MatchPlayerForStats[] }): PlayerWithStats {
   const totalMatches = player.matchPlayers.length;
   const wins = player.matchPlayers.filter((record) => record.result === matchResult.win).length;
   const losses = player.matchPlayers.filter((record) => record.result === matchResult.loss).length;
@@ -42,6 +138,7 @@ export function calculatePlayerStats(player: Player & { matchPlayers: MatchPlaye
   const goals = player.matchPlayers.reduce((sum, record) => sum + record.goals, 0);
   const assists = player.matchPlayers.reduce((sum, record) => sum + record.assists, 0);
   const mvpCount = player.matchPlayers.filter((record) => record.isMvp).length;
+  const recentRecords = getRecentRecords(player.matchPlayers);
 
   return {
     ...player,
@@ -52,7 +149,10 @@ export function calculatePlayerStats(player: Player & { matchPlayers: MatchPlaye
     winRate: totalMatches > 0 ? Math.round((wins / totalMatches) * 1000) / 10 : 0,
     goals,
     assists,
-    mvpCount
+    mvpCount,
+    currentWinStreak: countCurrentStreak(recentRecords, (record) => record.result === matchResult.win),
+    currentGoalStreak: countCurrentStreak(recentRecords, (record) => record.goals > 0),
+    currentAssistStreak: countCurrentStreak(recentRecords, (record) => record.assists > 0)
   };
 }
 
@@ -66,7 +166,9 @@ export async function getPlayersWithStats(dateRange?: Pick<DateRange, "start" | 
             status: matchStatus.completed,
             ...(dateRange ? { matchDate: { gte: dateRange.start, lte: dateRange.end } } : {})
           }
-        }
+        },
+        include: { match: { select: { id: true, matchDate: true } } },
+        orderBy: { match: { matchDate: "desc" } }
       }
     },
     orderBy: [{ number: "asc" }, { name: "asc" }]
@@ -109,8 +211,20 @@ export async function getDashboardData() {
     .filter((player) => player.totalMatches > 0)
     .sort((a, b) => b.winRate - a.winRate || b.totalMatches - a.totalMatches || b.goals - a.goals)
     .slice(0, 5);
+  const winStreakRankings = [...players]
+    .filter((player) => player.currentWinStreak > 0)
+    .sort((a, b) => b.currentWinStreak - a.currentWinStreak || b.winRate - a.winRate || b.totalMatches - a.totalMatches)
+    .slice(0, 5);
+  const goalStreakRankings = [...players]
+    .filter((player) => player.currentGoalStreak > 0)
+    .sort((a, b) => b.currentGoalStreak - a.currentGoalStreak || b.goals - a.goals || b.totalMatches - a.totalMatches)
+    .slice(0, 5);
+  const assistStreakRankings = [...players]
+    .filter((player) => player.currentAssistStreak > 0)
+    .sort((a, b) => b.currentAssistStreak - a.currentAssistStreak || b.assists - a.assists || b.totalMatches - a.totalMatches)
+    .slice(0, 5);
 
-  return { recentMatches, goalRankings, assistRankings, mvpRankings, winRateRankings, posters };
+  return { recentMatches, goalRankings, assistRankings, mvpRankings, winRateRankings, winStreakRankings, goalStreakRankings, assistStreakRankings, posters };
 }
 
 export function formatPlayerRecord(player: Pick<PlayerWithStats, "wins" | "losses" | "draws">) {

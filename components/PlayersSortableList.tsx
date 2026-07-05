@@ -33,7 +33,7 @@ const sortOptions: Array<{ key: SortKey; label: string }> = [
   { key: "winRate", label: "승률" },
   { key: "goals", label: "득점" },
   { key: "assists", label: "도움" },
-  { key: "mvpCount", label: "MVP" }
+  { key: "mvpCount", label: "MOM" }
 ];
 
 const statSortOptions = sortOptions.filter((option) => option.key !== "name");
@@ -165,7 +165,7 @@ export function PlayersSortableList({ players }: { players: SortablePlayer[] }) 
               <MobileStat label="경기" value={player.totalMatches} />
               <MobileStat label="득점" value={player.goals} />
               <MobileStat label="도움" value={player.assists} />
-              <MobileStat label="MVP" value={player.mvpCount} />
+              <MobileStat label="MOM" value={player.mvpCount} />
             </div>
           </article>
         ))}

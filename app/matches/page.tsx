@@ -40,7 +40,7 @@ export default async function MatchesPage({ searchParams }: { searchParams: { st
               {match.status === matchStatus.completed ? <WinnerBadge match={match} /> : <span className="font-bold text-white">-</span>}
             </span>
             <span className="text-sm text-slate-300">
-              {match.teamAName} MVP: {getTeamMvpNames(match.matchPlayers, match.teamAName)} · {match.teamBName} MVP:{" "}
+              {match.teamAName} MOM: {getTeamMvpNames(match.matchPlayers, match.teamAName)} · {match.teamBName} MOM:{" "}
               {getTeamMvpNames(match.matchPlayers, match.teamBName)}
             </span>
           </Link>

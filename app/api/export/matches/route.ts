@@ -39,8 +39,8 @@ export async function GET() {
         [styled("날짜", 1), styled(formatDate(match.matchDate), 2), styled("", 2)],
         [styled("장소", 1), styled(match.location, 2), styled("", 2)],
         [styled("승패", 1), styled(getScoreSummary(match), 2), styled("", 2)],
-        [styled("회장팀 MVP", 1), styled(getTeamMvpNames(match.matchPlayers, match.teamAName), 3), styled("", 3)],
-        [styled("총무팀 MVP", 1), styled(getTeamMvpNames(match.matchPlayers, match.teamBName), 4), styled("", 4)],
+        [styled("회장팀 MOM", 1), styled(getTeamMvpNames(match.matchPlayers, match.teamAName), 3), styled("", 3)],
+        [styled("총무팀 MOM", 1), styled(getTeamMvpNames(match.matchPlayers, match.teamBName), 4), styled("", 4)],
         [styled("S/N", 1), styled(match.teamAName, 3), styled(match.teamBName, 4)],
         ...Array.from({ length: rowCount }, (_, index) => [
           styled(index + 1, 5),
