@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { DesktopNav } from "@/components/DesktopNav";
 import { MobileNavMenu } from "@/components/MobileNavMenu";
 import "./globals.css";
 
@@ -42,25 +43,25 @@ const navItems = [
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="ko">
-      <body className="min-h-screen bg-arena-black text-slate-100">
-        <header className="sticky top-0 z-50 border-b border-arena-line bg-arena-navy/95 backdrop-blur">
-          <div className="relative mx-auto flex max-w-6xl items-center justify-between px-4 py-4">
+      <body className="arena-light min-h-screen bg-[#f4f6f8] text-slate-900">
+        <header className="sticky top-0 z-50 border-b border-arena-line bg-arena-navy/95 shadow-sm backdrop-blur-md">
+          <div className="relative mx-auto flex min-h-16 max-w-[1480px] items-center justify-between px-4 sm:px-6">
             <div className="flex items-center gap-3">
               <MobileNavMenu items={navItems} />
-              <Link href="/" className="text-2xl font-black tracking-wide text-white">
-                ARENA <span className="text-arena-lime">FC</span>
+              <Link href="/" className="group flex items-center gap-2.5 text-xl font-black text-white sm:text-2xl">
+                <span className="grid h-8 w-8 -skew-x-6 place-items-center border-2 border-arena-red text-base font-black text-arena-red transition group-hover:bg-arena-red group-hover:text-white">
+                  A
+                </span>
+                <span className="italic">ARENA FC</span>
               </Link>
             </div>
-            <nav className="hidden gap-2 sm:flex">
-              {navItems.map((item) => (
-                <Link key={item.href} className="rounded-md border border-arena-line px-3 py-2 text-sm font-semibold text-slate-200 transition hover:border-arena-cyan hover:text-white" href={item.href}>
-                  {item.label}
-                </Link>
-              ))}
-            </nav>
+            <DesktopNav items={navItems} />
+            <span className="hidden border border-arena-line bg-white/[0.03] px-3 py-2 text-xs font-bold text-slate-500 lg:block">
+              2026 SEASON RECORD
+            </span>
           </div>
         </header>
-        <main className="mx-auto max-w-6xl px-4 py-8">{children}</main>
+        <main className="mx-auto max-w-[1480px] px-4 py-5 sm:px-6 sm:py-7">{children}</main>
       </body>
     </html>
   );

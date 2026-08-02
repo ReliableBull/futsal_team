@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { notFound } from "next/navigation";
 import { PlayerAvatar } from "@/components/PlayerAvatar";
 import { StatCard } from "@/components/StatCard";
@@ -14,6 +15,16 @@ export default async function PlayerDetailPage({ params }: { params: { id: strin
         where: { match: { status: matchStatus.completed } },
         include: { match: true },
         orderBy: { match: { matchDate: "desc" } }
+      },
+      scoredGoals: {
+        where: { match: { status: matchStatus.completed } },
+        include: { match: true, assister: { select: { id: true, name: true } } },
+        orderBy: [{ match: { matchDate: "desc" } }, { sequence: "asc" }]
+      },
+      assistedGoals: {
+        where: { match: { status: matchStatus.completed } },
+        include: { match: true, scorer: { select: { id: true, name: true } } },
+        orderBy: [{ match: { matchDate: "desc" } }, { sequence: "asc" }]
       }
     }
   });
@@ -39,6 +50,8 @@ export default async function PlayerDetailPage({ params }: { params: { id: strin
       };
     });
   const position = parsePlayerPosition(player.position);
+  const missingGoalDetails = Math.max(0, stats.goals - player.scoredGoals.length);
+  const missingAssistDetails = Math.max(0, stats.assists - player.assistedGoals.length);
 
   return (
     <div className="space-y-6">
@@ -59,10 +72,96 @@ export default async function PlayerDetailPage({ params }: { params: { id: strin
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
         <StatCard label="출장 경기 수" value={stats.totalMatches} detail={formatPlayerRecord(stats)} />
         <StatCard label="승률" value={`${stats.winRate}%`} />
-        <StatCard label="득점" value={stats.goals} />
-        <StatCard label="도움" value={stats.assists} />
+        <StatCard label="득점" value={stats.goals} detail="도움을 준 선수 확인" href="#goal-details" />
+        <StatCard label="도움" value={stats.assists} detail="도움을 받은 득점자 확인" href="#assist-details" />
         <StatCard label="MOM" value={stats.mvpCount} detail="선정 횟수" />
       </div>
+
+      <section>
+        <div className="mb-4">
+          <p className="text-sm font-black uppercase text-arena-red">Goal Connections</p>
+          <h2 className="mt-1 text-xl font-black text-white">득점·도움 연결 기록</h2>
+          <p className="mt-1 text-sm text-slate-400">각 골의 득점자와 도움자를 경기별로 확인할 수 있습니다.</p>
+        </div>
+
+        <div className="grid gap-4 lg:grid-cols-2">
+          <article id="goal-details" className="scroll-mt-24 rounded-lg border border-arena-line bg-arena-panel p-5 shadow-lg shadow-slate-200/50">
+            <div className="flex items-center justify-between gap-3 border-b border-arena-line pb-3">
+              <div>
+                <h3 className="font-black text-white">내 득점</h3>
+                <p className="mt-1 text-xs text-slate-400">내 골을 도와준 선수</p>
+              </div>
+              <strong className="text-2xl font-black text-arena-red">{stats.goals}</strong>
+            </div>
+
+            <div className="mt-3 max-h-[520px] space-y-2 overflow-y-auto pr-1 arena-scrollbar">
+              {player.scoredGoals.map((goal) => (
+                <div key={goal.id} className="grid gap-2 rounded-md border border-arena-line bg-black/20 p-3 sm:grid-cols-[100px_1fr_auto] sm:items-center">
+                  <div>
+                    <p className="text-xs font-bold text-slate-500">{formatDate(goal.match.matchDate)}</p>
+                    <p className="mt-1 text-xs font-black text-arena-red">{goal.sequence}번째 골</p>
+                  </div>
+                  <Link className="text-sm font-bold text-white transition hover:text-arena-red" href={`/matches/${goal.matchId}`}>
+                    {goal.match.teamAName} {goal.match.teamAScore} : {goal.match.teamBScore} {goal.match.teamBName}
+                  </Link>
+                  <p className="text-sm font-semibold text-slate-500 sm:text-right">
+                    도움: {goal.assistKnown ? (
+                      goal.assister ? (
+                        <Link className="font-black text-arena-cyan hover:underline" href={`/players/${goal.assister.id}`}>
+                          {goal.assister.name}
+                        </Link>
+                      ) : (
+                        <span className="font-bold text-slate-600">없음</span>
+                      )
+                    ) : (
+                      <span className="font-bold text-slate-500">기존 상세정보 없음</span>
+                    )}
+                  </p>
+                </div>
+              ))}
+              {missingGoalDetails > 0 ? (
+                <p className="rounded-md border border-dashed border-arena-line bg-black/20 p-3 text-sm text-slate-500">
+                  기존 득점 {missingGoalDetails}골은 도움 연결 정보가 저장되어 있지 않습니다.
+                </p>
+              ) : null}
+              {stats.goals === 0 ? <p className="py-6 text-center text-sm text-slate-400">등록된 득점이 없습니다.</p> : null}
+            </div>
+          </article>
+
+          <article id="assist-details" className="scroll-mt-24 rounded-lg border border-arena-line bg-arena-panel p-5 shadow-lg shadow-slate-200/50">
+            <div className="flex items-center justify-between gap-3 border-b border-arena-line pb-3">
+              <div>
+                <h3 className="font-black text-white">내 도움</h3>
+                <p className="mt-1 text-xs text-slate-400">내 패스로 득점한 선수</p>
+              </div>
+              <strong className="text-2xl font-black text-arena-cyan">{stats.assists}</strong>
+            </div>
+
+            <div className="mt-3 max-h-[520px] space-y-2 overflow-y-auto pr-1 arena-scrollbar">
+              {player.assistedGoals.map((goal) => (
+                <div key={goal.id} className="grid gap-2 rounded-md border border-arena-line bg-black/20 p-3 sm:grid-cols-[100px_1fr_auto] sm:items-center">
+                  <div>
+                    <p className="text-xs font-bold text-slate-500">{formatDate(goal.match.matchDate)}</p>
+                    <p className="mt-1 text-xs font-black text-arena-cyan">도움</p>
+                  </div>
+                  <Link className="text-sm font-bold text-white transition hover:text-arena-red" href={`/matches/${goal.matchId}`}>
+                    {goal.match.teamAName} {goal.match.teamAScore} : {goal.match.teamBScore} {goal.match.teamBName}
+                  </Link>
+                  <p className="text-sm font-semibold text-slate-500 sm:text-right">
+                    득점: <Link className="font-black text-arena-red hover:underline" href={`/players/${goal.scorer.id}`}>{goal.scorer.name}</Link>
+                  </p>
+                </div>
+              ))}
+              {missingAssistDetails > 0 ? (
+                <p className="rounded-md border border-dashed border-arena-line bg-black/20 p-3 text-sm text-slate-500">
+                  기존 도움 {missingAssistDetails}개는 연결된 득점자 정보가 저장되어 있지 않습니다.
+                </p>
+              ) : null}
+              {stats.assists === 0 ? <p className="py-6 text-center text-sm text-slate-400">등록된 도움이 없습니다.</p> : null}
+            </div>
+          </article>
+        </div>
+      </section>
 
       <section className="rounded-lg border border-arena-line bg-arena-panel p-5">
         <div className="mb-4">

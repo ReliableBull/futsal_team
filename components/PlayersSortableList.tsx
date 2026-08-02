@@ -55,12 +55,20 @@ function PlayerIdentity({ player }: { player: SortablePlayer }) {
   );
 }
 
-function MobileStat({ label, value }: { label: string; value: string | number }) {
-  return (
-    <div className="rounded-md bg-white/5 px-3 py-2 text-center">
+function MobileStat({ label, value, href }: { label: string; value: string | number; href?: string }) {
+  const content = (
+    <>
       <p className="text-xs font-semibold text-slate-400">{label}</p>
       <p className="mt-1 text-sm font-black text-white">{value}</p>
-    </div>
+    </>
+  );
+
+  return href ? (
+    <Link className="rounded-md bg-white/5 px-3 py-2 text-center transition hover:bg-red-50 hover:text-arena-red" href={href}>
+      {content}
+    </Link>
+  ) : (
+    <div className="rounded-md bg-white/5 px-3 py-2 text-center">{content}</div>
   );
 }
 
@@ -141,7 +149,7 @@ export function PlayersSortableList({ players }: { players: SortablePlayer[] }) 
 
       <div className="grid gap-3 md:hidden">
         {sortedPlayers.map((player) => (
-          <article key={player.id} className="rounded-lg border border-arena-line bg-[radial-gradient(circle_at_top,rgba(64,217,255,0.12),transparent_42%),#151d2d] p-4 text-center shadow-xl shadow-black/20">
+          <article key={player.id} className="rounded-lg border border-arena-line bg-[radial-gradient(circle_at_top,rgba(239,65,54,0.09),transparent_42%),#ffffff] p-4 text-center shadow-lg shadow-slate-200/60">
             <div className="flex flex-col items-center">
               <Link className="transition hover:scale-[1.03]" href={`/players/${player.id}`} aria-label={`${player.name} 상세 보기`}>
                 <PlayerAvatar playerId={player.id} name={player.name} profileImageUrl={player.profileImageUrl} size="lg" />
@@ -163,8 +171,8 @@ export function PlayersSortableList({ players }: { players: SortablePlayer[] }) 
             </div>
             <div className="mt-2 grid grid-cols-4 gap-2">
               <MobileStat label="경기" value={player.totalMatches} />
-              <MobileStat label="득점" value={player.goals} />
-              <MobileStat label="도움" value={player.assists} />
+              <MobileStat label="득점" value={player.goals} href={`/players/${player.id}#goal-details`} />
+              <MobileStat label="도움" value={player.assists} href={`/players/${player.id}#assist-details`} />
               <MobileStat label="MOM" value={player.mvpCount} />
             </div>
           </article>
@@ -196,8 +204,12 @@ export function PlayersSortableList({ players }: { players: SortablePlayer[] }) 
                 <td className="px-3 py-3 text-right">{player.losses}</td>
                 <td className="px-3 py-3 text-right">{player.draws}</td>
                 <td className="px-3 py-3 text-right font-bold text-white">{player.winRate}%</td>
-                <td className="px-3 py-3 text-right">{player.goals}</td>
-                <td className="px-3 py-3 text-right">{player.assists}</td>
+                <td className="px-3 py-3 text-right">
+                  <Link className="font-black text-arena-red hover:underline" href={`/players/${player.id}#goal-details`}>{player.goals}</Link>
+                </td>
+                <td className="px-3 py-3 text-right">
+                  <Link className="font-black text-arena-cyan hover:underline" href={`/players/${player.id}#assist-details`}>{player.assists}</Link>
+                </td>
                 <td className="px-3 py-3 text-right">{player.mvpCount}</td>
               </tr>
             ))}

@@ -22,7 +22,7 @@ export function MobileNavMenu({ items }: MobileNavMenuProps) {
   return (
     <div className="sm:hidden">
       <button
-        className="grid h-10 w-10 place-items-center rounded-md border border-arena-line bg-black/20 text-slate-200 transition hover:border-arena-cyan hover:text-white"
+        className="grid h-10 w-10 place-items-center border border-arena-line bg-black/30 text-slate-200 transition hover:border-arena-red hover:text-white"
         type="button"
         aria-label="메뉴 열기"
         aria-expanded={isOpen}
@@ -30,9 +30,9 @@ export function MobileNavMenu({ items }: MobileNavMenuProps) {
         onClick={() => setIsOpen(true)}
       >
         <span className="grid gap-1">
-          <span className="block h-0.5 w-5 rounded-full bg-current" />
-          <span className="block h-0.5 w-5 rounded-full bg-current" />
-          <span className="block h-0.5 w-5 rounded-full bg-current" />
+          <span className="block h-0.5 w-5 bg-current" />
+          <span className="block h-0.5 w-5 bg-current" />
+          <span className="block h-0.5 w-5 bg-current" />
         </span>
       </button>
 
@@ -47,33 +47,34 @@ export function MobileNavMenu({ items }: MobileNavMenuProps) {
 
       <aside
         id="mobile-nav-drawer"
-        className={`fixed left-0 top-0 z-[70] flex h-dvh min-h-screen w-[82vw] max-w-[320px] flex-col overflow-y-auto border-r border-arena-line bg-[#101827] shadow-2xl shadow-black/70 transition-transform duration-300 ease-out ${
+        className={`arena-dark fixed left-0 top-0 z-[70] flex h-dvh min-h-screen w-[82vw] max-w-[320px] flex-col overflow-y-auto border-r border-arena-line bg-[#0c0e10] shadow-2xl shadow-black/70 transition-transform duration-300 ease-out ${
           isOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >
         <div className="flex items-center justify-between border-b border-arena-line px-5 py-4">
-          <Link className="text-xl font-black tracking-wide text-white" href="/" onClick={() => setIsOpen(false)}>
-            ARENA <span className="text-arena-lime">FC</span>
+          <Link className="flex items-center gap-2 text-xl font-black italic text-white" href="/" onClick={() => setIsOpen(false)}>
+            <span className="grid h-7 w-7 -skew-x-6 place-items-center border-2 border-arena-red text-sm text-arena-red">A</span>
+            ARENA FC
           </Link>
-          <button className="rounded-md border border-arena-line px-3 py-2 text-sm font-bold text-slate-200" type="button" onClick={() => setIsOpen(false)}>
-            닫기
+          <button className="grid h-9 w-9 place-items-center border border-arena-line text-xl font-bold text-slate-300" aria-label="메뉴 닫기" type="button" onClick={() => setIsOpen(false)}>
+            ×
           </button>
         </div>
 
-        <nav className="flex-1 bg-[#0c1220]" aria-label="모바일 탭 메뉴">
+        <nav className="flex-1 bg-[#090b0c]" aria-label="모바일 탭 메뉴">
           {items.map((item) => (
             <Link
               key={item.href}
-              className={`flex items-center justify-between border-b border-arena-line px-5 py-5 text-base font-bold transition ${
+              className={`flex items-center justify-between border-b border-arena-line px-5 py-5 text-base font-black transition ${
                 isActive(item.href)
-                  ? "bg-arena-lime text-arena-black shadow-lg shadow-arena-lime/15"
-                  : "bg-[#121b2b] text-slate-100 hover:bg-[#1b2536] hover:text-white"
+                  ? "border-l-4 border-l-arena-red bg-[#17191b] text-white"
+                  : "border-l-4 border-l-transparent bg-[#0f1113] text-slate-400 hover:bg-[#17191b] hover:text-white"
               }`}
               href={item.href}
               onClick={() => setIsOpen(false)}
             >
               <span>{item.label}</span>
-              <span className={`h-2 w-2 rounded-full ${isActive(item.href) ? "bg-arena-black" : "bg-arena-cyan"}`} />
+              <span className={`h-2 w-2 ${isActive(item.href) ? "bg-arena-red" : "bg-slate-700"}`} />
             </Link>
           ))}
         </nav>

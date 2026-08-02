@@ -10,6 +10,8 @@ export class MatchNotFoundError extends Error {
   status = 404;
 }
 
+export type GoalAssistSelection = number | null | "UNKNOWN";
+
 export type MatchPayload = {
   matchDate: string;
   status: MatchStatusValue;
@@ -22,7 +24,7 @@ export type MatchPayload = {
   teamBPlayerIds: number[];
   goalsByPlayerId: Record<number, number>;
   assistsByPlayerId: Record<number, number>;
-  goalAssistPlayerIdsByScorerId: Record<number, Array<number | null>>;
+  goalAssistPlayerIdsByScorerId: Record<number, GoalAssistSelection[]>;
   chairmanTeamMvpIds: number[];
   managerTeamMvpIds: number[];
   memo: string | null;
@@ -47,6 +49,11 @@ function asOptionalNumber(value: unknown) {
   return Number.isFinite(parsed) ? parsed : null;
 }
 
+function asGoalAssistSelection(value: unknown): GoalAssistSelection {
+  if (value === "UNKNOWN" || value === "unknown") return "UNKNOWN";
+  return asOptionalNumber(value);
+}
+
 function asMatchStatus(value: FormDataEntryValue | null): MatchStatusValue {
   return value === matchStatus.completed ? matchStatus.completed : matchStatus.inProgress;
 }
@@ -62,10 +69,20 @@ function normalizeRecord(input: unknown) {
   );
 }
 
+function normalizeGoalAssistRecord(input: unknown) {
+  if (!input || typeof input !== "object") return {};
+
+  return Object.fromEntries(
+    Object.entries(input as Record<string, unknown>)
+      .filter(([key, value]) => Number.isInteger(Number(key)) && Array.isArray(value))
+      .map(([key, value]) => [Number(key), (value as unknown[]).map(asGoalAssistSelection)])
+  );
+}
+
 function countGoalAssists(
   selectedIds: number[],
   goalsByPlayerId: Record<number, number>,
-  goalAssistPlayerIdsByScorerId: Record<number, Array<number | null>>
+  goalAssistPlayerIdsByScorerId: Record<number, GoalAssistSelection[]>
 ) {
   const assistsByPlayerId: Record<number, number> = Object.fromEntries(selectedIds.map((playerId) => [playerId, 0]));
 
@@ -74,7 +91,7 @@ function countGoalAssists(
     const goalCount = goalsByPlayerId[scorerId] ?? 0;
 
     assistPlayerIds.slice(0, goalCount).forEach((assistPlayerId) => {
-      if (assistPlayerId && selectedIds.includes(assistPlayerId)) {
+      if (typeof assistPlayerId === "number" && selectedIds.includes(assistPlayerId)) {
         assistsByPlayerId[assistPlayerId] = (assistsByPlayerId[assistPlayerId] ?? 0) + 1;
       }
     });
@@ -91,8 +108,18 @@ export function parseMatchFormData(formData: FormData): MatchPayload {
   const goalAssistPlayerIdsByScorerId = Object.fromEntries(
     selectedIds.map((playerId) => [
       playerId,
-      Array.from({ length: goalsByPlayerId[playerId] ?? 0 }, (_, index) => asOptionalNumber(asString(formData.get(`goalAssist_${playerId}_${index}`))))
+      Array.from({ length: goalsByPlayerId[playerId] ?? 0 }, (_, index) =>
+        asGoalAssistSelection(asString(formData.get(`goalAssist_${playerId}_${index}`)))
+      )
     ])
+  );
+  const countedAssists = countGoalAssists(selectedIds, goalsByPlayerId, goalAssistPlayerIdsByScorerId);
+  const hasUnknownGoalDetails = Object.values(goalAssistPlayerIdsByScorerId).some((selections) => selections.includes("UNKNOWN"));
+  const assistsByPlayerId = Object.fromEntries(
+    selectedIds.map((playerId) => {
+      const legacyAssists = Math.max(0, asOptionalNumber(asString(formData.get(`legacyAssists_${playerId}`))) ?? 0);
+      return [playerId, hasUnknownGoalDetails ? Math.max(legacyAssists, countedAssists[playerId] ?? 0) : countedAssists[playerId] ?? 0];
+    })
   );
 
   return {
@@ -106,7 +133,7 @@ export function parseMatchFormData(formData: FormData): MatchPayload {
     teamAPlayerIds: uniqueIds(formData.getAll("teamAPlayers")),
     teamBPlayerIds: uniqueIds(formData.getAll("teamBPlayers")),
     goalsByPlayerId,
-    assistsByPlayerId: countGoalAssists(selectedIds, goalsByPlayerId, goalAssistPlayerIdsByScorerId),
+    assistsByPlayerId,
     goalAssistPlayerIdsByScorerId,
     chairmanTeamMvpIds: uniqueIds(formData.getAll("chairmanTeamMvpIds")),
     managerTeamMvpIds: uniqueIds(formData.getAll("managerTeamMvpIds")),
@@ -120,6 +147,12 @@ export function parseMatchJson(input: unknown): MatchPayload {
   }
 
   const body = input as Record<string, unknown>;
+  const teamAPlayerIds = uniqueIds(Array.isArray(body.teamAPlayerIds) ? body.teamAPlayerIds : []);
+  const teamBPlayerIds = uniqueIds(Array.isArray(body.teamBPlayerIds) ? body.teamBPlayerIds : []);
+  const selectedIds = [...teamAPlayerIds, ...teamBPlayerIds];
+  const goalsByPlayerId = normalizeRecord(body.goalsByPlayerId);
+  const goalAssistPlayerIdsByScorerId = normalizeGoalAssistRecord(body.goalAssistPlayerIdsByScorerId);
+  const hasGoalAssistDetails = Object.keys(goalAssistPlayerIdsByScorerId).length > 0;
 
   return {
     matchDate: String(body.matchDate ?? "").trim(),
@@ -129,11 +162,13 @@ export function parseMatchJson(input: unknown): MatchPayload {
     teamBName: String(body.teamBName ?? "총무팀").trim() || "총무팀",
     teamAScore: asNumber(body.teamAScore, "회장팀 점수"),
     teamBScore: asNumber(body.teamBScore, "총무팀 점수"),
-    teamAPlayerIds: uniqueIds(Array.isArray(body.teamAPlayerIds) ? body.teamAPlayerIds : []),
-    teamBPlayerIds: uniqueIds(Array.isArray(body.teamBPlayerIds) ? body.teamBPlayerIds : []),
-    goalsByPlayerId: normalizeRecord(body.goalsByPlayerId),
-    assistsByPlayerId: normalizeRecord(body.assistsByPlayerId),
-    goalAssistPlayerIdsByScorerId: {},
+    teamAPlayerIds,
+    teamBPlayerIds,
+    goalsByPlayerId,
+    assistsByPlayerId: hasGoalAssistDetails
+      ? countGoalAssists(selectedIds, goalsByPlayerId, goalAssistPlayerIdsByScorerId)
+      : normalizeRecord(body.assistsByPlayerId),
+    goalAssistPlayerIdsByScorerId,
     chairmanTeamMvpIds: uniqueIds(
       Array.isArray(body.chairmanTeamMvpIds)
         ? body.chairmanTeamMvpIds
@@ -186,7 +221,7 @@ async function prepareMatchData(payload: MatchPayload) {
     const goalCount = payload.goalsByPlayerId[scorerId] ?? 0;
 
     assistPlayerIds.slice(0, goalCount).forEach((assistPlayerId) => {
-      if (!assistPlayerId) return;
+      if (assistPlayerId === null || assistPlayerId === "UNKNOWN") return;
       if (!teamByPlayerId.has(assistPlayerId)) {
         throw new MatchValidationError("도움 선수는 경기 참가 선수 중에서 선택해주세요.");
       }
@@ -244,6 +279,18 @@ async function prepareMatchData(payload: MatchPayload) {
       isMvp: payload.managerTeamMvpIds.includes(playerId)
     }))
   ];
+  const goals = allPlayerIds.flatMap((scorerId) =>
+    Array.from({ length: payload.goalsByPlayerId[scorerId] ?? 0 }, (_, goalIndex) => {
+      const assistSelection = payload.goalAssistPlayerIdsByScorerId[scorerId]?.[goalIndex] ?? "UNKNOWN";
+
+      return {
+        scorerId,
+        assisterId: typeof assistSelection === "number" ? assistSelection : null,
+        sequence: goalIndex + 1,
+        assistKnown: assistSelection !== "UNKNOWN"
+      };
+    })
+  );
 
   return {
     matchDate: new Date(payload.matchDate),
@@ -257,7 +304,8 @@ async function prepareMatchData(payload: MatchPayload) {
     chairmanTeamMvpId: payload.chairmanTeamMvpIds[0] ?? null,
     managerTeamMvpId: payload.managerTeamMvpIds[0] ?? null,
     memo: payload.memo,
-    matchPlayers
+    matchPlayers,
+    goals
   };
 }
 
@@ -269,6 +317,9 @@ export async function createMatchRecord(payload: MatchPayload) {
       ...data,
       matchPlayers: {
         create: data.matchPlayers
+      },
+      goals: {
+        create: data.goals
       }
     },
     include: matchInclude
@@ -290,6 +341,10 @@ export async function updateMatchRecord(matchId: number, payload: MatchPayload) 
       matchPlayers: {
         deleteMany: {},
         create: data.matchPlayers
+      },
+      goals: {
+        deleteMany: {},
+        create: data.goals
       }
     },
     include: matchInclude
@@ -309,6 +364,10 @@ export const matchInclude = Prisma.validator<Prisma.MatchInclude>()({
   chairmanTeamMvp: true,
   managerTeamMvp: true,
   posters: { orderBy: { createdAt: "desc" } },
+  goals: {
+    include: { scorer: true, assister: true },
+    orderBy: [{ scorerId: "asc" }, { sequence: "asc" }]
+  },
   matchPlayers: {
     include: { player: true },
     orderBy: [{ teamName: "asc" }, { player: { name: "asc" } }]

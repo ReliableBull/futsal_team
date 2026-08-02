@@ -17,6 +17,7 @@ function hashPassword(password: string) {
 }
 
 async function main() {
+  await prisma.matchGoal.deleteMany();
   await prisma.matchPlayer.deleteMany();
   await prisma.match.deleteMany();
   await prisma.player.deleteMany();
@@ -86,6 +87,23 @@ async function main() {
           { playerId: byName["Seo Dongmin"].id, teamName: "Manager Team", result: result.win, goals: 1, assists: 0 },
           { playerId: byName["Oh Seungjae"].id, teamName: "Manager Team", result: result.win, goals: 0, assists: 1 }
         ]
+      },
+      goals: {
+        create: [
+          { scorerId: byName["Lee Hojoon"].id, assisterId: byName["Park Sangwoo"].id, sequence: 1 },
+          { scorerId: byName["Park Sangwoo"].id, sequence: 1 },
+          { scorerId: byName["Choi Junseo"].id, assisterId: byName["Jung Hyun"].id, sequence: 1 },
+          { scorerId: byName["Choi Junseo"].id, sequence: 2 },
+          { scorerId: byName["Jung Hyun"].id, sequence: 1 },
+          { scorerId: byName["Kang Sumin"].id, sequence: 1 },
+          { scorerId: byName["Kim Minjae"].id, sequence: 1 },
+          { scorerId: byName["Yoon Taehyun"].id, assisterId: byName["Kim Minjae"].id, sequence: 1 },
+          { scorerId: byName["Yoon Taehyun"].id, assisterId: byName["Kim Minjae"].id, sequence: 2 },
+          { scorerId: byName["Yoon Taehyun"].id, assisterId: byName["Han Jiwon"].id, sequence: 3 },
+          { scorerId: byName["Yoon Taehyun"].id, assisterId: byName["Oh Seungjae"].id, sequence: 4 },
+          { scorerId: byName["Han Jiwon"].id, sequence: 1 },
+          { scorerId: byName["Seo Dongmin"].id, sequence: 1 }
+        ]
       }
     }
   });
@@ -115,6 +133,20 @@ async function main() {
           { playerId: byName["Seo Dongmin"].id, teamName: "Manager Team", result: result.draw, goals: 1, assists: 0 },
           { playerId: byName["Oh Seungjae"].id, teamName: "Manager Team", result: result.draw, goals: 0, assists: 1 }
         ]
+      },
+      goals: {
+        create: [
+          { scorerId: byName["Lee Hojoon"].id, sequence: 1 },
+          { scorerId: byName["Park Sangwoo"].id, assisterId: byName["Lee Hojoon"].id, sequence: 1 },
+          { scorerId: byName["Choi Junseo"].id, sequence: 1 },
+          { scorerId: byName["Lim Gyumin"].id, assisterId: byName["Choi Junseo"].id, sequence: 1 },
+          { scorerId: byName["Baek Dohyun"].id, sequence: 1 },
+          { scorerId: byName["Kim Minjae"].id, assisterId: byName["Han Jiwon"].id, sequence: 1 },
+          { scorerId: byName["Kim Minjae"].id, sequence: 2 },
+          { scorerId: byName["Yoon Taehyun"].id, assisterId: byName["Kim Minjae"].id, sequence: 1 },
+          { scorerId: byName["Han Jiwon"].id, assisterId: byName["Oh Seungjae"].id, sequence: 1 },
+          { scorerId: byName["Seo Dongmin"].id, sequence: 1 }
+        ]
       }
     }
   });
@@ -143,6 +175,24 @@ async function main() {
           { playerId: byName["Han Jiwon"].id, teamName: "Manager Team", result: result.loss, goals: 2, assists: 1, isMvp: true },
           { playerId: byName["Seo Dongmin"].id, teamName: "Manager Team", result: result.loss, goals: 1, assists: 0 },
           { playerId: byName["Baek Dohyun"].id, teamName: "Manager Team", result: result.loss, goals: 0, assists: 1 }
+        ]
+      },
+      goals: {
+        create: [
+          { scorerId: byName["Lee Hojoon"].id, assisterId: byName["Park Sangwoo"].id, sequence: 1 },
+          { scorerId: byName["Lee Hojoon"].id, sequence: 2 },
+          { scorerId: byName["Park Sangwoo"].id, sequence: 1 },
+          { scorerId: byName["Choi Junseo"].id, assisterId: byName["Lee Hojoon"].id, sequence: 1 },
+          { scorerId: byName["Choi Junseo"].id, sequence: 2 },
+          { scorerId: byName["Jung Hyun"].id, sequence: 1 },
+          { scorerId: byName["Jung Hyun"].id, sequence: 2 },
+          { scorerId: byName["Lim Gyumin"].id, assisterId: byName["Jung Hyun"].id, sequence: 1 },
+          { scorerId: byName["Kim Minjae"].id, assisterId: byName["Han Jiwon"].id, sequence: 1 },
+          { scorerId: byName["Yoon Taehyun"].id, assisterId: byName["Kim Minjae"].id, sequence: 1 },
+          { scorerId: byName["Yoon Taehyun"].id, assisterId: byName["Kim Minjae"].id, sequence: 2 },
+          { scorerId: byName["Han Jiwon"].id, assisterId: byName["Baek Dohyun"].id, sequence: 1 },
+          { scorerId: byName["Han Jiwon"].id, sequence: 2 },
+          { scorerId: byName["Seo Dongmin"].id, sequence: 1 }
         ]
       }
     }

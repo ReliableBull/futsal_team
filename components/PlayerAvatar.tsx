@@ -30,7 +30,7 @@ export function PlayerAvatar({ playerId, name, profileImageUrl, size = "md" }: P
   }, [imageSrc]);
 
   return (
-    <span className={`relative inline-grid shrink-0 place-items-center overflow-hidden rounded-full border border-arena-line bg-[radial-gradient(circle_at_30%_20%,rgba(64,217,255,0.35),transparent_34%),#111827] font-black text-arena-lime shadow-lg shadow-black/20 ${sizeClass[size]}`}>
+    <span className={`relative inline-grid shrink-0 place-items-center overflow-hidden rounded-full border border-arena-line bg-[radial-gradient(circle_at_30%_20%,rgba(239,65,54,0.32),transparent_34%),#111315] font-black text-arena-red shadow-lg shadow-black/20 ${sizeClass[size]}`}>
       {!imageFailed && isLocalPreview ? (
         <span className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: `url("${imageSrc}")` }} />
       ) : !imageFailed ? (

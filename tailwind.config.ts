@@ -10,12 +10,16 @@ const config: Config = {
     extend: {
       colors: {
         arena: {
-          black: "#080b12",
-          navy: "#101827",
-          panel: "#151d2d",
-          line: "#273142",
-          lime: "#b6ff4d",
-          cyan: "#40d9ff"
+          black: "#08090a",
+          navy: "#ffffff",
+          panel: "#ffffff",
+          line: "#d9dee4",
+          lime: "#ef4136",
+          cyan: "#2563eb",
+          red: "#ef4136",
+          green: "#16803b",
+          gold: "#b7791f",
+          steel: "#64748b"
         }
       }
     }

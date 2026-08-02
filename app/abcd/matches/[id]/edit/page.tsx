@@ -30,6 +30,16 @@ export default async function EditMatchPage({ params }: { params: { id: string }
 
   const teamARecords = match.matchPlayers.filter((record) => record.teamName === match.teamAName);
   const teamBRecords = match.matchPlayers.filter((record) => record.teamName === match.teamBName);
+  const goalAssistPlayerIdsByScorerId: MatchFormInitialData["goalAssistPlayerIdsByScorerId"] = Object.fromEntries(
+    match.matchPlayers.map((record) => [
+      record.playerId,
+      Array.from({ length: record.goals }, (_, goalIndex) => {
+        const goal = match.goals.find((item) => item.scorerId === record.playerId && item.sequence === goalIndex + 1);
+        if (!goal || !goal.assistKnown) return "UNKNOWN" as const;
+        return goal.assisterId;
+      })
+    ])
+  );
   const initialData: MatchFormInitialData = {
     matchDate: toInputDate(match.matchDate),
     status: match.status === "COMPLETED" ? "COMPLETED" : "IN_PROGRESS",
@@ -42,7 +52,7 @@ export default async function EditMatchPage({ params }: { params: { id: string }
     teamBPlayerIds: teamBRecords.map((record) => record.playerId),
     goalsByPlayerId: Object.fromEntries(match.matchPlayers.map((record) => [record.playerId, record.goals])),
     assistsByPlayerId: Object.fromEntries(match.matchPlayers.map((record) => [record.playerId, record.assists])),
-    goalAssistPlayerIdsByScorerId: {},
+    goalAssistPlayerIdsByScorerId,
     chairmanTeamMvpIds: teamARecords.filter((record) => record.isMvp).map((record) => record.playerId),
     managerTeamMvpIds: teamBRecords.filter((record) => record.isMvp).map((record) => record.playerId),
     memo: match.memo ?? ""

@@ -26,6 +26,8 @@ model Player {
   createdAt           DateTime      @default(now())
   updatedAt           DateTime      @updatedAt
   matchPlayers        MatchPlayer[]
+  scoredGoals         MatchGoal[]   @relation("GoalScorer")
+  assistedGoals       MatchGoal[]   @relation("GoalAssister")
   chairmanMvpMatches  Match[]       @relation("ChairmanTeamMvp")
   managerMvpMatches   Match[]       @relation("ManagerTeamMvp")
 }
@@ -48,6 +50,7 @@ model Match {
   chairmanTeamMvp    Player?       @relation("ChairmanTeamMvp", fields: [chairmanTeamMvpId], references: [id])
   managerTeamMvp     Player?       @relation("ManagerTeamMvp", fields: [managerTeamMvpId], references: [id])
   matchPlayers       MatchPlayer[]
+  goals              MatchGoal[]
   posters            MatchPoster[]
 }
 
@@ -75,4 +78,21 @@ model MatchPoster {
   imageUrl  String
   createdAt DateTime @default(now())
   match     Match    @relation(fields: [matchId], references: [id], onDelete: Cascade)
+}
+
+model MatchGoal {
+  id          Int      @id @default(autoincrement())
+  matchId     Int
+  scorerId    Int
+  assisterId  Int?
+  sequence    Int
+  assistKnown Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  match       Match    @relation(fields: [matchId], references: [id], onDelete: Cascade)
+  scorer      Player   @relation("GoalScorer", fields: [scorerId], references: [id], onDelete: Restrict)
+  assister    Player?  @relation("GoalAssister", fields: [assisterId], references: [id], onDelete: Restrict)
+
+  @@unique([matchId, scorerId, sequence])
+  @@index([assisterId])
 }

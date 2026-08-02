@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import type { Player } from "@prisma/client";
+import type { GoalAssistSelection } from "@/lib/matches";
 import { matchStatus, type MatchStatusValue } from "@/lib/stats";
 
 type MatchFormAction = (formData: FormData) => void | Promise<void>;
@@ -21,7 +22,7 @@ export type MatchFormInitialData = {
   teamBPlayerIds: number[];
   goalsByPlayerId: Record<number, number>;
   assistsByPlayerId: Record<number, number>;
-  goalAssistPlayerIdsByScorerId: Record<number, Array<number | null>>;
+  goalAssistPlayerIdsByScorerId: Record<number, GoalAssistSelection[]>;
   chairmanTeamMvpIds: number[];
   managerTeamMvpIds: number[];
   memo: string;
@@ -68,31 +69,7 @@ function wait(ms: number) {
 }
 
 function buildInitialGoalAssists(initialData: MatchFormInitialData) {
-  if (Object.keys(initialData.goalAssistPlayerIdsByScorerId).length > 0) {
-    return initialData.goalAssistPlayerIdsByScorerId;
-  }
-
-  function distribute(teamIds: number[]) {
-    const result: Record<number, Array<number | null>> = {};
-    const assistQueue = teamIds.flatMap((playerId) => Array.from({ length: initialData.assistsByPlayerId[playerId] ?? 0 }, () => playerId));
-
-    teamIds.forEach((scorerId) => {
-      const goalCount = initialData.goalsByPlayerId[scorerId] ?? 0;
-      result[scorerId] = Array.from({ length: goalCount }, () => {
-        const assistIndex = assistQueue.findIndex((assistPlayerId) => assistPlayerId !== scorerId);
-        if (assistIndex === -1) return null;
-        const [assistPlayerId] = assistQueue.splice(assistIndex, 1);
-        return assistPlayerId;
-      });
-    });
-
-    return result;
-  }
-
-  return {
-    ...distribute(initialData.teamAPlayerIds),
-    ...distribute(initialData.teamBPlayerIds)
-  };
+  return initialData.goalAssistPlayerIdsByScorerId;
 }
 
 export function AdminMatchForm({ action, players, initialData = defaultInitialData, submitLabel = "경기 등록" }: AdminMatchFormProps) {
@@ -338,6 +315,14 @@ export function AdminMatchForm({ action, players, initialData = defaultInitialDa
       {teamBIds.map((playerId) => (
         <input key={`team-b-${playerId}`} name="teamBPlayers" type="hidden" value={playerId} />
       ))}
+      {Array.from(selectedIds).map((playerId) => (
+        <input
+          key={`legacy-assists-${playerId}`}
+          name={`legacyAssists_${playerId}`}
+          type="hidden"
+          value={initialData.assistsByPlayerId[playerId] ?? 0}
+        />
+      ))}
 
       {activeTab === "manual" ? (
         <div className="grid gap-4 lg:grid-cols-2">
@@ -450,9 +435,16 @@ export function AdminMatchForm({ action, players, initialData = defaultInitialDa
                               <select
                                 className="w-full rounded-md border border-arena-line bg-black/30 px-2 py-2 text-sm text-slate-100"
                                 name={`goalAssist_${player.id}_${goalIndex}`}
-                                defaultValue={initialGoalAssistPlayerIdsByScorerId[player.id]?.[goalIndex] ?? ""}
+                                defaultValue={
+                                  initialGoalAssistPlayerIdsByScorerId[player.id]?.[goalIndex] === "UNKNOWN"
+                                    ? "unknown"
+                                    : initialGoalAssistPlayerIdsByScorerId[player.id]?.[goalIndex] ?? ""
+                                }
                                 aria-label={`${player.name} ${goalIndex + 1}번째 골 도움`}
                               >
+                                {initialGoalAssistPlayerIdsByScorerId[player.id]?.[goalIndex] === "UNKNOWN" ? (
+                                  <option value="unknown">기존 상세정보 없음</option>
+                                ) : null}
                                 <option value="">도움 없음</option>
                                 {team.players
                                   .filter((assistPlayer) => assistPlayer.id !== player.id)

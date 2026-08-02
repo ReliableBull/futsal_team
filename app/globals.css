@@ -3,18 +3,125 @@
 @tailwind utilities;
 
 :root {
-  color-scheme: dark;
+  color-scheme: light;
 }
 
 body {
-  background: #080b12;
-  color: #eef4ff;
+  background: #f4f6f8;
+  color: #111827;
+  letter-spacing: 0;
+  background-image: linear-gradient(rgba(15, 23, 42, 0.025) 1px, transparent 1px);
+  background-size: 100% 32px;
 }
 
 input,
 select,
 textarea {
-  color-scheme: dark;
+  color-scheme: light;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: #94a3b8;
+}
+
+.arena-light .text-white,
+.arena-light .text-slate-100 {
+  color: #111827;
+}
+
+.arena-light .text-slate-200 {
+  color: #334155;
+}
+
+.arena-light .text-slate-300 {
+  color: #475569;
+}
+
+.arena-light .text-slate-400 {
+  color: #64748b;
+}
+
+.arena-light .bg-black\/20 {
+  background-color: #f8fafc;
+}
+
+.arena-light .bg-black\/25 {
+  background-color: #f8fafc;
+}
+
+.arena-light .bg-black\/30 {
+  background-color: #ffffff;
+}
+
+.arena-light .bg-white\/5 {
+  background-color: #f1f5f9;
+}
+
+.arena-light .bg-white\/10 {
+  background-color: #e2e8f0;
+}
+
+.arena-light .bg-white\/\[0\.03\] {
+  background-color: #f8fafc;
+}
+
+.arena-light .hover\:bg-white\/5:hover,
+.arena-light .hover\:bg-white\/\[0\.025\]:hover {
+  background-color: #f8fafc;
+}
+
+.arena-light .hover\:text-white:hover {
+  color: #111827;
+}
+
+.arena-light .arena-dark .text-white,
+.arena-light .arena-dark .text-slate-100 {
+  color: #ffffff;
+}
+
+.arena-light .arena-dark .text-slate-200 {
+  color: #e2e8f0;
+}
+
+.arena-light .arena-dark .text-slate-300 {
+  color: #cbd5e1;
+}
+
+.arena-light .arena-dark .text-slate-400 {
+  color: #94a3b8;
+}
+
+.arena-light .arena-dark .border-arena-line {
+  border-color: #2a2e31;
+}
+
+.arena-light .arena-dark .hover\:text-white:hover {
+  color: #ffffff;
+}
+
+::selection {
+  background: #ef4136;
+  color: #fff;
+}
+
+.arena-scrollbar {
+  scrollbar-color: #aeb6bf #eef1f4;
+  scrollbar-width: thin;
+}
+
+.arena-scrollbar::-webkit-scrollbar {
+  height: 8px;
+  width: 8px;
+}
+
+.arena-scrollbar::-webkit-scrollbar-track {
+  background: #eef1f4;
+}
+
+.arena-scrollbar::-webkit-scrollbar-thumb {
+  background: #aeb6bf;
+  border-radius: 2px;
 }
 
 @keyframes lotto-pop {
