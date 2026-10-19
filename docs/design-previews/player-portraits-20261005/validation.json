@@ -1,0 +1,27 @@
+{
+  "snapshotDate": "2026-10-05",
+  "activePlayers": 27,
+  "completePlayers": 25,
+  "selectedImages": 50,
+  "posesPerPlayer": 2,
+  "allPngFilesDecode": true,
+  "allDimensions": [
+    1024,
+    1536
+  ],
+  "allHaveTransparentAlpha": true,
+  "allOriginalReferenceHashesMatch": true,
+  "allSelectedImagesUnique": true,
+  "allGalleryLinksResolve": true,
+  "missingReferences": [
+    {
+      "id": 66,
+      "name": "이상헌"
+    },
+    {
+      "id": 68,
+      "name": "김성년"
+    }
+  ],
+  "totalBytes": 82852643
+}

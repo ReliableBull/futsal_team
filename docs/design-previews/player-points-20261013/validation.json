@@ -1,0 +1,21 @@
+{
+  "passed": true,
+  "players": 27,
+  "checks": [
+    "desktop points calculation",
+    "descending and ascending sorting",
+    "date filter agrees with stored completed-match records",
+    "tablet scroll without page overflow",
+    "mobile points display and sorting"
+  ],
+  "browserErrors": [],
+  "deployment": {
+    "deployed": true,
+    "buildId": "Sdos7KqEXxlBIk8vur8Ee",
+    "previousBuildId": "NWsV0TygO3nAhbhOUrxJO",
+    "pid": 50129,
+    "backup": ".next-mobile-player-points-rollback-20261013-NWsV0TygO3nAhbhOUrxJO",
+    "deployedAt": "2026-10-13T10:42:03.031Z"
+  },
+  "publicAddressVerified": true
+}

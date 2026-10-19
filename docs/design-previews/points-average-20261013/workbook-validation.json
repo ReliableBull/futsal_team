@@ -1,0 +1,14 @@
+{
+  "desktop": {
+    "rows": 27,
+    "screenValuesMatch": true,
+    "numericAverageWithFormula": true,
+    "filterColumns": 14
+  },
+  "mobile": {
+    "rows": 27,
+    "screenValuesMatch": true,
+    "numericAverageWithFormula": true,
+    "filterColumns": 14
+  }
+}

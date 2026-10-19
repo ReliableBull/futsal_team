@@ -19,4 +19,8 @@ const nextConfig = {
   }
 };
 
-export default nextConfig;
+export default (phase) => ({
+  ...nextConfig,
+  // A development server must never overwrite files used by next start.
+  distDir: process.env.NEXT_DIST_DIR || (phase === "phase-development-server" ? ".next-dev" : ".next")
+});

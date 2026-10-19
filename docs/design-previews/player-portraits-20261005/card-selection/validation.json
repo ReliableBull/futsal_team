@@ -1,0 +1,77 @@
+{
+  "results": [
+    {
+      "pose": "arms-crossed",
+      "theme": "arena",
+      "bytes": 908117,
+      "hash": "9eb8953664c1252b6496238c1d0a8dd39be26f18d8de0bda8843637fcf6f7007"
+    },
+    {
+      "pose": "arms-crossed",
+      "theme": "editorial",
+      "bytes": 253163,
+      "hash": "71cc951f542de1ee02a7256279e9a04202a5ce811b84b04e3158ee951c2f1ef0"
+    },
+    {
+      "pose": "arms-crossed",
+      "theme": "noir",
+      "bytes": 258951,
+      "hash": "a5dacac8e0a00f88a4fc3bd3dd4f45f98b8c062a7729adc9b80ec449af28e42e"
+    },
+    {
+      "pose": "arms-crossed",
+      "theme": "archive",
+      "bytes": 288144,
+      "hash": "04572466ebf95e67e2e7a3be98f8626586d319aaa04f9ef13971a978be3f2a58"
+    },
+    {
+      "pose": "arms-crossed",
+      "theme": "gold",
+      "bytes": 932329,
+      "hash": "d5826522f09d5205040105a9408bf050be7273324f04df2b5c6e25ace950df16"
+    },
+    {
+      "pose": "cheering",
+      "theme": "arena",
+      "bytes": 913912,
+      "hash": "d15ebd92591ce4215ae59419eddc623c20a86e663d7d9fa08fde24abb8ac1a13"
+    },
+    {
+      "pose": "cheering",
+      "theme": "editorial",
+      "bytes": 262646,
+      "hash": "381bd6495840f8cca2ff59fcb280a9beba57be3b629cf5cf9fdb085e6d42b69a"
+    },
+    {
+      "pose": "cheering",
+      "theme": "noir",
+      "bytes": 266222,
+      "hash": "2bb63197de2dca266fbfd038b7f28d3b531ca28453fadaf63fb5764888b87728"
+    },
+    {
+      "pose": "cheering",
+      "theme": "archive",
+      "bytes": 296120,
+      "hash": "dd35d7e0a0334d4f520df442295e92853b1db73b5cfee446bf93b2634cbf7eb5"
+    },
+    {
+      "pose": "cheering",
+      "theme": "gold",
+      "bytes": 939606,
+      "hash": "e5d1d17cce12beed2c4738453af3c10ac7676a55e0ca4274088ac86a11fa6e8c"
+    }
+  ],
+  "checked": [
+    "original profile",
+    "both poses in all 5 themes",
+    "matching preview/download",
+    "1080x1440 PNG",
+    "fast selection changes",
+    "close/reopen",
+    "mobile overflow",
+    "mobile save fallback",
+    "corrected logo variant",
+    "missing-reference fallback"
+  ],
+  "errors": []
+}

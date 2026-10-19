@@ -160,6 +160,7 @@ export default async function AdminPage() {
                   </p>
                 </Link>
                 <div className="flex gap-2">
+                  {match.status === matchStatus.inProgress && <Link className="rounded-md bg-arena-red px-3 py-2 text-sm font-bold text-[#fff]" href={`/matches/${match.id}/mom-vote`}>MOM 투표</Link>}
                   <Link className="rounded-md border border-arena-line px-3 py-2 text-sm font-bold text-slate-200 transition hover:border-arena-cyan hover:text-white" href={`/abcd/matches/${match.id}/edit`}>
                     수정
                   </Link>

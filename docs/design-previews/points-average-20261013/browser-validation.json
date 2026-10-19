@@ -1,0 +1,13 @@
+{
+  "passed": true,
+  "rows": 27,
+  "checks": [
+    "desktop average and sorting",
+    "two decimal display",
+    "date filter",
+    "zero appearances",
+    "mobile display and sorting",
+    "desktop and mobile downloads"
+  ],
+  "browserErrors": []
+}

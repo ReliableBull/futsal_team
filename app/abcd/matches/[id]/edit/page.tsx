@@ -3,6 +3,8 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { AdminMatchForm, type MatchFormInitialData } from "@/components/AdminMatchForm";
 import { DeletePosterButton } from "@/components/DeletePosterButton";
+import { MomVoteShare } from "@/components/MomVoteShare";
+import { MomVoteResults } from "@/components/MomVoteResults";
 import { deleteMatchPoster, updateMatch, uploadMatchPoster } from "@/lib/actions";
 import { requireAdmin } from "@/lib/auth";
 import { matchInclude } from "@/lib/matches";
@@ -69,6 +71,9 @@ export default async function EditMatchPage({ params }: { params: { id: string }
           관리자 페이지로
         </Link>
       </div>
+
+      {match.status === "IN_PROGRESS" && <MomVoteShare matchId={match.id} />}
+      <MomVoteResults matchId={match.id} />
 
       <AdminMatchForm
         action={updateMatch.bind(null, match.id)}

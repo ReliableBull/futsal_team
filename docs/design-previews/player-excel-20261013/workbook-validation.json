@@ -1,0 +1,14 @@
+{
+  "desktop": {
+    "rows": 27,
+    "screenMatchesWorkbook": true,
+    "zipAndXmlValid": true,
+    "formulas": 54
+  },
+  "mobile": {
+    "rows": 27,
+    "screenMatchesWorkbook": true,
+    "zipAndXmlValid": true,
+    "formulas": 54
+  }
+}

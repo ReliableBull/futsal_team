@@ -1,0 +1,10 @@
+{
+  "passed": true,
+  "checks": [
+    "desktop XLSX download",
+    "unsubmitted date does not affect export",
+    "period-filtered mobile XLSX download",
+    "mobile button and layout"
+  ],
+  "browserErrors": []
+}

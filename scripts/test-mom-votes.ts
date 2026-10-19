@@ -1,0 +1,25 @@
+import assert from "node:assert/strict";
+import { getVoteClientIp, hashVoteIp, normalizeIp } from "../lib/mom-vote-ip";
+import { parseMomChoices } from "../lib/mom-votes";
+
+assert.equal(normalizeIp("::ffff:192.0.2.5"), "192.0.2.5");
+assert.equal(normalizeIp("::FFFF:c000:205"), "192.0.2.5");
+assert.equal(normalizeIp("2001:0DB8:0000:0000:0000:0000:0000:0001"), "2001:db8::1");
+for (const value of ["unknown", "", "192.0.2.5:80", "garbage", "fe80::1%en0"]) assert.equal(normalizeIp(value), null);
+assert.equal(getVoteClientIp("192.0.2.5", "203.0.113.99", ""), "192.0.2.5", "direct callers cannot spoof X-Forwarded-For");
+assert.equal(getVoteClientIp("::ffff:127.0.0.1", "203.0.113.99, 192.0.2.5", "127.0.0.1"), "192.0.2.5", "ignore client-prepended addresses");
+assert.equal(getVoteClientIp("127.0.0.1", "192.0.2.5, 10.0.0.2", "127.0.0.1,10.0.0.2"), "192.0.2.5");
+assert.equal(getVoteClientIp("127.0.0.1", undefined, "127.0.0.1"), null);
+assert.equal(getVoteClientIp("127.0.0.1", "192.0.2.5, invalid", "127.0.0.1"), null);
+assert.equal(getVoteClientIp(undefined, "192.0.2.5", ""), null);
+assert.throws(() => getVoteClientIp("127.0.0.1", "192.0.2.5", "*"));
+const secret = "test-only-mom-secret-0123456789-abcdef";
+const hash = hashVoteIp(1, "192.0.2.5", secret);
+assert.match(hash, /^[a-f0-9]{64}$/);
+assert.equal(hashVoteIp(1, "192.0.2.5", secret), hash);
+assert.notEqual(hashVoteIp(2, "192.0.2.5", secret), hash, "IP hashes are scoped to each match");
+assert.notEqual(hashVoteIp(1, "192.0.2.6", secret), hash);
+assert.throws(() => hashVoteIp(1, "192.0.2.5", "short"));
+for (const input of [null, [], {}, { teamAPlayerId: 1 }, { teamAPlayerId: "1", teamBPlayerId: 2 }, { teamAPlayerId: 1, teamBPlayerId: 1 }, { teamAPlayerId: -1, teamBPlayerId: 2 }, { teamAPlayerId: 1.5, teamBPlayerId: 2 }]) assert.throws(() => parseMomChoices(input));
+assert.deepEqual(parseMomChoices({ teamAPlayerId: 1, teamBPlayerId: 2 }), { teamAPlayerId: 1, teamBPlayerId: 2 });
+console.log("MOM unit tests passed: IP trust, canonicalization, keyed hashes, ballot validation.");

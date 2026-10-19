@@ -18,10 +18,12 @@ export type SortablePlayer = {
   winRate: number;
   goals: number;
   assists: number;
+  attackPoints: number;
+  attackPointsPerMatch: number;
   mvpCount: number;
 };
 
-type SortKey = "name" | "totalMatches" | "wins" | "losses" | "draws" | "winRate" | "goals" | "assists" | "mvpCount";
+type SortKey = "name" | "totalMatches" | "wins" | "losses" | "draws" | "winRate" | "goals" | "assists" | "attackPoints" | "attackPointsPerMatch" | "mvpCount";
 type SortDirection = "asc" | "desc";
 
 const sortOptions: Array<{ key: SortKey; label: string }> = [
@@ -33,6 +35,8 @@ const sortOptions: Array<{ key: SortKey; label: string }> = [
   { key: "winRate", label: "승률" },
   { key: "goals", label: "득점" },
   { key: "assists", label: "도움" },
+  { key: "attackPoints", label: "공격 포인트" },
+  { key: "attackPointsPerMatch", label: "경기당 공격 포인트" },
   { key: "mvpCount", label: "MOM" }
 ];
 
@@ -87,9 +91,11 @@ function SortButton({ sortKey, label, activeKey, direction, align = "right", onC
   );
 }
 
-export function PlayersSortableList({ players }: { players: SortablePlayer[] }) {
+export function PlayersSortableList({ players, startDate, endDate }: { players: SortablePlayer[]; startDate: string; endDate: string }) {
   const [sortKey, setSortKey] = useState<SortKey>("totalMatches");
   const [direction, setDirection] = useState<SortDirection>("desc");
+  const [exporting, setExporting] = useState(false);
+  const [exportError, setExportError] = useState("");
 
   const sortedPlayers = useMemo(() => {
     const multiplier = direction === "asc" ? 1 : -1;
@@ -112,8 +118,39 @@ export function PlayersSortableList({ players }: { players: SortablePlayer[] }) 
     setDirection(nextKey === "name" ? "asc" : "desc");
   }
 
+  async function downloadExcel() {
+    if (exporting) return;
+    setExporting(true);
+    setExportError("");
+    try {
+      const { createPlayerListWorkbook, playerListExcelType } = await import("@/lib/player-list-excel");
+      const bytes = createPlayerListWorkbook(sortedPlayers, {
+        startDate, endDate, sortLabel: sortOptions.find((option) => option.key === sortKey)!.label, direction
+      });
+      const url = URL.createObjectURL(new Blob([bytes], { type: playerListExcelType }));
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = `arena-fc-players-${startDate}_${endDate}.xlsx`;
+      document.body.appendChild(link);
+      try { link.click(); } finally {
+        link.remove();
+        window.setTimeout(() => URL.revokeObjectURL(url), 30000);
+      }
+    } catch {
+      setExportError("엑셀 파일을 만들지 못했습니다. 다시 시도해주세요.");
+    } finally { setExporting(false); }
+  }
+
   return (
     <div className="space-y-5">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+        <p className="text-sm text-slate-500">현재 조회 기간과 정렬 순서로 {players.length}명의 기록을 저장합니다.</p>
+        <button type="button" onClick={downloadExcel} disabled={exporting} className="inline-flex shrink-0 items-center justify-center gap-2 rounded-lg bg-slate-900 px-5 py-3 text-sm font-bold text-[#fff] hover:bg-slate-700 disabled:cursor-wait disabled:opacity-60">
+          <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 3v12m-5-5 5 5 5-5M5 16v5h14v-5" /></svg>
+          {exporting ? "엑셀 만드는 중…" : "엑셀 다운로드"}
+        </button>
+      </div>
+      {exportError && <p role="alert" className="text-sm font-semibold text-red-700">{exportError}</p>}
       <div className="rounded-lg border border-arena-line bg-arena-panel p-4 md:hidden">
         <label className="block text-sm font-bold text-slate-200">
           정렬 기준
@@ -163,31 +200,33 @@ export function PlayersSortableList({ players }: { players: SortablePlayer[] }) 
               </p>
             </div>
 
-            <div className="mt-5 grid grid-cols-4 gap-2">
+            <div className="mt-5 grid grid-cols-3 gap-2">
+              <MobileStat label="경기" value={player.totalMatches} />
+              <MobileStat label="승률" value={`${player.winRate}%`} />
+              <MobileStat label="MOM" value={player.mvpCount} />
               <MobileStat label="승" value={player.wins} />
               <MobileStat label="패" value={player.losses} />
               <MobileStat label="무" value={player.draws} />
-              <MobileStat label="승률" value={`${player.winRate}%`} />
             </div>
-            <div className="mt-2 grid grid-cols-4 gap-2">
-              <MobileStat label="경기" value={player.totalMatches} />
+            <div className="mt-2 grid grid-cols-2 gap-2">
               <MobileStat label="득점" value={player.goals} href={`/players/${player.id}#goal-details`} />
               <MobileStat label="도움" value={player.assists} href={`/players/${player.id}#assist-details`} />
-              <MobileStat label="MOM" value={player.mvpCount} />
+              <MobileStat label="공격 포인트" value={player.attackPoints} />
+              <MobileStat label="경기당 공격 포인트" value={player.attackPointsPerMatch.toFixed(2)} />
             </div>
           </article>
         ))}
       </div>
 
-      <div className="hidden overflow-hidden rounded-lg border border-arena-line bg-arena-panel md:block">
-        <table className="w-full text-sm">
+      <div className="hidden overflow-x-auto rounded-lg border border-arena-line bg-arena-panel md:block">
+        <table className="w-full min-w-[1050px] text-sm">
           <thead className="bg-white/5 text-left">
             <tr>
               <th className="px-4 py-3">
                 <SortButton sortKey="name" label="선수 이름" activeKey={sortKey} direction={direction} align="left" onClick={handleSort} />
               </th>
               {statSortOptions.map((option) => (
-                <th key={option.key} className="px-3 py-3 text-right">
+                <th key={option.key} className="whitespace-nowrap px-3 py-3 text-right">
                   <SortButton sortKey={option.key} label={option.label} activeKey={sortKey} direction={direction} onClick={handleSort} />
                 </th>
               ))}
@@ -210,6 +249,8 @@ export function PlayersSortableList({ players }: { players: SortablePlayer[] }) 
                 <td className="px-3 py-3 text-right">
                   <Link className="font-black text-arena-cyan hover:underline" href={`/players/${player.id}#assist-details`}>{player.assists}</Link>
                 </td>
+                <td className="px-3 py-3 text-right font-black text-white">{player.attackPoints}</td>
+                <td className="px-3 py-3 text-right font-black text-white">{player.attackPointsPerMatch.toFixed(2)}</td>
                 <td className="px-3 py-3 text-right">{player.mvpCount}</td>
               </tr>
             ))}

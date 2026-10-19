@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { PlayerAvatar } from "@/components/PlayerAvatar";
+import { PlayerShareCard } from "@/components/PlayerShareCard";
+import { buildPlayerCardData } from "@/lib/player-card";
 import { StatCard } from "@/components/StatCard";
 import { getDateRange, quickDateRanges } from "@/lib/date-range";
 import { parsePlayerPosition } from "@/lib/player-position";
@@ -65,9 +67,14 @@ export default async function PlayerDetailPage({ params }: { params: { id: strin
               {player.nickname ? `${player.nickname} · ` : ""}
               {position} · 등번호 {player.number ?? "-"}
             </p>
+            <Link href={`/chemistry?playerId=${player.id}`} className="mt-3 inline-flex rounded-md border border-arena-line bg-white px-3 py-2 text-sm font-bold text-arena-cyan hover:border-arena-cyan">
+              동료·상대 전적 분석 →
+            </Link>
           </div>
         </div>
       </section>
+
+      <PlayerShareCard data={buildPlayerCardData({ ...stats, position }, player.matchPlayers.map((record) => record.match.matchDate))} />
 
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
         <StatCard label="출장 경기 수" value={stats.totalMatches} detail={formatPlayerRecord(stats)} />

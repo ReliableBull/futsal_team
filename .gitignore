@@ -2,6 +2,7 @@ node_modules
 .local-node
 .npm/_cacache
 .next
+.next-dev
 out
 dist
 .env
@@ -10,3 +11,8 @@ prisma/dev.db-journal
 *.log
 public/uploads
 forserver.md
+
+.next-mobile-*
+*.tsbuildinfo
+
+.arena-production.pid

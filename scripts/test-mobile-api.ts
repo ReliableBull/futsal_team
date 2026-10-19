@@ -1,0 +1,88 @@
+import assert from "node:assert/strict";
+import { PrismaClient } from "@prisma/client";
+import { hashPassword } from "../lib/auth";
+
+const database = new URL(process.env.DATABASE_URL ?? "http://invalid");
+if (!database.pathname.startsWith("/arena_mobile_test_") || process.env.ALLOW_MOBILE_TEST_DB !== "1") throw new Error("Run only against an isolated arena_mobile_test_* database with ALLOW_MOBILE_TEST_DB=1.");
+const base = process.env.MOBILE_TEST_URL ?? "http://127.0.0.1:3101";
+if (!["localhost","127.0.0.1"].includes(new URL(base).hostname)) throw new Error("Only local test servers are allowed.");
+const db = new PrismaClient();
+let token = ""; let checks = 0;
+async function call(method: string, path: string, input?: unknown, expected = 200, auth = true) {
+  const response = await fetch(`${base}/api/v1/${path}`, { method, headers: { ...(input ? {"Content-Type":"application/json"} : {}), ...(auth && token ? {Authorization:`Bearer ${token}`} : {}) }, body: input ? JSON.stringify(input) : undefined });
+  const data = await response.json();
+  assert.equal(response.status, expected, `${method} ${path}: ${JSON.stringify(data)}`); checks++;
+  return data;
+}
+async function main() {
+  assert.equal(await db.admin.count(), 0, "The test database must be empty.");
+  const admin = await db.admin.create({data:{username:"mobile-test", passwordHash:hashPassword("test-password-123")}});
+  try {
+    await call("GET","health");
+    await call("POST","players",{},401,false);
+    await call("GET","players?includeInactive=true",undefined,401,false);
+    await call("POST","auth/login",{username:"mobile-test",password:"wrong"},401,false);
+    token = (await call("POST","auth/login",{username:"mobile-test",password:"test-password-123"},200,false)).token;
+    assert.equal((await call("GET","auth/me")).admin.username,"mobile-test");
+    assert.equal((await db.mobileSession.findFirstOrThrow()).tokenHash.includes(token),false);
+    const ids: number[] = [];
+    for (const name of ["가선수","나선수","다선수","라선수"]) ids.push((await call("POST","players",{name,position:"미드필더",number:10,isActive:true},201)).player.id);
+    const [a,b,c,d] = ids;
+    const payload = {matchDate:"2026-09-22",status:"COMPLETED",location:"테스트 구장",teamAName:"회장팀",teamBName:"총무팀",teamAScore:1,teamBScore:0,teamAPlayerIds:[a,b],teamBPlayerIds:[c,d],goalsByPlayerId:{[a]:1},assistsByPlayerId:{[b]:1},goalAssistPlayerIdsByScorerId:{[a]:[b]},chairmanTeamMvpIds:[a,b],managerTeamMvpIds:[c],memo:"integration-test"};
+    await call("POST","matches",{...payload,teamAScore:-1},400);
+    await call("POST","matches",{...payload,matchDate:"2026-02-30"},400);
+    await call("POST","matches",{...payload,teamBPlayerIds:[a,c]},400);
+    await call("POST","matches",{...payload,goalAssistPlayerIdsByScorerId:{[a]:[c]}},400);
+    await call("POST","matches",{...payload,chairmanTeamMvpIds:[c]},400);
+    await call("POST","matches",{...payload,teamBPlayerIds:[999999]},400);
+    const match = (await call("POST","matches",payload,201)).match;
+    assert.equal(match.matchPlayers.filter((r:{isMvp:boolean})=>r.isMvp).length,3);
+    assert.equal((await call("GET",`players/${b}`)).player.assists,1);
+    assert.equal((await call("GET",`players/${a}`)).player.winRate,100);
+    assert.equal((await call("GET","dashboard")).goalRankings[0].id,a);
+    assert.equal((await call("GET","hall-of-fame")).hallOfFame.totalMatches,1);
+    assert.equal((await call("GET","matches?limit=1")).pagination.total,1);
+    assert.equal((await call("GET","matches?startDate=2026-01-01&endDate=2026-01-31")).pagination.total,0);
+    await call("GET","matches?startDate=2026-09-22&endDate=2026-01-01",undefined,400);
+    await call("GET","matches/NaN",undefined,400);
+    await call("DELETE",`players/${a}`,undefined,409);
+    const legacy = {...payload,assistsByPlayerId:{[b]:2},goalAssistPlayerIdsByScorerId:{[a]:["UNKNOWN"]}};
+    await call("PUT",`matches/${match.id}`,legacy);
+    assert.equal((await call("GET",`players/${b}`)).player.assists,2);
+    await call("PUT",`matches/${match.id}`,{...legacy,status:"IN_PROGRESS"});
+    assert.equal((await call("GET",`players/${a}`)).player.totalMatches,0);
+    assert.equal((await call("GET","hall-of-fame")).hallOfFame.totalMatches,0);
+    await call("PUT",`matches/${match.id}`,payload);
+    const png = Buffer.from("iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+a1ioAAAAASUVORK5CYII=","base64");
+    const form = new FormData(); form.set("image",new Blob([png],{type:"image/png"}),"test.png");
+    const uploaded = await fetch(`${base}/api/v1/matches/${match.id}/posters`,{method:"POST",headers:{Authorization:`Bearer ${token}`},body:form});
+    assert.equal(uploaded.status,201); checks++;
+    const poster = (await uploaded.json()).poster;
+    assert.equal((await fetch(`${base}${poster.imageUrl}`)).status,200);
+    const photoForm = new FormData(); photoForm.set("image",new Blob([png],{type:"image/png"}),"profile.png");
+    const photoResponse = await fetch(`${base}/api/v1/players/${a}/photo`,{method:"POST",headers:{Authorization:`Bearer ${token}`},body:photoForm});
+    assert.equal(photoResponse.status,200); checks++;
+    const photoPlayer = (await photoResponse.json()).player;
+    assert.equal((await fetch(`${base}${photoPlayer.profileImageUrl}`)).status,200);
+    const badImage = new FormData(); badImage.set("image",new Blob(["<script>bad</script>"],{type:"image/png"}),"bad.png");
+    assert.equal((await fetch(`${base}/api/v1/matches/${match.id}/posters`,{method:"POST",headers:{Authorization:`Bearer ${token}`},body:badImage})).status,400); checks++;
+    await call("DELETE",`matches/${match.id}/posters/${poster.id}`);
+    assert.equal((await fetch(`${base}${poster.imageUrl}`)).status,404);
+    await call("POST","auth/logout");
+    await call("GET","auth/me",undefined,401);
+    await call("DELETE",`matches/${match.id}`,undefined,401);
+    token = (await call("POST","auth/login",{username:"mobile-test",password:"test-password-123"},200,false)).token;
+    await db.mobileSession.updateMany({data:{expiresAt:new Date(0)}});
+    await call("GET","auth/me",undefined,401);
+    token = (await call("POST","auth/login",{username:"mobile-test",password:"test-password-123"},200,false)).token;
+    await db.admin.update({where:{id:admin.id},data:{passwordHash:hashPassword("new-password-123")}});
+    await call("GET","auth/me",undefined,401);
+    token = (await call("POST","auth/login",{username:"mobile-test",password:"new-password-123"},200,false)).token;
+    await call("DELETE",`matches/${match.id}`);
+    await call("GET",`matches/${match.id}`,undefined,404);
+    for (const playerId of ids) await call("DELETE",`players/${playerId}`);
+    assert.equal(await db.matchGoal.count(),0);
+    console.log(`Mobile API integration: ${checks} HTTP checks passed, plus DB/statistics assertions.`);
+  } finally { await db.admin.delete({where:{id:admin.id}}); await db.$disconnect(); }
+}
+main().catch(error => { console.error(error); process.exitCode = 1; });

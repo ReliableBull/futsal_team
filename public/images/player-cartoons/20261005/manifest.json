@@ -1,0 +1,249 @@
+{
+  "snapshotDate": "2026-10-05",
+  "style": "sports-webtoon",
+  "format": {
+    "width": 1024,
+    "height": 1536,
+    "type": "image/png",
+    "transparent": true
+  },
+  "missingReference": [
+    {
+      "id": 66,
+      "name": "이상헌",
+      "number": 15
+    },
+    {
+      "id": 68,
+      "name": "김성년",
+      "number": null
+    }
+  ],
+  "players": [
+    {
+      "id": 13,
+      "name": "강수길",
+      "number": 6,
+      "poses": {
+        "arms-crossed": "/images/player-cartoons/20261005/13/arms-crossed.png",
+        "cheering": "/images/player-cartoons/20261005/13/cheering.png"
+      }
+    },
+    {
+      "id": 14,
+      "name": "김중환",
+      "number": 22,
+      "poses": {
+        "arms-crossed": "/images/player-cartoons/20261005/14/arms-crossed.png",
+        "cheering": "/images/player-cartoons/20261005/14/cheering.png"
+      }
+    },
+    {
+      "id": 15,
+      "name": "김상목",
+      "number": 11,
+      "poses": {
+        "arms-crossed": "/images/player-cartoons/20261005/15/arms-crossed.png",
+        "cheering": "/images/player-cartoons/20261005/15/cheering.png"
+      }
+    },
+    {
+      "id": 17,
+      "name": "송원섭",
+      "number": 7,
+      "poses": {
+        "arms-crossed": "/images/player-cartoons/20261005/17/arms-crossed.png",
+        "cheering": "/images/player-cartoons/20261005/17/cheering.png"
+      }
+    },
+    {
+      "id": 18,
+      "name": "안민수",
+      "number": 93,
+      "poses": {
+        "arms-crossed": "/images/player-cartoons/20261005/18/arms-crossed.png",
+        "cheering": "/images/player-cartoons/20261005/18/cheering.png"
+      }
+    },
+    {
+      "id": 19,
+      "name": "양용진",
+      "number": 17,
+      "poses": {
+        "arms-crossed": "/images/player-cartoons/20261005/19/arms-crossed.png",
+        "cheering": "/images/player-cartoons/20261005/19/cheering.png"
+      }
+    },
+    {
+      "id": 20,
+      "name": "오세현",
+      "number": 55,
+      "poses": {
+        "arms-crossed": "/images/player-cartoons/20261005/20/arms-crossed.png",
+        "cheering": "/images/player-cartoons/20261005/20/cheering.png"
+      }
+    },
+    {
+      "id": 21,
+      "name": "이광민",
+      "number": 9,
+      "poses": {
+        "arms-crossed": "/images/player-cartoons/20261005/21/arms-crossed.png",
+        "cheering": "/images/player-cartoons/20261005/21/cheering.png"
+      }
+    },
+    {
+      "id": 22,
+      "name": "김재겸",
+      "number": 7,
+      "poses": {
+        "arms-crossed": "/images/player-cartoons/20261005/22/arms-crossed.png",
+        "cheering": "/images/player-cartoons/20261005/22/cheering.png"
+      }
+    },
+    {
+      "id": 23,
+      "name": "이동훈",
+      "number": 19,
+      "poses": {
+        "arms-crossed": "/images/player-cartoons/20261005/23/arms-crossed.png",
+        "cheering": "/images/player-cartoons/20261005/23/cheering.png"
+      }
+    },
+    {
+      "id": 24,
+      "name": "이호준",
+      "number": 1,
+      "poses": {
+        "arms-crossed": "/images/player-cartoons/20261005/24/arms-crossed.png",
+        "cheering": "/images/player-cartoons/20261005/24/cheering.png"
+      }
+    },
+    {
+      "id": 25,
+      "name": "장현부",
+      "number": 78,
+      "poses": {
+        "arms-crossed": "/images/player-cartoons/20261005/25/arms-crossed.png",
+        "cheering": "/images/player-cartoons/20261005/25/cheering.png"
+      }
+    },
+    {
+      "id": 26,
+      "name": "정대규",
+      "number": 75,
+      "poses": {
+        "arms-crossed": "/images/player-cartoons/20261005/26/arms-crossed.png",
+        "cheering": "/images/player-cartoons/20261005/26/cheering.png"
+      }
+    },
+    {
+      "id": 27,
+      "name": "최병훈",
+      "number": 13,
+      "poses": {
+        "arms-crossed": "/images/player-cartoons/20261005/27/arms-crossed.png",
+        "cheering": "/images/player-cartoons/20261005/27/cheering.png"
+      }
+    },
+    {
+      "id": 29,
+      "name": "김민석",
+      "number": 27,
+      "poses": {
+        "arms-crossed": "/images/player-cartoons/20261005/29/arms-crossed.png",
+        "cheering": "/images/player-cartoons/20261005/29/cheering.png"
+      }
+    },
+    {
+      "id": 30,
+      "name": "김민규",
+      "number": 10,
+      "poses": {
+        "arms-crossed": "/images/player-cartoons/20261005/30/arms-crossed.png",
+        "cheering": "/images/player-cartoons/20261005/30/cheering.png"
+      }
+    },
+    {
+      "id": 31,
+      "name": "나성욱",
+      "number": 18,
+      "poses": {
+        "arms-crossed": "/images/player-cartoons/20261005/31/arms-crossed.png",
+        "cheering": "/images/player-cartoons/20261005/31/cheering.png"
+      }
+    },
+    {
+      "id": 33,
+      "name": "이명재",
+      "number": 16,
+      "poses": {
+        "arms-crossed": "/images/player-cartoons/20261005/33/arms-crossed.png",
+        "cheering": "/images/player-cartoons/20261005/33/cheering.png"
+      }
+    },
+    {
+      "id": 34,
+      "name": "권동혁",
+      "number": 29,
+      "poses": {
+        "arms-crossed": "/images/player-cartoons/20261005/34/arms-crossed.png",
+        "cheering": "/images/player-cartoons/20261005/34/cheering.png"
+      }
+    },
+    {
+      "id": 35,
+      "name": "김윤태",
+      "number": 8,
+      "poses": {
+        "arms-crossed": "/images/player-cartoons/20261005/35/arms-crossed.png",
+        "cheering": "/images/player-cartoons/20261005/35/cheering.png"
+      }
+    },
+    {
+      "id": 36,
+      "name": "김대익",
+      "number": 77,
+      "poses": {
+        "arms-crossed": "/images/player-cartoons/20261005/36/arms-crossed.png",
+        "cheering": "/images/player-cartoons/20261005/36/cheering.png"
+      }
+    },
+    {
+      "id": 37,
+      "name": "김민기",
+      "number": 0,
+      "poses": {
+        "arms-crossed": "/images/player-cartoons/20261005/37/arms-crossed.png",
+        "cheering": "/images/player-cartoons/20261005/37/cheering.png"
+      }
+    },
+    {
+      "id": 44,
+      "name": "최석훈",
+      "number": null,
+      "poses": {
+        "arms-crossed": "/images/player-cartoons/20261005/44/arms-crossed.png",
+        "cheering": "/images/player-cartoons/20261005/44/cheering.png"
+      }
+    },
+    {
+      "id": 47,
+      "name": "심현민",
+      "number": 4,
+      "poses": {
+        "arms-crossed": "/images/player-cartoons/20261005/47/arms-crossed.png",
+        "cheering": "/images/player-cartoons/20261005/47/cheering.png"
+      }
+    },
+    {
+      "id": 65,
+      "name": "유훈",
+      "number": 99,
+      "poses": {
+        "arms-crossed": "/images/player-cartoons/20261005/65/arms-crossed.png",
+        "cheering": "/images/player-cartoons/20261005/65/cheering.png"
+      }
+    }
+  ]
+}

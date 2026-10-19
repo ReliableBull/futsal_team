@@ -15,12 +15,12 @@ type MobileNavMenuProps = {
 
 export function MobileNavMenu({ items }: MobileNavMenuProps) {
   const [isOpen, setIsOpen] = useState(false);
-  const pathname = usePathname();
+  const pathname = usePathname() ?? "";
 
   const isActive = (href: string) => (href === "/" ? pathname === href : pathname.startsWith(href));
 
   return (
-    <div className="sm:hidden">
+    <div className="md:hidden">
       <button
         className="grid h-10 w-10 place-items-center border border-arena-line bg-black/30 text-slate-200 transition hover:border-arena-red hover:text-white"
         type="button"

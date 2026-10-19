@@ -1,0 +1,18 @@
+{
+  "passed": true,
+  "checks": [
+    "clipboard copy",
+    "HTTP manual copy fallback",
+    "mobile layout",
+    "two teams required",
+    "submit confirmation",
+    "reload duplicate block",
+    "different browser same-IP block",
+    "admin authentication",
+    "vote counts",
+    "manual MOM confirmation",
+    "closed match hides sharing",
+    "closed link disables voting"
+  ],
+  "browserErrors": []
+}

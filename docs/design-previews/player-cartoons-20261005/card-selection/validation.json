@@ -1,0 +1,79 @@
+{
+  "results": [
+    {
+      "pose": "cartoon-arms-crossed",
+      "theme": "arena",
+      "bytes": 902439,
+      "hash": "d447f0da923669d8f1e5cd01ac3446748403c5a9dc802c576d85fc985aed3b9c"
+    },
+    {
+      "pose": "cartoon-arms-crossed",
+      "theme": "editorial",
+      "bytes": 253130,
+      "hash": "ec76488e6b8eb368c51ae70d5f626a4b66632fd8ee01144c59f88ed784e97a0e"
+    },
+    {
+      "pose": "cartoon-arms-crossed",
+      "theme": "noir",
+      "bytes": 257965,
+      "hash": "c164fae58ce088cc3fc751cd7c2a5fcc94bd07fdf5263ef1be0823c2c4fa404b"
+    },
+    {
+      "pose": "cartoon-arms-crossed",
+      "theme": "archive",
+      "bytes": 287688,
+      "hash": "eee8ab4060299007d5ff17278d7d7823280cb4001ee4cf116cd73eb7d975358c"
+    },
+    {
+      "pose": "cartoon-arms-crossed",
+      "theme": "gold",
+      "bytes": 922130,
+      "hash": "e8742aedc79756eb49f9a46e78a731bdfe74e462ba1218d69a443ec8596470fc"
+    },
+    {
+      "pose": "cartoon-cheering",
+      "theme": "arena",
+      "bytes": 907389,
+      "hash": "7fd6d853c6374efce3ab3a8c111ebf58af31e209707abd83236e0806f6482628"
+    },
+    {
+      "pose": "cartoon-cheering",
+      "theme": "editorial",
+      "bytes": 262660,
+      "hash": "0bdd25c90b11a798e1e9f4e5195ad4d584fdffff7786edc6bae861e3e9b17c16"
+    },
+    {
+      "pose": "cartoon-cheering",
+      "theme": "noir",
+      "bytes": 264450,
+      "hash": "5eb5de0effec7a66497e5074fc6722358076ef24edd562f99150a041a89b0e63"
+    },
+    {
+      "pose": "cartoon-cheering",
+      "theme": "archive",
+      "bytes": 296322,
+      "hash": "a3302fb0257961c387cf0d7d61abf32e2e0887fc6c475de67097c83cee9a76bf"
+    },
+    {
+      "pose": "cartoon-cheering",
+      "theme": "gold",
+      "bytes": 929228,
+      "hash": "f69178ff1c6820545b71633541ebaa6a9c6e1eeda57b6fda487733c61cd914d8"
+    }
+  ],
+  "checked": [
+    "original profile",
+    "both cartoon poses in all 5 themes",
+    "matching preview/download",
+    "1080x1440 PNG",
+    "fast selection changes",
+    "close/reopen",
+    "mobile overflow",
+    "mobile save fallback",
+    "player-specific cartoons",
+    "zero and absent jersey numbers",
+    "gallery search and transparency",
+    "missing-reference fallback"
+  ],
+  "errors": []
+}

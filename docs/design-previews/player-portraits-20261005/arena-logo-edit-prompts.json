@@ -1,0 +1,24 @@
+{
+  "player": {
+    "id": 23,
+    "name": "이동훈",
+    "number": 19
+  },
+  "createdDate": "2026-10-05",
+  "mode": "built-in image_gen",
+  "edit": "Add an ARENA FC chest badge using the existing project app A symbol.",
+  "logoSource": "mobile/assets/branding/icon.svg",
+  "logoReference": "mobile/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-1024x1024@1x.png",
+  "outputs": [
+    {
+      "file": "lee-donghun-23-arms-crossed-arena-logo-v2.png",
+      "source": "lee-donghun-23-arms-crossed-v1.png",
+      "prompt": "Use case: precise-object-edit\nAsset type: existing transparent full-body football player portrait, arms-crossed pose.\nInput images: Image 1 is the EDIT TARGET, the already approved generated portrait of 이동훈 in his cyan and navy football uniform. Image 2 is a SUPPORTING LOGO REFERENCE, the ARENA project's existing dark navy / lime angular A monogram app icon.\nPrimary request: Make a highly localized clothing edit to image 1: add one tasteful ARENA FC embroidered club badge to the player's anatomical LEFT upper chest, on the viewer's right side, above the crossed forearms.\nBadge: Small realistic football club chest badge, approximately 6–7 cm high in real clothing scale, roughly 55–65 pixels wide at this image resolution. Dark navy circular fabric patch with a fine lime embroidered border. Inside it use the same distinctive lime-green angular A symbol and underline from image 2, with tiny but legible off-white uppercase text \"ARENA FC\" below the symbol. The exact text must read ARENA FC. The badge follows the shirt surface and wrinkles naturally, with believable stitching and subtle fabric shading. It should feel like a real club kit, restrained and professional, not like a floating sticker or huge sponsor graphic.\nInvariants: Preserve the EXACT face, facial expression, hair, skin texture, body, arms-crossed pose, hands, all existing cyan/navy shirt colors and construction, shorts, existing white number 19, socks, shoes, studio lighting, full head-to-toe framing, image dimensions, and subject scale. Change ONLY the small chest badge region. No new sponsor, no extra badge elsewhere, no unrelated text, no visual redesign.\nBackground: preserve the existing transparent alpha background and clean subject silhouette. No background, no floor, no printed checkerboard. One person, one portrait, no montage."
+    },
+    {
+      "file": "lee-donghun-23-cheering-arena-logo-v2.png",
+      "source": "lee-donghun-23-cheering-v1.png",
+      "prompt": "Use case: precise-object-edit\nAsset type: existing transparent full-body football player portrait, raised-fist cheering pose.\nInput images: Image 1 is the EDIT TARGET, 이동훈 in a cyan/navy football uniform with his right fist raised and the other arm hanging naturally. Image 2 is a SUPPORTING PATCH REFERENCE showing the same player with crossed arms and the just-created ARENA FC chest badge.\nPrimary request: Add the exact same small ARENA FC badge from image 2 onto the player's anatomical LEFT upper chest in image 1, on the viewer's right side. Match its position relative to the collar and shoulder, size, shape, colors, A monogram and text precisely. The final pose MUST remain the raised-fist cheering pose from image 1.\nBadge: Small circular dark navy football-club chest patch with a fine lime-green border, a large lime angular A symbol, and small off-white uppercase text \"ARENA FC\" below. Copy the badge design from image 2. Roughly 60 pixels across in this 1024-wide portrait; discreet authentic football shirt scale. Apply with realistic embroidery/printed fabric texture that follows the shirt's surface and folds.\nText (verbatim): \"ARENA FC\".\nInvariants: Preserve the exact face, expression, hair, body, fist, relaxed other hand, original arm positions, existing cyan/navy jersey, number 19 on shorts, socks, shoes, lighting, photo composition and full-body framing from image 1. Change ONLY the local shirt chest-badge region. Do not use the crossed-arm pose from image 2. Do not redesign the uniform or add other logos.\nBackground: preserve transparent alpha outside the subject. No scenery, no floor, no printed checkerboard, no new background. One person, single portrait, same 2:3 dimensions."
+    }
+  ]
+}

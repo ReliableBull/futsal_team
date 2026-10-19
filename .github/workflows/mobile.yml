@@ -1,0 +1,67 @@
+name: Mobile checks
+on:
+  push:
+  pull_request:
+jobs:
+  flutter:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: mobile
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.47.4'
+          channel: stable
+          cache: true
+      - run: flutter pub get
+      - run: dart format --output=none --set-exit-if-changed lib test
+      - run: flutter analyze
+      - run: flutter test
+      - run: flutter build apk --debug
+      - uses: actions/upload-artifact@v4
+        with:
+          name: arena-fc-debug
+          path: mobile/build/app/outputs/flutter-apk/app-debug.apk
+  api:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:18
+        env:
+          POSTGRES_USER: arena
+          POSTGRES_PASSWORD: test-only-password
+          POSTGRES_DB: arena_mobile_test_ci
+        ports: ['5432:5432']
+        options: >-
+          --health-cmd pg_isready --health-interval 10s
+          --health-timeout 5s --health-retries 5
+    env:
+      DATABASE_URL: postgresql://arena:test-only-password@localhost:5432/arena_mobile_test_ci
+      AUTH_SECRET: ci-test-only-secret-not-for-production
+      ALLOW_MOBILE_TEST_DB: '1'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: npm
+      - run: npm ci
+      - run: npx prisma migrate deploy
+      - run: npx tsc --noEmit
+      - run: npm run lint
+      - run: npm run test:mobile
+      - run: |
+          NEXT_DIST_DIR=.next-mobile-test npx next dev -p 3101 -H 127.0.0.1 > /tmp/arena-mobile-server.log 2>&1 &
+          for attempt in $(seq 1 60); do
+            if curl --fail --silent http://127.0.0.1:3101/api/v1/health; then break; fi
+            sleep 1
+          done
+          npm run test:mobile:integration
+      - if: failure()
+        run: cat /tmp/arena-mobile-server.log

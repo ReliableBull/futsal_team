@@ -1,0 +1,848 @@
+{
+  "passed": true,
+  "players": 25,
+  "images": 50,
+  "sourcePhotosUnchanged": true,
+  "uniqueImages": 50,
+  "galleryLinksValid": true,
+  "missingReference": [
+    {
+      "id": 66,
+      "name": "이상헌",
+      "number": 15
+    },
+    {
+      "id": 68,
+      "name": "김성년",
+      "number": null
+    }
+  ],
+  "assets": [
+    {
+      "playerId": 13,
+      "pose": "arms-crossed",
+      "file": "public/images/player-cartoons/20261005/13/arms-crossed.png",
+      "sha256": "605a4487f86f00f57bc3eb9764a6c18e0bbd8cd4b58d9b80798b097258bfebb9",
+      "bytes": 1477689,
+      "size": [
+        1024,
+        1536
+      ],
+      "alphaRange": [
+        0,
+        254
+      ],
+      "transparentPixels": 1138234
+    },
+    {
+      "playerId": 13,
+      "pose": "cheering",
+      "file": "public/images/player-cartoons/20261005/13/cheering.png",
+      "sha256": "1213203d18ff720bd1a6a31744e685b9638deb79d8efdedc54567a27cb537184",
+      "bytes": 1599161,
+      "size": [
+        1024,
+        1536
+      ],
+      "alphaRange": [
+        0,
+        254
+      ],
+      "transparentPixels": 1076509
+    },
+    {
+      "playerId": 14,
+      "pose": "arms-crossed",
+      "file": "public/images/player-cartoons/20261005/14/arms-crossed.png",
+      "sha256": "b7a632c939191fc78c1c76d69529aeab8e8b1b0933e6550e2c0f4f72f7f247cd",
+      "bytes": 1485093,
+      "size": [
+        1024,
+        1536
+      ],
+      "alphaRange": [
+        0,
+        254
+      ],
+      "transparentPixels": 1133161
+    },
+    {
+      "playerId": 14,
+      "pose": "cheering",
+      "file": "public/images/player-cartoons/20261005/14/cheering.png",
+      "sha256": "6c2865c594f79bb5aed74fee23fc0630d6be48fa74d0b87b967ee4356514722a",
+      "bytes": 1566084,
+      "size": [
+        1024,
+        1536
+      ],
+      "alphaRange": [
+        0,
+        254
+      ],
+      "transparentPixels": 1064785
+    },
+    {
+      "playerId": 15,
+      "pose": "arms-crossed",
+      "file": "public/images/player-cartoons/20261005/15/arms-crossed.png",
+      "sha256": "f168715c73d30a4570b86eaee32c2f41d2564e07e126fef3a93615077b0d0e35",
+      "bytes": 1481313,
+      "size": [
+        1024,
+        1536
+      ],
+      "alphaRange": [
+        0,
+        254
+      ],
+      "transparentPixels": 1141713
+    },
+    {
+      "playerId": 15,
+      "pose": "cheering",
+      "file": "public/images/player-cartoons/20261005/15/cheering.png",
+      "sha256": "6822405b29ee896c20032341cdb362a05c15ee6667bbef3bd67490096b8d1f2f",
+      "bytes": 1545207,
+      "size": [
+        1024,
+        1536
+      ],
+      "alphaRange": [
+        0,
+        254
+      ],
+      "transparentPixels": 1082584
+    },
+    {
+      "playerId": 17,
+      "pose": "arms-crossed",
+      "file": "public/images/player-cartoons/20261005/17/arms-crossed.png",
+      "sha256": "5bab8d7fdaf09214a84478ddac14fdf70106e16c351bdbc099f73526a50d4376",
+      "bytes": 1466288,
+      "size": [
+        1024,
+        1536
+      ],
+      "alphaRange": [
+        0,
+        254
+      ],
+      "transparentPixels": 1151165
+    },
+    {
+      "playerId": 17,
+      "pose": "cheering",
+      "file": "public/images/player-cartoons/20261005/17/cheering.png",
+      "sha256": "902b928e2c9edbf49e8cf93f2fc656736a502ec2212009346d11402b8afd5aaa",
+      "bytes": 1529642,
+      "size": [
+        1024,
+        1536
+      ],
+      "alphaRange": [
+        0,
+        254
+      ],
+      "transparentPixels": 1107187
+    },
+    {
+      "playerId": 18,
+      "pose": "arms-crossed",
+      "file": "public/images/player-cartoons/20261005/18/arms-crossed.png",
+      "sha256": "5a869ae09c41b3785bcf26d859e1fb92ca221fd766d51dce49003c2c6cac4ef3",
+      "bytes": 1501277,
+      "size": [
+        1024,
+        1536
+      ],
+      "alphaRange": [
+        0,
+        254
+      ],
+      "transparentPixels": 1130983
+    },
+    {
+      "playerId": 18,
+      "pose": "cheering",
+      "file": "public/images/player-cartoons/20261005/18/cheering.png",
+      "sha256": "c9563848c013c6b99b2c060de53d53e87923a7916c92f59ece1fa0c18947892a",
+      "bytes": 1482110,
+      "size": [
+        1024,
+        1536
+      ],
+      "alphaRange": [
+        0,
+        254
+      ],
+      "transparentPixels": 1107069
+    },
+    {
+      "playerId": 19,
+      "pose": "arms-crossed",
+      "file": "public/images/player-cartoons/20261005/19/arms-crossed.png",
+      "sha256": "237d2833d43bbed75944e2c1211225b604250976b2d9cc1525140c9ddc61b1fc",
+      "bytes": 1468742,
+      "size": [
+        1024,
+        1536
+      ],
+      "alphaRange": [
+        0,
+        254
+      ],
+      "transparentPixels": 1125514
+    },
+    {
+      "playerId": 19,
+      "pose": "cheering",
+      "file": "public/images/player-cartoons/20261005/19/cheering.png",
+      "sha256": "cca0335f72c12bddc9e343eaa2e41a901554fb38f3113b199447679058f49364",
+      "bytes": 1518921,
+      "size": [
+        1024,
+        1536
+      ],
+      "alphaRange": [
+        0,
+        254
+      ],
+      "transparentPixels": 1077476
+    },
+    {
+      "playerId": 20,
+      "pose": "arms-crossed",
+      "file": "public/images/player-cartoons/20261005/20/arms-crossed.png",
+      "sha256": "e459844d83eb5e6b3a907f8567205418ffb25fcc74f855a0268b4c197a5b381f",
+      "bytes": 1484611,
+      "size": [
+        1024,
+        1536
+      ],
+      "alphaRange": [
+        0,
+        254
+      ],
+      "transparentPixels": 1150115
+    },
+    {
+      "playerId": 20,
+      "pose": "cheering",
+      "file": "public/images/player-cartoons/20261005/20/cheering.png",
+      "sha256": "464def62211ef1bafc4c1476592b55703bedcb7e02a67b8e87ee58ce5ab76920",
+      "bytes": 1521107,
+      "size": [
+        1024,
+        1536
+      ],
+      "alphaRange": [
+        0,
+        254
+      ],
+      "transparentPixels": 1104357
+    },
+    {
+      "playerId": 21,
+      "pose": "arms-crossed",
+      "file": "public/images/player-cartoons/20261005/21/arms-crossed.png",
+      "sha256": "898e8a96fc927ad38718745c8317782e815924dfdc7eeaf634229e980d9db8d1",
+      "bytes": 1480960,
+      "size": [
+        1024,
+        1536
+      ],
+      "alphaRange": [
+        0,
+        254
+      ],
+      "transparentPixels": 1142753
+    },
+    {
+      "playerId": 21,
+      "pose": "cheering",
+      "file": "public/images/player-cartoons/20261005/21/cheering.png",
+      "sha256": "fdec297ff61e1b66b3db2c5bfc3f4a5ee0526529ca513438b0ea67349c8e1b8c",
+      "bytes": 1573858,
+      "size": [
+        1024,
+        1536
+      ],
+      "alphaRange": [
+        0,
+        254
+      ],
+      "transparentPixels": 1086732
+    },
+    {
+      "playerId": 22,
+      "pose": "arms-crossed",
+      "file": "public/images/player-cartoons/20261005/22/arms-crossed.png",
+      "sha256": "d3de5cfe27e00dda501039224c91569f619099acd11e57a318fe51443c117124",
+      "bytes": 1525286,
+      "size": [
+        1024,
+        1536
+      ],
+      "alphaRange": [
+        0,
+        254
+      ],
+      "transparentPixels": 1117150
+    },
+    {
+      "playerId": 22,
+      "pose": "cheering",
+      "file": "public/images/player-cartoons/20261005/22/cheering.png",
+      "sha256": "e5e0e425bf1a827b52574f03eeb30c8399c10032839e00a414f245b8e8d5d082",
+      "bytes": 1572001,
+      "size": [
+        1024,
+        1536
+      ],
+      "alphaRange": [
+        0,
+        254
+      ],
+      "transparentPixels": 1074454
+    },
+    {
+      "playerId": 23,
+      "pose": "arms-crossed",
+      "file": "public/images/player-cartoons/20261005/23/arms-crossed.png",
+      "sha256": "953103fdc5818477d9f83861d9a52be6dc6c01bd8d85f480ebbac7f98e56169f",
+      "bytes": 1466703,
+      "size": [
+        1024,
+        1536
+      ],
+      "alphaRange": [
+        0,
+        254
+      ],
+      "transparentPixels": 1157939
+    },
+    {
+      "playerId": 23,
+      "pose": "cheering",
+      "file": "public/images/player-cartoons/20261005/23/cheering.png",
+      "sha256": "ac74e6055cdd1158197ed331a63d8c24d397fbd95488d0bf7481d6bd4b2183de",
+      "bytes": 1517039,
+      "size": [
+        1024,
+        1536
+      ],
+      "alphaRange": [
+        0,
+        254
+      ],
+      "transparentPixels": 1112525
+    },
+    {
+      "playerId": 24,
+      "pose": "arms-crossed",
+      "file": "public/images/player-cartoons/20261005/24/arms-crossed.png",
+      "sha256": "708d5896170561772e32abfd3cf7982f45ae0c7eed092b6bcd3441786459b886",
+      "bytes": 1533811,
+      "size": [
+        1024,
+        1536
+      ],
+      "alphaRange": [
+        0,
+        254
+      ],
+      "transparentPixels": 1113818
+    },
+    {
+      "playerId": 24,
+      "pose": "cheering",
+      "file": "public/images/player-cartoons/20261005/24/cheering.png",
+      "sha256": "eec9ae8e4e3e7c88f703b80dd93d87d3123b4b146206a55d15a1c9d231c52ae2",
+      "bytes": 1552786,
+      "size": [
+        1024,
+        1536
+      ],
+      "alphaRange": [
+        0,
+        254
+      ],
+      "transparentPixels": 1074602
+    },
+    {
+      "playerId": 25,
+      "pose": "arms-crossed",
+      "file": "public/images/player-cartoons/20261005/25/arms-crossed.png",
+      "sha256": "387204341c51730445653496921c7384d2085306e5211e56bc55b5274b38a233",
+      "bytes": 1497477,
+      "size": [
+        1024,
+        1536
+      ],
+      "alphaRange": [
+        0,
+        254
+      ],
+      "transparentPixels": 1133487
+    },
+    {
+      "playerId": 25,
+      "pose": "cheering",
+      "file": "public/images/player-cartoons/20261005/25/cheering.png",
+      "sha256": "a2c145b55dbe3bb2184b1b13bf326b708bbc99d66505faa5310bf474ae3c22b3",
+      "bytes": 1572106,
+      "size": [
+        1024,
+        1536
+      ],
+      "alphaRange": [
+        0,
+        254
+      ],
+      "transparentPixels": 1064066
+    },
+    {
+      "playerId": 26,
+      "pose": "arms-crossed",
+      "file": "public/images/player-cartoons/20261005/26/arms-crossed.png",
+      "sha256": "01f8bd280f6a0d296609ebe8564ab80b37ae625055673454b230745194eb03d1",
+      "bytes": 1516447,
+      "size": [
+        1024,
+        1536
+      ],
+      "alphaRange": [
+        0,
+        254
+      ],
+      "transparentPixels": 1132363
+    },
+    {
+      "playerId": 26,
+      "pose": "cheering",
+      "file": "public/images/player-cartoons/20261005/26/cheering.png",
+      "sha256": "3ec0b29a02395aa21ff5d0c26f0abe2dea321f1777bf35800ef3f5c52524cb12",
+      "bytes": 1544816,
+      "size": [
+        1024,
+        1536
+      ],
+      "alphaRange": [
+        0,
+        254
+      ],
+      "transparentPixels": 1095422
+    },
+    {
+      "playerId": 27,
+      "pose": "arms-crossed",
+      "file": "public/images/player-cartoons/20261005/27/arms-crossed.png",
+      "sha256": "532a6c18401a5d49db35daba38eaa9c5a2e45d28e74b9b3016e6fcab3613a107",
+      "bytes": 1520201,
+      "size": [
+        1024,
+        1536
+      ],
+      "alphaRange": [
+        0,
+        254
+      ],
+      "transparentPixels": 1128958
+    },
+    {
+      "playerId": 27,
+      "pose": "cheering",
+      "file": "public/images/player-cartoons/20261005/27/cheering.png",
+      "sha256": "a83d82a073c175e83ee1f3d10f612b280ca3fa8c0480c3b6626397ec877bc378",
+      "bytes": 1554362,
+      "size": [
+        1024,
+        1536
+      ],
+      "alphaRange": [
+        0,
+        254
+      ],
+      "transparentPixels": 1100884
+    },
+    {
+      "playerId": 29,
+      "pose": "arms-crossed",
+      "file": "public/images/player-cartoons/20261005/29/arms-crossed.png",
+      "sha256": "04ab494c620253c3a96706abc60dd8cab360300dd45e547eddb681469eee0cce",
+      "bytes": 1500464,
+      "size": [
+        1024,
+        1536
+      ],
+      "alphaRange": [
+        0,
+        254
+      ],
+      "transparentPixels": 1145242
+    },
+    {
+      "playerId": 29,
+      "pose": "cheering",
+      "file": "public/images/player-cartoons/20261005/29/cheering.png",
+      "sha256": "d95f4ab1be5e33cc6ffcaa047d4e7ff64457155107aa78fffb1a079ead013aaf",
+      "bytes": 1560051,
+      "size": [
+        1024,
+        1536
+      ],
+      "alphaRange": [
+        0,
+        254
+      ],
+      "transparentPixels": 1097802
+    },
+    {
+      "playerId": 30,
+      "pose": "arms-crossed",
+      "file": "public/images/player-cartoons/20261005/30/arms-crossed.png",
+      "sha256": "3d6aa19cb6117cfaa859f0ffb3de55b31ccbda4931d3b3b8d18cc235a0d286eb",
+      "bytes": 1473316,
+      "size": [
+        1024,
+        1536
+      ],
+      "alphaRange": [
+        0,
+        254
+      ],
+      "transparentPixels": 1144485
+    },
+    {
+      "playerId": 30,
+      "pose": "cheering",
+      "file": "public/images/player-cartoons/20261005/30/cheering.png",
+      "sha256": "0a764945dd17961f9cbc21038fc55896c5e447d367ebbb5d1fc6edd58db8c797",
+      "bytes": 1538718,
+      "size": [
+        1024,
+        1536
+      ],
+      "alphaRange": [
+        0,
+        254
+      ],
+      "transparentPixels": 1093863
+    },
+    {
+      "playerId": 31,
+      "pose": "arms-crossed",
+      "file": "public/images/player-cartoons/20261005/31/arms-crossed.png",
+      "sha256": "a94a23030df24c9dd05580c1688c675cfeac513a0346eb6ee7b9e1b3a8a8e9b3",
+      "bytes": 1484690,
+      "size": [
+        1024,
+        1536
+      ],
+      "alphaRange": [
+        0,
+        254
+      ],
+      "transparentPixels": 1136438
+    },
+    {
+      "playerId": 31,
+      "pose": "cheering",
+      "file": "public/images/player-cartoons/20261005/31/cheering.png",
+      "sha256": "21650e70bbcb66c83cf6b7344c364cda10310344d32e1dc6655d786d9ca26e05",
+      "bytes": 1529107,
+      "size": [
+        1024,
+        1536
+      ],
+      "alphaRange": [
+        0,
+        254
+      ],
+      "transparentPixels": 1097532
+    },
+    {
+      "playerId": 33,
+      "pose": "arms-crossed",
+      "file": "public/images/player-cartoons/20261005/33/arms-crossed.png",
+      "sha256": "44569433cb07152859c386f9c10935ce87543006c550497928225517b53dac2a",
+      "bytes": 1470054,
+      "size": [
+        1024,
+        1536
+      ],
+      "alphaRange": [
+        0,
+        254
+      ],
+      "transparentPixels": 1138677
+    },
+    {
+      "playerId": 33,
+      "pose": "cheering",
+      "file": "public/images/player-cartoons/20261005/33/cheering.png",
+      "sha256": "94d34843d5730a1543fdbfa272d22f357461ac8d84b7b193fd56f11dd64e2a7b",
+      "bytes": 1559688,
+      "size": [
+        1024,
+        1536
+      ],
+      "alphaRange": [
+        0,
+        254
+      ],
+      "transparentPixels": 1085844
+    },
+    {
+      "playerId": 34,
+      "pose": "arms-crossed",
+      "file": "public/images/player-cartoons/20261005/34/arms-crossed.png",
+      "sha256": "7e81eb67272ee9e012dc1697b43caf41cbf53a7c49a11cb1b26b04224d21e4f6",
+      "bytes": 1449080,
+      "size": [
+        1024,
+        1536
+      ],
+      "alphaRange": [
+        0,
+        254
+      ],
+      "transparentPixels": 1152883
+    },
+    {
+      "playerId": 34,
+      "pose": "cheering",
+      "file": "public/images/player-cartoons/20261005/34/cheering.png",
+      "sha256": "4d80a1a9ca478c7ee61a483a49210c69a00018d3cb57a1cf049836ec9a4758ae",
+      "bytes": 1517478,
+      "size": [
+        1024,
+        1536
+      ],
+      "alphaRange": [
+        0,
+        254
+      ],
+      "transparentPixels": 1101070
+    },
+    {
+      "playerId": 35,
+      "pose": "arms-crossed",
+      "file": "public/images/player-cartoons/20261005/35/arms-crossed.png",
+      "sha256": "5ed10af01efbb15c4216cd4a17b29b0568ca2408005ef56312c65f4a934f1ae1",
+      "bytes": 1459307,
+      "size": [
+        1024,
+        1536
+      ],
+      "alphaRange": [
+        0,
+        254
+      ],
+      "transparentPixels": 1149479
+    },
+    {
+      "playerId": 35,
+      "pose": "cheering",
+      "file": "public/images/player-cartoons/20261005/35/cheering.png",
+      "sha256": "80d8692b77808f9162179072809cfcb55044f13bf5a17447ab888c4092070916",
+      "bytes": 1519076,
+      "size": [
+        1024,
+        1536
+      ],
+      "alphaRange": [
+        0,
+        254
+      ],
+      "transparentPixels": 1096034
+    },
+    {
+      "playerId": 36,
+      "pose": "arms-crossed",
+      "file": "public/images/player-cartoons/20261005/36/arms-crossed.png",
+      "sha256": "ee4af5a8e9df262684e004f62143930fdd3c283aedf7a91c5773961d162ad143",
+      "bytes": 1495584,
+      "size": [
+        1024,
+        1536
+      ],
+      "alphaRange": [
+        0,
+        254
+      ],
+      "transparentPixels": 1126377
+    },
+    {
+      "playerId": 36,
+      "pose": "cheering",
+      "file": "public/images/player-cartoons/20261005/36/cheering.png",
+      "sha256": "2eb8cef3b435bd1e77c632a067f63e395677d23860cba52b82d64e8f4e1f08be",
+      "bytes": 1584853,
+      "size": [
+        1024,
+        1536
+      ],
+      "alphaRange": [
+        0,
+        254
+      ],
+      "transparentPixels": 1070994
+    },
+    {
+      "playerId": 37,
+      "pose": "arms-crossed",
+      "file": "public/images/player-cartoons/20261005/37/arms-crossed.png",
+      "sha256": "8004f80e250342813c56300ac677928027deb1ae60f46c86a0b79fa6455f7d60",
+      "bytes": 1491826,
+      "size": [
+        1024,
+        1536
+      ],
+      "alphaRange": [
+        0,
+        254
+      ],
+      "transparentPixels": 1136487
+    },
+    {
+      "playerId": 37,
+      "pose": "cheering",
+      "file": "public/images/player-cartoons/20261005/37/cheering.png",
+      "sha256": "7e206e371b12fc3d55f10fc91dd09d7c108d3c409a207a71256c73ef750021d3",
+      "bytes": 1542279,
+      "size": [
+        1024,
+        1536
+      ],
+      "alphaRange": [
+        0,
+        254
+      ],
+      "transparentPixels": 1092764
+    },
+    {
+      "playerId": 44,
+      "pose": "arms-crossed",
+      "file": "public/images/player-cartoons/20261005/44/arms-crossed.png",
+      "sha256": "f71f3b279fad1804b6263390157268ea8215a8ab8a211f7e9095fe6e8b630135",
+      "bytes": 1478394,
+      "size": [
+        1024,
+        1536
+      ],
+      "alphaRange": [
+        0,
+        254
+      ],
+      "transparentPixels": 1145485
+    },
+    {
+      "playerId": 44,
+      "pose": "cheering",
+      "file": "public/images/player-cartoons/20261005/44/cheering.png",
+      "sha256": "cbd6ea78ae4eb2d5f05488df46c94ce6a315a7acd7ba83c0e12bbd3244172a79",
+      "bytes": 1560783,
+      "size": [
+        1024,
+        1536
+      ],
+      "alphaRange": [
+        0,
+        254
+      ],
+      "transparentPixels": 1077208
+    },
+    {
+      "playerId": 47,
+      "pose": "arms-crossed",
+      "file": "public/images/player-cartoons/20261005/47/arms-crossed.png",
+      "sha256": "09d820dcbbd9dbba4d2da6dcbd73e87ea388c491a09ce98df22d79480ff0b821",
+      "bytes": 1479894,
+      "size": [
+        1024,
+        1536
+      ],
+      "alphaRange": [
+        0,
+        254
+      ],
+      "transparentPixels": 1143523
+    },
+    {
+      "playerId": 47,
+      "pose": "cheering",
+      "file": "public/images/player-cartoons/20261005/47/cheering.png",
+      "sha256": "0e273fdf3305e346bba2f7aedad319399a9f12868ace7f13071756e47e27bcfb",
+      "bytes": 1537894,
+      "size": [
+        1024,
+        1536
+      ],
+      "alphaRange": [
+        0,
+        254
+      ],
+      "transparentPixels": 1098789
+    },
+    {
+      "playerId": 65,
+      "pose": "arms-crossed",
+      "file": "public/images/player-cartoons/20261005/65/arms-crossed.png",
+      "sha256": "c47ded30af7658e4da7a5d3db4cf5aff9d0b51fb430c8c61d995a0dbc0b8fa6a",
+      "bytes": 1479608,
+      "size": [
+        1024,
+        1536
+      ],
+      "alphaRange": [
+        0,
+        254
+      ],
+      "transparentPixels": 1118206
+    },
+    {
+      "playerId": 65,
+      "pose": "cheering",
+      "file": "public/images/player-cartoons/20261005/65/cheering.png",
+      "sha256": "7ad8a29e27f18944f24f011be12c465e6b727db0b2d708428749fcd42343f04f",
+      "bytes": 1537047,
+      "size": [
+        1024,
+        1536
+      ],
+      "alphaRange": [
+        0,
+        254
+      ],
+      "transparentPixels": 1068053
+    }
+  ],
+  "activeRosterVerified": {
+    "activeCount": 27,
+    "photoReadyCount": 25,
+    "missing": [
+      {
+        "id": 66,
+        "name": "이상헌",
+        "number": 15
+      },
+      {
+        "id": 68,
+        "name": "김성년",
+        "number": null
+      }
+    ]
+  },
+  "checks": {
+    "webFeatures": "passed",
+    "lint": "passed",
+    "productionBuild": "passed",
+    "cardExports": 10,
+    "cardThemes": 5,
+    "posesPerPlayer": 2,
+    "visualReview": "passed for all 50 images",
+    "productionBuildId": "NLZqwMYlI-MmmvkLJKOUV"
+  }
+}

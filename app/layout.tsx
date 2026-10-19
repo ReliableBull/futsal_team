@@ -37,7 +37,9 @@ export const metadata: Metadata = {
 const navItems = [
   { href: "/", label: "홈" },
   { href: "/players", label: "선수목록" },
-  { href: "/matches", label: "경기결과" }
+  { href: "/matches", label: "경기결과" },
+  { href: "/chemistry", label: "조합 분석" },
+  { href: "/hall-of-fame", label: "🏆 명예의 전당" }
 ];
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

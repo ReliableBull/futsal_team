@@ -1,0 +1,17 @@
+name: arena_club_server
+description: "동호회·풋살장 예약 앱 전용 백엔드 (ARENA 웹사이트와 분리된 서버)"
+publish_to: 'none'
+version: 0.1.0
+
+environment:
+  sdk: ^3.13.0
+
+dependencies:
+  crypto: ^3.0.7
+  http: ^1.6.0
+  shelf: ^1.4.2
+  sqlite3: ^3.7.0
+
+dev_dependencies:
+  lints: ^6.0.0
+  test: ^1.26.0

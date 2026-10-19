@@ -1,0 +1,22 @@
+{
+  "validWorkbook": true,
+  "playerRows": 27,
+  "tableRange": "A5:M32",
+  "visibleFilterColumns": 13,
+  "headers": [
+    "선수 이름",
+    "닉네임",
+    "포지션",
+    "등번호",
+    "경기",
+    "승",
+    "패",
+    "무",
+    "승률",
+    "득점",
+    "도움",
+    "공격 포인트",
+    "MOM"
+  ],
+  "nativeExcelAutomation": "unavailable: Excel did not respond to open within 30 seconds"
+}

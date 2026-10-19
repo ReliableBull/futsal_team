@@ -2,6 +2,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { WinnerBadge } from "@/components/WinnerBadge";
+import { MatchShareCard } from "@/components/MatchShareCard";
+import { MomVoteShare } from "@/components/MomVoteShare";
+import { buildMatchShareData } from "@/lib/match-share-card";
 import { matchInclude } from "@/lib/matches";
 import { prisma } from "@/lib/prisma";
 import { formatDate, getTeamMvpNames, matchStatus } from "@/lib/stats";
@@ -35,6 +38,9 @@ export default async function MatchDetailPage({ params }: { params: { id: string
           </span>
         </p>
       </section>
+
+      {match.status === matchStatus.inProgress && <MomVoteShare matchId={match.id} />}
+      <MatchShareCard data={buildMatchShareData(match)} />
 
       <div className="grid gap-5 lg:grid-cols-2">
         {[

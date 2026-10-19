@@ -9,17 +9,17 @@ type NavItem = {
 };
 
 export function DesktopNav({ items }: { items: NavItem[] }) {
-  const pathname = usePathname();
+  const pathname = usePathname() ?? "";
 
   return (
-    <nav className="hidden h-full items-stretch sm:flex" aria-label="주요 메뉴">
+    <nav className="hidden h-full items-stretch md:flex" aria-label="주요 메뉴">
       {items.map((item) => {
         const isActive = item.href === "/" ? pathname === item.href : pathname.startsWith(item.href);
 
         return (
           <Link
             key={item.href}
-            className={`relative flex min-h-16 items-center px-5 text-sm font-black transition after:absolute after:inset-x-4 after:bottom-0 after:h-0.5 after:origin-left after:bg-arena-red after:transition-transform ${
+            className={`relative flex min-h-16 items-center whitespace-nowrap px-3 text-sm font-black transition lg:px-5 after:absolute after:inset-x-4 after:bottom-0 after:h-0.5 after:origin-left after:bg-arena-red after:transition-transform ${
               isActive
                 ? "text-white after:scale-x-100"
                 : "text-slate-400 after:scale-x-0 hover:text-white hover:after:scale-x-100"

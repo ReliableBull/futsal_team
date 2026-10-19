@@ -8,6 +8,7 @@ datasource db {
 }
 
 model Admin {
+  mobileSessions MobileSession[]
   id           Int      @id @default(autoincrement())
   username     String   @unique
   passwordHash String
@@ -30,6 +31,8 @@ model Player {
   assistedGoals       MatchGoal[]   @relation("GoalAssister")
   chairmanMvpMatches  Match[]       @relation("ChairmanTeamMvp")
   managerMvpMatches   Match[]       @relation("ManagerTeamMvp")
+  momTeamABallots      MomBallot[]   @relation("MomTeamAVote")
+  momTeamBBallots      MomBallot[]   @relation("MomTeamBVote")
 }
 
 model Match {
@@ -52,6 +55,21 @@ model Match {
   matchPlayers       MatchPlayer[]
   goals              MatchGoal[]
   posters            MatchPoster[]
+  momBallots         MomBallot[]
+}
+
+model MomBallot {
+  id            Int      @id @default(autoincrement())
+  matchId       Int
+  voterHash     String   @db.VarChar(64)
+  teamAPlayerId Int?
+  teamBPlayerId Int?
+  createdAt     DateTime @default(now())
+  match         Match    @relation(fields: [matchId], references: [id], onDelete: Cascade)
+  teamAPlayer   Player?  @relation("MomTeamAVote", fields: [teamAPlayerId], references: [id], onDelete: SetNull)
+  teamBPlayer   Player?  @relation("MomTeamBVote", fields: [teamBPlayerId], references: [id], onDelete: SetNull)
+
+  @@unique([matchId, voterHash])
 }
 
 model MatchPlayer {
@@ -95,4 +113,16 @@ model MatchGoal {
 
   @@unique([matchId, scorerId, sequence])
   @@index([assisterId])
+}
+
+model MobileSession {
+  tokenHash       String   @id
+  adminId         Int
+  passwordVersion String
+  expiresAt       DateTime
+  createdAt       DateTime @default(now())
+  admin           Admin    @relation(fields: [adminId], references: [id], onDelete: Cascade)
+
+  @@index([expiresAt])
+  @@index([adminId])
 }

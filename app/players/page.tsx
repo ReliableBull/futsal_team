@@ -23,6 +23,8 @@ export default async function PlayersPage({ searchParams }: { searchParams: { st
     winRate: player.winRate,
     goals: player.goals,
     assists: player.assists,
+    attackPoints: player.goals + player.assists,
+    attackPointsPerMatch: player.totalMatches > 0 ? Math.round(((player.goals + player.assists) * 100) / player.totalMatches) / 100 : 0,
     mvpCount: player.mvpCount
   }));
 
@@ -34,11 +36,13 @@ export default async function PlayersPage({ searchParams }: { searchParams: { st
         <p className="mt-2 text-sm text-slate-400">
           기록 집계 기간: {dateRange.startDate} ~ {dateRange.endDate}
         </p>
+        <p className="mt-1 text-xs text-slate-500">공격 포인트 = 득점 + 도움 · 완료된 경기만 집계합니다.</p>
+        <p className="mt-1 text-xs text-slate-500">경기당 공격 포인트 = 공격 포인트 ÷ 출전 경기 수</p>
       </div>
 
       <DateRangeFilter actionPath="/players" range={dateRange} />
 
-      <PlayersSortableList players={sortablePlayers} />
+      <PlayersSortableList players={sortablePlayers} startDate={dateRange.startDate} endDate={dateRange.endDate} />
     </div>
   );
 }

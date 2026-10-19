@@ -7,13 +7,23 @@ type PlayerAvatarProps = {
   playerId: number;
   name: string;
   profileImageUrl?: string | null;
-  size?: "sm" | "md" | "lg";
+  size?: "sm" | "md" | "lg" | "xl" | "2xl";
 };
 
 const sizeClass = {
   sm: "h-9 w-9 text-xs",
   md: "h-12 w-12 text-sm",
-  lg: "h-24 w-24 text-2xl"
+  lg: "h-24 w-24 text-2xl",
+  xl: "h-[72px] w-[72px] text-xl sm:h-24 sm:w-24 sm:text-2xl",
+  "2xl": "h-[104px] w-[104px] text-3xl sm:h-[136px] sm:w-[136px] sm:text-4xl"
+};
+
+const sizeHint = {
+  sm: "36px",
+  md: "48px",
+  lg: "96px",
+  xl: "96px",
+  "2xl": "136px"
 };
 
 function getInitial(name: string) {
@@ -39,7 +49,7 @@ export function PlayerAvatar({ playerId, name, profileImageUrl, size = "md" }: P
           alt={`${name} 프로필 사진`}
           className="object-cover"
           onError={() => setImageFailed(true)}
-          sizes={size === "lg" ? "96px" : size === "md" ? "48px" : "36px"}
+          sizes={sizeHint[size]}
           src={imageSrc}
         />
       ) : (

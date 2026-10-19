@@ -1,0 +1,10 @@
+{
+  "productionPort": 3000,
+  "photoOptions": 5,
+  "existingPhotoPoses": "passed",
+  "cartoonPoses": "passed",
+  "previewAndDownloadMatch": true,
+  "servedCartoonImages": 50,
+  "mobileOverflow": false,
+  "browserErrors": []
+}

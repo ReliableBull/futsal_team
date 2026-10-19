@@ -1,0 +1,18 @@
+{
+  "passed": true,
+  "deployed": true,
+  "buildId": "ne9g5-Bb6Yi7wVgbx_lsy",
+  "previousBuildId": "NLZqwMYlI-MmmvkLJKOUV",
+  "pid": 67913,
+  "backup": ".next-mobile-mom-rollback-20261013-NLZqwMYlI-MmmvkLJKOUV",
+  "deployedAt": "2026-10-12T17:51:38.865Z",
+  "checks": [
+    "production closed match page and mobile layout",
+    "production API and database connection",
+    "production closed match share button hidden",
+    "production results require admin login",
+    "existing cartoon player card options retained",
+    "public address API serves deployed feature"
+  ],
+  "browserErrors": []
+}

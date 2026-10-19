@@ -1,0 +1,1048 @@
+{
+  "snapshotDate": "2026-10-05",
+  "timeZone": "Asia/Seoul",
+  "tool": "built-in image_gen",
+  "style": "Cyan/navy kit; ARENA FC chest patch; full body; transparent PNG",
+  "players": [
+    {
+      "id": 13,
+      "name": "강수길",
+      "number": 6,
+      "position": "미드필더",
+      "activeAtSnapshot": true,
+      "reference": "/Users/hojunlee/Desktop/coding_server/futsal_team/public/images/players/13.jpg",
+      "referenceSha256": "d4814ebb0f6f7ab93de5cdf6503062ba2009e867494a73d2f69fe0aa39d5c2fd",
+      "status": "complete",
+      "poses": {
+        "arms-crossed": {
+          "status": "complete",
+          "url": "/images/player-portraits/20261005/13/arms-crossed.png",
+          "file": "/Users/hojunlee/Desktop/coding_server/futsal_team/public/images/player-portraits/20261005/13/arms-crossed.png",
+          "sha256": "1f39fa2a1cfde8d12eecdd5c2614836fe9cb05dadcced5b2a3994f1075f8793d",
+          "dimensions": [
+            1024,
+            1536
+          ],
+          "transparent": true,
+          "tool": "built-in image_gen",
+          "source": "/Users/hojunlee/.codex/generated_images/01a10ba2-a1f6-73c3-af27-474c22a212b7/exec-905fd522-3228-4ac6-b59c-9349764bb349.png",
+          "prompt": "Use case: identity-preserve\nAsset type: photorealistic full-body individual football player cutout for the ARENA FC player-card collection.\nInput images: Image 1 is the ONLY FACIAL IDENTITY reference: the registered photograph of 강수길, player ID 13. Image 2 is STRICTLY an OUTFIT, BADGE, LIGHTING AND COMPOSITION reference of another teammate. Never transfer the teammate's face, hair, hair accessories, build, or personal features from image 2. Make the person in IMAGE 1, not the man in image 2.\nPrimary request: Create ONE full-body standing portrait of the exact same adult man shown in image 1, confidently and comfortably crossing both arms over his chest, looking at the camera with a natural friendly expression. Preserve his recognisable facial identity: face shape, eyes, nose, mouth, hairline, hairstyle, skin tone, apparent age and smile lines. Short textured black fringe, broad rounded face, natural mature features; no glasses. Retain glasses only when present on the face in image 1; do not remove them. Keep natural visible body proportions; do not give all players the same body or make them uniformly muscular or thin. Do not beautify him into a younger generic model.\nUniform: EXACT approved team outfit from image 2: cyan/light-blue short-sleeved football jersey, dark navy collar and sleeve hems, navy shorts, pale blue football socks and charcoal futsal shoes. On the anatomical LEFT chest (viewer right), reproduce the small circular dark navy ARENA FC badge with thin lime ring, lime A symbol, and off-white text \"ARENA FC\". Match the badge size and placement in image 2. The white number on the shorts MUST be 6; replace the reference teammate's number 19 with 6. No other sponsors, no unrelated brands, no additional lettering.\nComposition: single person, centered, full head-to-toe, both feet and all hair visible inside the image with small margins. Vertical 2:3 1024x1536 framing, same full-body scale as image 2. Naturally planted feet, anatomically correct folded arms and hands. Soft neutral studio lighting and realistic skin/fabric, sharp face detail.\nBackground: truly transparent PNG alpha around the complete subject, clean natural hair edges, no scenery, no floor, no printed checkerboard, no glow or haze. Preserve transparent isolation.\nConstraints: one image of one person, no collage, no panel, no text caption, no watermark. Facial fidelity to image 1 is highest priority; uniform consistency to image 2 is second. Do not copy any face or accessory from image 2."
+        },
+        "cheering": {
+          "status": "complete",
+          "url": "/images/player-portraits/20261005/13/cheering.png",
+          "file": "/Users/hojunlee/Desktop/coding_server/futsal_team/public/images/player-portraits/20261005/13/cheering.png",
+          "sha256": "af245f4a2efc5e25757f8e208b81ef0db4421bca628e3faff25948897781034f",
+          "dimensions": [
+            1024,
+            1536
+          ],
+          "transparent": true,
+          "tool": "built-in image_gen",
+          "source": "/Users/hojunlee/.codex/generated_images/01a10ba2-a1f6-73c3-af27-474c22a212b7/exec-2272ee77-64ae-4675-b341-283ad4192a23.png",
+          "prompt": "Use case: identity-preserve\nAsset type: second pose for an existing transparent ARENA FC full-body player portrait.\nInput images: Image 1 is the EDIT TARGET, the already generated ARMS-CROSSED full-body portrait of 강수길, player ID 13. Image 2 is the SAME PERSON'S ORIGINAL REGISTERED PHOTO, the primary check for facial identity. Image 3 is a POSE GUIDE of another teammate: use ONLY its raised-fist pose, never its head, face, hair or number.\nPrimary request: Create the same player from image 1 in a friendly Korean \"화이팅\" encouragement pose: right elbow bent, naturally clenched right fist beside the shoulder, other arm relaxed at the side, looking at the camera with a natural warm expression. Preserve this player's exact facial identity, hairstyle, glasses if present, age, skin tone and natural body proportions from images 1 and 2. No rejuvenation, no generic model face. Make sure this is the same person as image 2.\nUniform: Keep the precise cyan/light-blue jersey with navy collar and sleeve hems, small circular ARENA FC chest badge (navy patch, thin lime ring, lime A symbol and readable off-white text \"ARENA FC\"), navy shorts, pale blue socks and charcoal shoes from image 1. Preserve the white shorts number 6. Do not copy number 19 from the pose guide.\nComposition: same centered head-to-toe portrait, complete hair and both shoes within small margins, vertical 2:3 1024x1536, same scale, lighting and detailed photographic realism as image 1. Natural anatomically correct hands and arms.\nBackground: retain genuine transparent alpha, clean silhouette, no background or floor, no printed checkerboard.\nChange the arm pose as requested; preserve individual identity and team outfit. Single person, single image, no montage, no additional props or captions."
+        }
+      }
+    },
+    {
+      "id": 14,
+      "name": "김중환",
+      "number": 22,
+      "position": "미드필더",
+      "activeAtSnapshot": true,
+      "reference": "/Users/hojunlee/Desktop/coding_server/futsal_team/public/uploads/players/14/1783273460878-df6a4944-2e84-47df-977c-f46fd4f0145e.png",
+      "referenceSha256": "80e9de65339241a48e850d4de6ed686dcb707c8afea151bbbc833422a4ad447f",
+      "status": "complete",
+      "poses": {
+        "arms-crossed": {
+          "status": "complete",
+          "url": "/images/player-portraits/20261005/14/arms-crossed.png",
+          "file": "/Users/hojunlee/Desktop/coding_server/futsal_team/public/images/player-portraits/20261005/14/arms-crossed.png",
+          "sha256": "1d8ba3dc65e3d49562393769e03ccbdc7b52fe523aa11aedcccca3a99ba9b3be",
+          "dimensions": [
+            1024,
+            1536
+          ],
+          "transparent": true,
+          "tool": "built-in image_gen",
+          "source": "/Users/hojunlee/.codex/generated_images/01a10ba2-a1f6-73c3-af27-474c22a212b7/exec-91121088-cd08-49df-8fab-3d53d09d5b5c.png",
+          "prompt": "Use case: identity-preserve\nAsset type: photorealistic full-body individual football player cutout for the ARENA FC player-card collection.\nInput images: Image 1 is the ONLY FACIAL IDENTITY reference: the registered photograph of 김중환, player ID 14. Image 2 is STRICTLY an OUTFIT, BADGE, LIGHTING AND COMPOSITION reference of another teammate. Never transfer the teammate's face, hair, hair accessories, build, or personal features from image 2. Make the person in IMAGE 1, not the man in image 2.\nPrimary request: Create ONE full-body standing portrait of the exact same adult man shown in image 1, confidently and comfortably crossing both arms over his chest, looking at the camera with a natural friendly expression. Preserve his recognisable facial identity: face shape, eyes, nose, mouth, hairline, hairstyle, skin tone, apparent age and smile lines. Preserve his round wire-frame glasses, center-parted black hair, round fuller face and cheerful expression. Retain glasses only when present on the face in image 1; do not remove them. Keep natural visible body proportions; do not give all players the same body or make them uniformly muscular or thin. Do not beautify him into a younger generic model.\nUniform: EXACT approved team outfit from image 2: cyan/light-blue short-sleeved football jersey, dark navy collar and sleeve hems, navy shorts, pale blue football socks and charcoal futsal shoes. On the anatomical LEFT chest (viewer right), reproduce the small circular dark navy ARENA FC badge with thin lime ring, lime A symbol, and off-white text \"ARENA FC\". Match the badge size and placement in image 2. The white number on the shorts MUST be 22; replace the reference teammate's number 19 with 22. No other sponsors, no unrelated brands, no additional lettering.\nComposition: single person, centered, full head-to-toe, both feet and all hair visible inside the image with small margins. Vertical 2:3 1024x1536 framing, same full-body scale as image 2. Naturally planted feet, anatomically correct folded arms and hands. Soft neutral studio lighting and realistic skin/fabric, sharp face detail.\nBackground: truly transparent PNG alpha around the complete subject, clean natural hair edges, no scenery, no floor, no printed checkerboard, no glow or haze. Preserve transparent isolation.\nConstraints: one image of one person, no collage, no panel, no text caption, no watermark. Facial fidelity to image 1 is highest priority; uniform consistency to image 2 is second. Do not copy any face or accessory from image 2."
+        },
+        "cheering": {
+          "status": "complete",
+          "url": "/images/player-portraits/20261005/14/cheering.png",
+          "file": "/Users/hojunlee/Desktop/coding_server/futsal_team/public/images/player-portraits/20261005/14/cheering.png",
+          "sha256": "c01f4d3a626deb5b1036615832a8996d826fb836fe6bc2f9edff9a7ce5ccb0b6",
+          "dimensions": [
+            1024,
+            1536
+          ],
+          "transparent": true,
+          "tool": "built-in image_gen",
+          "source": "/Users/hojunlee/.codex/generated_images/01a10ba2-a1f6-73c3-af27-474c22a212b7/exec-3e8161d9-ecf9-49b5-b020-af93a808af15.png",
+          "prompt": "Use case: identity-preserve\nAsset type: second pose for an existing transparent ARENA FC full-body player portrait.\nInput images: Image 1 is the EDIT TARGET, the already generated ARMS-CROSSED full-body portrait of 김중환, player ID 14. Image 2 is the SAME PERSON'S ORIGINAL REGISTERED PHOTO, the primary check for facial identity. Image 3 is a POSE GUIDE of another teammate: use ONLY its raised-fist pose, never its head, face, hair or number.\nPrimary request: Create the same player from image 1 in a friendly Korean \"화이팅\" encouragement pose: right elbow bent, naturally clenched right fist beside the shoulder, other arm relaxed at the side, looking at the camera with a natural warm expression. Preserve this player's exact facial identity, hairstyle, glasses if present, age, skin tone and natural body proportions from images 1 and 2. No rejuvenation, no generic model face. Make sure this is the same person as image 2.\nUniform: Keep the precise cyan/light-blue jersey with navy collar and sleeve hems, small circular ARENA FC chest badge (navy patch, thin lime ring, lime A symbol and readable off-white text \"ARENA FC\"), navy shorts, pale blue socks and charcoal shoes from image 1. Preserve the white shorts number 22. Do not copy number 19 from the pose guide.\nComposition: same centered head-to-toe portrait, complete hair and both shoes within small margins, vertical 2:3 1024x1536, same scale, lighting and detailed photographic realism as image 1. Natural anatomically correct hands and arms.\nBackground: retain genuine transparent alpha, clean silhouette, no background or floor, no printed checkerboard.\nChange the arm pose as requested; preserve individual identity and team outfit. Single person, single image, no montage, no additional props or captions."
+        }
+      }
+    },
+    {
+      "id": 15,
+      "name": "김상목",
+      "number": 11,
+      "position": "미드필더",
+      "activeAtSnapshot": true,
+      "reference": "/Users/hojunlee/Desktop/coding_server/futsal_team/public/images/players/15.jpg",
+      "referenceSha256": "cab87c97d09d6b836d64d9df8765e5cfbcb23b4b2986fdd416b04b525234ba32",
+      "status": "complete",
+      "poses": {
+        "arms-crossed": {
+          "status": "complete",
+          "url": "/images/player-portraits/20261005/15/arms-crossed-v2.png",
+          "file": "/Users/hojunlee/Desktop/coding_server/futsal_team/public/images/player-portraits/20261005/15/arms-crossed-v2.png",
+          "sha256": "d1f80abd7f7444a1c12b8a86b9dce60d43302ecdca70a34a43bb1167cda0e3ad",
+          "dimensions": [
+            1024,
+            1536
+          ],
+          "transparent": true,
+          "tool": "built-in image_gen",
+          "source": "/Users/hojunlee/.codex/generated_images/01a10ba2-a1f6-73c3-af27-474c22a212b7/exec-ad3e4911-06c2-4eb4-bb41-f1149cdf3722.png",
+          "prompt": "Use case: precise-object-edit\nInput image 1 is the EDIT TARGET: the generated arms-crossed portrait of 김상목, shorts number 11. Image 2 is a SUPPORTING REFERENCE for the ARENA FC badge only.\nMake ONE tiny localized correction: correct and sharpen the off-white lettering below the lime A on the circular chest badge in image 1. It must read exactly \"ARENA FC\": five letters A R E N A, one space, then F C. Use clean, simple, small uppercase sans-serif text, fully legible, matching image 2. Preserve the circular navy badge, lime border and A symbol. Do not add any other text or logo. The only permitted visual change is this badge lettering.\nPreserve the EXACT face, hair, glasses if present, skin texture, body, arms-crossed pose, hands, cyan/navy uniform, shorts number 11, socks, shoes, lighting and image framing from image 1. Do not transfer the face or pose from image 2. Retain the full head-to-toe vertical 1024x1536 portrait and genuine transparent alpha background. No background, no scenery, no montage."
+        },
+        "cheering": {
+          "status": "complete",
+          "url": "/images/player-portraits/20261005/15/cheering.png",
+          "file": "/Users/hojunlee/Desktop/coding_server/futsal_team/public/images/player-portraits/20261005/15/cheering.png",
+          "sha256": "8f4261513b1eabb38ec6c3965e495a33dbc6f2b6f602e19d259eca08f7bb6e2c",
+          "dimensions": [
+            1024,
+            1536
+          ],
+          "transparent": true,
+          "tool": "built-in image_gen",
+          "source": "/Users/hojunlee/.codex/generated_images/01a10ba2-a1f6-73c3-af27-474c22a212b7/exec-bc26db01-36c9-4593-860a-625af1c78b88.png",
+          "prompt": "Use case: identity-preserve\nAsset type: second pose for an existing transparent ARENA FC full-body player portrait.\nInput images: Image 1 is the EDIT TARGET, the already generated ARMS-CROSSED full-body portrait of 김상목, player ID 15. Image 2 is the SAME PERSON'S ORIGINAL REGISTERED PHOTO, the primary check for facial identity. Image 3 is a POSE GUIDE of another teammate: use ONLY its raised-fist pose, never its head, face, hair or number.\nPrimary request: Create the same player from image 1 in a friendly Korean \"화이팅\" encouragement pose: right elbow bent, naturally clenched right fist beside the shoulder, other arm relaxed at the side, looking at the camera with a natural warm expression. Preserve this player's exact facial identity, hairstyle, glasses if present, age, skin tone and natural body proportions from images 1 and 2. No rejuvenation, no generic model face. Make sure this is the same person as image 2.\nUniform: Keep the precise cyan/light-blue jersey with navy collar and sleeve hems, small circular ARENA FC chest badge (navy patch, thin lime ring, lime A symbol and readable off-white text \"ARENA FC\"), navy shorts, pale blue socks and charcoal shoes from image 1. Preserve the white shorts number 11. Do not copy number 19 from the pose guide.\nComposition: same centered head-to-toe portrait, complete hair and both shoes within small margins, vertical 2:3 1024x1536, same scale, lighting and detailed photographic realism as image 1. Natural anatomically correct hands and arms.\nBackground: retain genuine transparent alpha, clean silhouette, no background or floor, no printed checkerboard.\nChange the arm pose as requested; preserve individual identity and team outfit. Single person, single image, no montage, no additional props or captions."
+        }
+      },
+      "revisions": [
+        {
+          "pose": "arms-crossed",
+          "status": "complete",
+          "file": "/Users/hojunlee/Desktop/coding_server/futsal_team/docs/design-previews/player-portraits-20261005/drafts/15-arms-crossed.png",
+          "sha256": "23f4e0297bfa373ce03a085a7d12c423541c45920d53fc52cc4a905cdedb2223",
+          "dimensions": [
+            1024,
+            1536
+          ],
+          "transparent": true,
+          "tool": "built-in image_gen",
+          "source": "/Users/hojunlee/.codex/generated_images/01a10ba2-a1f6-73c3-af27-474c22a212b7/exec-f4e3ba31-5561-4585-b219-b7250407fca6.png",
+          "prompt": "Use case: identity-preserve\nAsset type: photorealistic full-body individual football player cutout for the ARENA FC player-card collection.\nInput images: Image 1 is the ONLY FACIAL IDENTITY reference: the registered photograph of 김상목, player ID 15. Image 2 is STRICTLY an OUTFIT, BADGE, LIGHTING AND COMPOSITION reference of another teammate. Never transfer the teammate's face, hair, hair accessories, build, or personal features from image 2. Make the person in IMAGE 1, not the man in image 2.\nPrimary request: Create ONE full-body standing portrait of the exact same adult man shown in image 1, confidently and comfortably crossing both arms over his chest, looking at the camera with a natural friendly expression. Preserve his recognisable facial identity: face shape, eyes, nose, mouth, hairline, hairstyle, skin tone, apparent age and smile lines. Preserve his thin round glasses, short slightly tousled black hair, mature facial features and calm expression. Retain glasses only when present on the face in image 1; do not remove them. Keep natural visible body proportions; do not give all players the same body or make them uniformly muscular or thin. Do not beautify him into a younger generic model.\nUniform: EXACT approved team outfit from image 2: cyan/light-blue short-sleeved football jersey, dark navy collar and sleeve hems, navy shorts, pale blue football socks and charcoal futsal shoes. On the anatomical LEFT chest (viewer right), reproduce the small circular dark navy ARENA FC badge with thin lime ring, lime A symbol, and off-white text \"ARENA FC\". Match the badge size and placement in image 2. The white number on the shorts MUST be 11; replace the reference teammate's number 19 with 11. No other sponsors, no unrelated brands, no additional lettering.\nComposition: single person, centered, full head-to-toe, both feet and all hair visible inside the image with small margins. Vertical 2:3 1024x1536 framing, same full-body scale as image 2. Naturally planted feet, anatomically correct folded arms and hands. Soft neutral studio lighting and realistic skin/fabric, sharp face detail.\nBackground: truly transparent PNG alpha around the complete subject, clean natural hair edges, no scenery, no floor, no printed checkerboard, no glow or haze. Preserve transparent isolation.\nConstraints: one image of one person, no collage, no panel, no text caption, no watermark. Facial fidelity to image 1 is highest priority; uniform consistency to image 2 is second. Do not copy any face or accessory from image 2."
+        }
+      ]
+    },
+    {
+      "id": 17,
+      "name": "송원섭",
+      "number": 7,
+      "position": "미드필더",
+      "activeAtSnapshot": true,
+      "reference": "/Users/hojunlee/Desktop/coding_server/futsal_team/public/images/players/17.jpg",
+      "referenceSha256": "b3c1092b50bb7163a32529fd8615d371ce68b86f8f5eeab17b711ec224b24e39",
+      "status": "complete",
+      "poses": {
+        "arms-crossed": {
+          "status": "complete",
+          "url": "/images/player-portraits/20261005/17/arms-crossed.png",
+          "file": "/Users/hojunlee/Desktop/coding_server/futsal_team/public/images/player-portraits/20261005/17/arms-crossed.png",
+          "sha256": "8aff4f819d057b68979f52ecc807b5f49cbcda74da4de465ebdfedbfb49eff8b",
+          "dimensions": [
+            1024,
+            1536
+          ],
+          "transparent": true,
+          "tool": "built-in image_gen",
+          "source": "/Users/hojunlee/.codex/generated_images/01a10ba2-a1f6-73c3-af27-474c22a212b7/exec-88fda750-2ae1-4e30-888d-377f1a278517.png",
+          "prompt": "Use case: identity-preserve\nAsset type: photorealistic full-body individual football player cutout for the ARENA FC player-card collection.\nInput images: Image 1 is the ONLY FACIAL IDENTITY reference: the registered photograph of 송원섭, player ID 17. Image 2 is STRICTLY an OUTFIT, BADGE, LIGHTING AND COMPOSITION reference of another teammate. Never transfer the teammate's face, hair, hair accessories, build, or personal features from image 2. Make the person in IMAGE 1, not the man in image 2.\nPrimary request: Create ONE full-body standing portrait of the exact same adult man shown in image 1, confidently and comfortably crossing both arms over his chest, looking at the camera with a natural friendly expression. Preserve his recognisable facial identity: face shape, eyes, nose, mouth, hairline, hairstyle, skin tone, apparent age and smile lines. Preserve straight black fringe, lean angular face, mature smile lines, no glasses. Retain glasses only when present on the face in image 1; do not remove them. Keep natural visible body proportions; do not give all players the same body or make them uniformly muscular or thin. Do not beautify him into a younger generic model.\nUniform: EXACT approved team outfit from image 2: cyan/light-blue short-sleeved football jersey, dark navy collar and sleeve hems, navy shorts, pale blue football socks and charcoal futsal shoes. On the anatomical LEFT chest (viewer right), reproduce the small circular dark navy ARENA FC badge with thin lime ring, lime A symbol, and off-white text \"ARENA FC\". Match the badge size and placement in image 2. The white number on the shorts MUST be 7; replace the reference teammate's number 19 with 7. No other sponsors, no unrelated brands, no additional lettering.\nComposition: single person, centered, full head-to-toe, both feet and all hair visible inside the image with small margins. Vertical 2:3 1024x1536 framing, same full-body scale as image 2. Naturally planted feet, anatomically correct folded arms and hands. Soft neutral studio lighting and realistic skin/fabric, sharp face detail.\nBackground: truly transparent PNG alpha around the complete subject, clean natural hair edges, no scenery, no floor, no printed checkerboard, no glow or haze. Preserve transparent isolation.\nConstraints: one image of one person, no collage, no panel, no text caption, no watermark. Facial fidelity to image 1 is highest priority; uniform consistency to image 2 is second. Do not copy any face or accessory from image 2."
+        },
+        "cheering": {
+          "status": "complete",
+          "url": "/images/player-portraits/20261005/17/cheering.png",
+          "file": "/Users/hojunlee/Desktop/coding_server/futsal_team/public/images/player-portraits/20261005/17/cheering.png",
+          "sha256": "ffb9ae704de94b066d5ea263de63dbc2a896fa395488a985d716c4904c97ab66",
+          "dimensions": [
+            1024,
+            1536
+          ],
+          "transparent": true,
+          "tool": "built-in image_gen",
+          "source": "/Users/hojunlee/.codex/generated_images/01a10ba2-a1f6-73c3-af27-474c22a212b7/exec-dde230b6-fa0d-4182-ac5d-5d85ff634569.png",
+          "prompt": "Use case: identity-preserve\nAsset type: second pose for an existing transparent ARENA FC full-body player portrait.\nInput images: Image 1 is the EDIT TARGET, the already generated ARMS-CROSSED full-body portrait of 송원섭, player ID 17. Image 2 is the SAME PERSON'S ORIGINAL REGISTERED PHOTO, the primary check for facial identity. Image 3 is a POSE GUIDE of another teammate: use ONLY its raised-fist pose, never its head, face, hair or number.\nPrimary request: Create the same player from image 1 in a friendly Korean \"화이팅\" encouragement pose: right elbow bent, naturally clenched right fist beside the shoulder, other arm relaxed at the side, looking at the camera with a natural warm expression. Preserve this player's exact facial identity, hairstyle, glasses if present, age, skin tone and natural body proportions from images 1 and 2. No rejuvenation, no generic model face. Make sure this is the same person as image 2.\nUniform: Keep the precise cyan/light-blue jersey with navy collar and sleeve hems, small circular ARENA FC chest badge (navy patch, thin lime ring, lime A symbol and readable off-white text \"ARENA FC\"), navy shorts, pale blue socks and charcoal shoes from image 1. Preserve the white shorts number 7. Do not copy number 19 from the pose guide.\nComposition: same centered head-to-toe portrait, complete hair and both shoes within small margins, vertical 2:3 1024x1536, same scale, lighting and detailed photographic realism as image 1. Natural anatomically correct hands and arms.\nBackground: retain genuine transparent alpha, clean silhouette, no background or floor, no printed checkerboard.\nChange the arm pose as requested; preserve individual identity and team outfit. Single person, single image, no montage, no additional props or captions."
+        }
+      }
+    },
+    {
+      "id": 18,
+      "name": "안민수",
+      "number": 93,
+      "position": "미드필더",
+      "activeAtSnapshot": true,
+      "reference": "/Users/hojunlee/Desktop/coding_server/futsal_team/public/images/players/18.jpg",
+      "referenceSha256": "0c884bf5367b894a59e9c7c144ac897e93c8cf4b07f98a9ec600f109520fead2",
+      "status": "complete",
+      "poses": {
+        "arms-crossed": {
+          "status": "complete",
+          "url": "/images/player-portraits/20261005/18/arms-crossed-v2.png",
+          "file": "/Users/hojunlee/Desktop/coding_server/futsal_team/public/images/player-portraits/20261005/18/arms-crossed-v2.png",
+          "sha256": "2c3062010605f87833489e03e87aa5bdb880fda84f8b51612a4f3047771ff656",
+          "dimensions": [
+            1024,
+            1536
+          ],
+          "transparent": true,
+          "tool": "built-in image_gen",
+          "source": "/Users/hojunlee/.codex/generated_images/01a10ba2-a1f6-73c3-af27-474c22a212b7/exec-97cb3599-7fcc-4bfa-a6ca-465139e03309.png",
+          "prompt": "Use case: precise-object-edit\nInput image 1 is the EDIT TARGET: the generated arms-crossed portrait of 안민수, shorts number 93. Image 2 is a SUPPORTING REFERENCE for the ARENA FC badge only.\nMake ONE tiny localized correction: correct and sharpen the off-white lettering below the lime A on the circular chest badge in image 1. It must read exactly \"ARENA FC\": five letters A R E N A, one space, then F C. Use clean, simple, small uppercase sans-serif text, fully legible, matching image 2. Preserve the circular navy badge, lime border and A symbol. Do not add any other text or logo. The only permitted visual change is this badge lettering.\nPreserve the EXACT face, hair, glasses if present, skin texture, body, arms-crossed pose, hands, cyan/navy uniform, shorts number 93, socks, shoes, lighting and image framing from image 1. Do not transfer the face or pose from image 2. Retain the full head-to-toe vertical 1024x1536 portrait and genuine transparent alpha background. No background, no scenery, no montage."
+        },
+        "cheering": {
+          "status": "complete",
+          "url": "/images/player-portraits/20261005/18/cheering.png",
+          "file": "/Users/hojunlee/Desktop/coding_server/futsal_team/public/images/player-portraits/20261005/18/cheering.png",
+          "sha256": "80989def34de758b5c4b4704a574bc54796573498c9df05effabf006b1407933",
+          "dimensions": [
+            1024,
+            1536
+          ],
+          "transparent": true,
+          "tool": "built-in image_gen",
+          "source": "/Users/hojunlee/.codex/generated_images/01a10ba2-a1f6-73c3-af27-474c22a212b7/exec-c368cdc0-8be0-41ab-bed7-4fc443668177.png",
+          "prompt": "Use case: identity-preserve\nAsset type: second pose for an existing transparent ARENA FC full-body player portrait.\nInput images: Image 1 is the EDIT TARGET, the already generated ARMS-CROSSED full-body portrait of 안민수, player ID 18. Image 2 is the SAME PERSON'S ORIGINAL REGISTERED PHOTO, the primary check for facial identity. Image 3 is a POSE GUIDE of another teammate: use ONLY its raised-fist pose, never its head, face, hair or number.\nPrimary request: Create the same player from image 1 in a friendly Korean \"화이팅\" encouragement pose: right elbow bent, naturally clenched right fist beside the shoulder, other arm relaxed at the side, looking at the camera with a natural warm expression. Preserve this player's exact facial identity, hairstyle, glasses if present, age, skin tone and natural body proportions from images 1 and 2. No rejuvenation, no generic model face. Make sure this is the same person as image 2.\nUniform: Keep the precise cyan/light-blue jersey with navy collar and sleeve hems, small circular ARENA FC chest badge (navy patch, thin lime ring, lime A symbol and readable off-white text \"ARENA FC\"), navy shorts, pale blue socks and charcoal shoes from image 1. Preserve the white shorts number 93, not the pose-guide teammate's 19. The chest badge text must read ARENA FC (A R E N A, then F C), clearly letter-for-letter.\nComposition: same centered head-to-toe portrait, complete hair and both shoes within small margins, vertical 2:3 1024x1536, same scale, lighting and detailed photographic realism as image 1. Natural anatomically correct hands and arms.\nBackground: retain genuine transparent alpha, clean silhouette, no background or floor, no printed checkerboard.\nChange the arm pose as requested; preserve individual identity and team outfit. Single person, single image, no montage, no additional props or captions."
+        }
+      },
+      "revisions": [
+        {
+          "pose": "arms-crossed",
+          "status": "complete",
+          "file": "/Users/hojunlee/Desktop/coding_server/futsal_team/docs/design-previews/player-portraits-20261005/drafts/18-arms-crossed.png",
+          "sha256": "76f1cfbbd300aa1125347874d68ad46afa7959d285fec91cc7681d7213870668",
+          "dimensions": [
+            1024,
+            1536
+          ],
+          "transparent": true,
+          "tool": "built-in image_gen",
+          "source": "/Users/hojunlee/.codex/generated_images/01a10ba2-a1f6-73c3-af27-474c22a212b7/exec-a113da78-76e4-4774-8e9a-65a4811ec134.png",
+          "prompt": "Use case: identity-preserve\nAsset type: photorealistic full-body individual football player cutout for the ARENA FC player-card collection.\nInput images: Image 1 is the ONLY FACIAL IDENTITY reference: the registered photograph of 안민수, player ID 18. Image 2 is STRICTLY an OUTFIT, BADGE, LIGHTING AND COMPOSITION reference of another teammate. Never transfer the teammate's face, hair, hair accessories, build, or personal features from image 2. Make the person in IMAGE 1, not the man in image 2.\nPrimary request: Create ONE full-body standing portrait of the exact same adult man shown in image 1, confidently and comfortably crossing both arms over his chest, looking at the camera with a natural friendly expression. Preserve his recognisable facial identity: face shape, eyes, nose, mouth, hairline, hairstyle, skin tone, apparent age and smile lines. Preserve the thick rounded black fringe and full rounded face, no glasses. Retain glasses only when present on the face in image 1; do not remove them. Keep natural visible body proportions; do not give all players the same body or make them uniformly muscular or thin. Do not beautify him into a younger generic model.\nUniform: EXACT approved team outfit from image 2: cyan/light-blue short-sleeved football jersey, dark navy collar and sleeve hems, navy shorts, pale blue football socks and charcoal futsal shoes. On the anatomical LEFT chest (viewer right), reproduce the small circular dark navy ARENA FC badge with thin lime ring, lime A symbol, and off-white text \"ARENA FC\". Match the badge size and placement in image 2. The shorts must show white number 93, not the reference teammate's 19. No other sponsors, no unrelated brands, no additional lettering.\nComposition: single person, centered, full head-to-toe, both feet and all hair visible inside the image with small margins. Vertical 2:3 1024x1536 framing, same full-body scale as image 2. Naturally planted feet, anatomically correct folded arms and hands. Soft neutral studio lighting and realistic skin/fabric, sharp face detail.\nBackground: truly transparent PNG alpha around the complete subject, clean natural hair edges, no scenery, no floor, no printed checkerboard, no glow or haze. Preserve transparent isolation.\nConstraints: one image of one person, no collage, no panel, no text caption, no watermark. Facial fidelity to image 1 is highest priority; uniform consistency to image 2 is second. Do not copy any face or accessory from image 2."
+        }
+      ]
+    },
+    {
+      "id": 19,
+      "name": "양용진",
+      "number": 17,
+      "position": "미드필더",
+      "activeAtSnapshot": true,
+      "reference": "/Users/hojunlee/Desktop/coding_server/futsal_team/docs/design-previews/player-portraits-20261005/sources/player-19-reference.jpg",
+      "referenceSha256": "3f0c68fca9f45b29caca820e12dbd45664edad046d6b2ed13fecd66187305ece",
+      "status": "complete",
+      "poses": {
+        "arms-crossed": {
+          "status": "complete",
+          "url": "/images/player-portraits/20261005/19/arms-crossed.png",
+          "file": "/Users/hojunlee/Desktop/coding_server/futsal_team/public/images/player-portraits/20261005/19/arms-crossed.png",
+          "sha256": "c2273ec0a98f9692baf52ec2598784e4880292c833435f9e8e2658860cfd9d97",
+          "dimensions": [
+            1024,
+            1536
+          ],
+          "transparent": true,
+          "tool": "built-in image_gen",
+          "source": "/Users/hojunlee/.codex/generated_images/01a10ba2-a1f6-73c3-af27-474c22a212b7/exec-df51e79d-1f63-4023-a9a2-d31f23b932d9.png",
+          "prompt": "Use case: identity-preserve\nAsset type: photorealistic full-body individual football player cutout for the ARENA FC player-card collection.\nInput images: Image 1 is the ONLY FACIAL IDENTITY reference: the registered photograph of 양용진, player ID 19. Image 2 is STRICTLY an OUTFIT, BADGE, LIGHTING AND COMPOSITION reference of another teammate. Never transfer the teammate's face, hair, hair accessories, build, or personal features from image 2. Make the person in IMAGE 1, not the man in image 2.\nPrimary request: Create ONE full-body standing portrait of the exact same adult man shown in image 1, confidently and comfortably crossing both arms over his chest, looking at the camera with a natural friendly expression. Preserve his recognisable facial identity: face shape, eyes, nose, mouth, hairline, hairstyle, skin tone, apparent age and smile lines. Preserve neatly center-parted dark hair, fuller rounded face and gentle smile; no glasses. Retain glasses only when present on the face in image 1; do not remove them. Keep natural visible body proportions; do not give all players the same body or make them uniformly muscular or thin. Do not beautify him into a younger generic model.\nUniform: EXACT approved team outfit from image 2: cyan/light-blue short-sleeved football jersey, dark navy collar and sleeve hems, navy shorts, pale blue football socks and charcoal futsal shoes. On the anatomical LEFT chest (viewer right), reproduce the small circular dark navy ARENA FC badge with thin lime ring, lime A symbol, and off-white text \"ARENA FC\". Match the badge size and placement in image 2. The shorts must show white number 17, not the reference teammate's 19. No other sponsors, no unrelated brands, no additional lettering.\nComposition: single person, centered, full head-to-toe, both feet and all hair visible inside the image with small margins. Vertical 2:3 1024x1536 framing, same full-body scale as image 2. Naturally planted feet, anatomically correct folded arms and hands. Soft neutral studio lighting and realistic skin/fabric, sharp face detail.\nBackground: truly transparent PNG alpha around the complete subject, clean natural hair edges, no scenery, no floor, no printed checkerboard, no glow or haze. Preserve transparent isolation.\nConstraints: one image of one person, no collage, no panel, no text caption, no watermark. Facial fidelity to image 1 is highest priority; uniform consistency to image 2 is second. Do not copy any face or accessory from image 2."
+        },
+        "cheering": {
+          "status": "complete",
+          "url": "/images/player-portraits/20261005/19/cheering.png",
+          "file": "/Users/hojunlee/Desktop/coding_server/futsal_team/public/images/player-portraits/20261005/19/cheering.png",
+          "sha256": "ee3a8809326b22e8da1f91eeb111e5cef3f87e621e769c07d9011cbc577d2308",
+          "dimensions": [
+            1024,
+            1536
+          ],
+          "transparent": true,
+          "tool": "built-in image_gen",
+          "source": "/Users/hojunlee/.codex/generated_images/01a10ba2-a1f6-73c3-af27-474c22a212b7/exec-ba56c24f-25ce-4d7b-b62e-0c89d32def45.png",
+          "prompt": "Use case: identity-preserve\nAsset type: second pose for an existing transparent ARENA FC full-body player portrait.\nInput images: Image 1 is the EDIT TARGET, the already generated ARMS-CROSSED full-body portrait of 양용진, player ID 19. Image 2 is the SAME PERSON'S ORIGINAL REGISTERED PHOTO, the primary check for facial identity. Image 3 is a POSE GUIDE of another teammate: use ONLY its raised-fist pose, never its head, face, hair or number.\nPrimary request: Create the same player from image 1 in a friendly Korean \"화이팅\" encouragement pose: right elbow bent, naturally clenched right fist beside the shoulder, other arm relaxed at the side, looking at the camera with a natural warm expression. Preserve this player's exact facial identity, hairstyle, glasses if present, age, skin tone and natural body proportions from images 1 and 2. No rejuvenation, no generic model face. Make sure this is the same person as image 2.\nUniform: Keep the precise cyan/light-blue jersey with navy collar and sleeve hems, small circular ARENA FC chest badge (navy patch, thin lime ring, lime A symbol and readable off-white text \"ARENA FC\"), navy shorts, pale blue socks and charcoal shoes from image 1. Preserve the white shorts number 17, not the pose-guide teammate's 19. The chest badge text must read ARENA FC (A R E N A, then F C), clearly letter-for-letter.\nComposition: same centered head-to-toe portrait, complete hair and both shoes within small margins, vertical 2:3 1024x1536, same scale, lighting and detailed photographic realism as image 1. Natural anatomically correct hands and arms.\nBackground: retain genuine transparent alpha, clean silhouette, no background or floor, no printed checkerboard.\nChange the arm pose as requested; preserve individual identity and team outfit. Single person, single image, no montage, no additional props or captions."
+        }
+      }
+    },
+    {
+      "id": 20,
+      "name": "오세현",
+      "number": 55,
+      "position": "미드필더",
+      "activeAtSnapshot": true,
+      "reference": "/Users/hojunlee/Desktop/coding_server/futsal_team/public/images/players/20.jpg",
+      "referenceSha256": "265bdbec4ce3e9c0c5d0b671081f9a8ec10bcb812aeaa44cfd529abfd2131bb3",
+      "status": "complete",
+      "poses": {
+        "arms-crossed": {
+          "status": "complete",
+          "url": "/images/player-portraits/20261005/20/arms-crossed.png",
+          "file": "/Users/hojunlee/Desktop/coding_server/futsal_team/public/images/player-portraits/20261005/20/arms-crossed.png",
+          "sha256": "0ffb6cd4b752566c6146d754600336d1c8bb3e43b9dd772a6c18032da77d86fa",
+          "dimensions": [
+            1024,
+            1536
+          ],
+          "transparent": true,
+          "tool": "built-in image_gen",
+          "source": "/Users/hojunlee/.codex/generated_images/01a10ba2-a1f6-73c3-af27-474c22a212b7/exec-8775ec79-c022-42b5-8e95-182a33dbcb9f.png",
+          "prompt": "Use case: identity-preserve\nAsset type: photorealistic full-body individual football player cutout for the ARENA FC player-card collection.\nInput images: Image 1 is the ONLY FACIAL IDENTITY reference: the registered photograph of 오세현, player ID 20. Image 2 is STRICTLY an OUTFIT, BADGE, LIGHTING AND COMPOSITION reference of another teammate. Never transfer the teammate's face, hair, hair accessories, build, or personal features from image 2. Make the person in IMAGE 1, not the man in image 2.\nPrimary request: Create ONE full-body standing portrait of the exact same adult man shown in image 1, confidently and comfortably crossing both arms over his chest, looking at the camera with a natural friendly expression. Preserve his recognisable facial identity: face shape, eyes, nose, mouth, hairline, hairstyle, skin tone, apparent age and smile lines. Preserve the straight dark fringe, slim angular face, wide warm smile and mature facial lines; no glasses. Retain glasses only when present on the face in image 1; do not remove them. Keep natural visible body proportions; do not give all players the same body or make them uniformly muscular or thin. Do not beautify him into a younger generic model.\nUniform: EXACT approved team outfit from image 2: cyan/light-blue short-sleeved football jersey, dark navy collar and sleeve hems, navy shorts, pale blue football socks and charcoal futsal shoes. On the anatomical LEFT chest (viewer right), reproduce the small circular dark navy ARENA FC badge with thin lime ring, lime A symbol, and off-white text \"ARENA FC\". Match the badge size and placement in image 2. The shorts must show white number 55, not the reference teammate's 19. No other sponsors, no unrelated brands, no additional lettering.\nComposition: single person, centered, full head-to-toe, both feet and all hair visible inside the image with small margins. Vertical 2:3 1024x1536 framing, same full-body scale as image 2. Naturally planted feet, anatomically correct folded arms and hands. Soft neutral studio lighting and realistic skin/fabric, sharp face detail.\nBackground: truly transparent PNG alpha around the complete subject, clean natural hair edges, no scenery, no floor, no printed checkerboard, no glow or haze. Preserve transparent isolation.\nConstraints: one image of one person, no collage, no panel, no text caption, no watermark. Facial fidelity to image 1 is highest priority; uniform consistency to image 2 is second. Do not copy any face or accessory from image 2."
+        },
+        "cheering": {
+          "status": "complete",
+          "url": "/images/player-portraits/20261005/20/cheering.png",
+          "file": "/Users/hojunlee/Desktop/coding_server/futsal_team/public/images/player-portraits/20261005/20/cheering.png",
+          "sha256": "6c2e46c086fd0590c966e7057f58be0f5a198686ef75710c659adb009c613c26",
+          "dimensions": [
+            1024,
+            1536
+          ],
+          "transparent": true,
+          "tool": "built-in image_gen",
+          "source": "/Users/hojunlee/.codex/generated_images/01a10ba2-a1f6-73c3-af27-474c22a212b7/exec-594a67a2-378a-46d8-b64e-c388bf6a344a.png",
+          "prompt": "Use case: identity-preserve\nAsset type: second pose for an existing transparent ARENA FC full-body player portrait.\nInput images: Image 1 is the EDIT TARGET, the already generated ARMS-CROSSED full-body portrait of 오세현, player ID 20. Image 2 is the SAME PERSON'S ORIGINAL REGISTERED PHOTO, the primary check for facial identity. Image 3 is a POSE GUIDE of another teammate: use ONLY its raised-fist pose, never its head, face, hair or number.\nPrimary request: Create the same player from image 1 in a friendly Korean \"화이팅\" encouragement pose: right elbow bent, naturally clenched right fist beside the shoulder, other arm relaxed at the side, looking at the camera with a natural warm expression. Preserve this player's exact facial identity, hairstyle, glasses if present, age, skin tone and natural body proportions from images 1 and 2. No rejuvenation, no generic model face. Make sure this is the same person as image 2.\nUniform: Keep the precise cyan/light-blue jersey with navy collar and sleeve hems, small circular ARENA FC chest badge (navy patch, thin lime ring, lime A symbol and readable off-white text \"ARENA FC\"), navy shorts, pale blue socks and charcoal shoes from image 1. Preserve the white shorts number 55, not the pose-guide teammate's 19. The chest badge text must read ARENA FC (A R E N A, then F C), clearly letter-for-letter.\nComposition: same centered head-to-toe portrait, complete hair and both shoes within small margins, vertical 2:3 1024x1536, same scale, lighting and detailed photographic realism as image 1. Natural anatomically correct hands and arms.\nBackground: retain genuine transparent alpha, clean silhouette, no background or floor, no printed checkerboard.\nChange the arm pose as requested; preserve individual identity and team outfit. Single person, single image, no montage, no additional props or captions."
+        }
+      }
+    },
+    {
+      "id": 21,
+      "name": "이광민",
+      "number": 9,
+      "position": "미드필더",
+      "activeAtSnapshot": true,
+      "reference": "/Users/hojunlee/Desktop/coding_server/futsal_team/public/images/players/21.jpg",
+      "referenceSha256": "53ebdca44e0c1f6dd74db7cb408eb30c577071e6701e4e085c69ee8c1f5d2f9f",
+      "status": "complete",
+      "poses": {
+        "arms-crossed": {
+          "status": "complete",
+          "url": "/images/player-portraits/20261005/21/arms-crossed.png",
+          "file": "/Users/hojunlee/Desktop/coding_server/futsal_team/public/images/player-portraits/20261005/21/arms-crossed.png",
+          "sha256": "5c7b471a018459409d23e4acc5b00e74bd8603ae3055d945f379a42ea16b3ce7",
+          "dimensions": [
+            1024,
+            1536
+          ],
+          "transparent": true,
+          "tool": "built-in image_gen",
+          "source": "/Users/hojunlee/.codex/generated_images/01a10ba2-a1f6-73c3-af27-474c22a212b7/exec-9b755475-ac4e-462f-a621-af968cfde7bb.png",
+          "prompt": "Use case: identity-preserve\nAsset type: photorealistic full-body individual football player cutout for the ARENA FC player-card collection.\nInput images: Image 1 is the ONLY FACIAL IDENTITY reference: the registered photograph of 이광민, player ID 21. Image 2 is STRICTLY an OUTFIT, BADGE, LIGHTING AND COMPOSITION reference of another teammate. Never transfer the teammate's face, hair, hair accessories, build, or personal features from image 2. Make the person in IMAGE 1, not the man in image 2.\nPrimary request: Create ONE full-body standing portrait of the exact same adult man shown in image 1, confidently and comfortably crossing both arms over his chest, looking at the camera with a natural friendly expression. Preserve his recognisable facial identity: face shape, eyes, nose, mouth, hairline, hairstyle, skin tone, apparent age and smile lines. Preserve his rounded face, short dense black fringe and gentle closed-mouth smile; no glasses. Retain glasses only when present on the face in image 1; do not remove them. Keep natural visible body proportions; do not give all players the same body or make them uniformly muscular or thin. Do not beautify him into a younger generic model.\nUniform: EXACT approved team outfit from image 2: cyan/light-blue short-sleeved football jersey, dark navy collar and sleeve hems, navy shorts, pale blue football socks and charcoal futsal shoes. On the anatomical LEFT chest (viewer right), reproduce the small circular dark navy ARENA FC badge with thin lime ring, lime A symbol, and off-white text \"ARENA FC\". Match the badge size and placement in image 2. The shorts must show white number 9, not the reference teammate's 19. No other sponsors, no unrelated brands, no additional lettering.\nComposition: single person, centered, full head-to-toe, both feet and all hair visible inside the image with small margins. Vertical 2:3 1024x1536 framing, same full-body scale as image 2. Naturally planted feet, anatomically correct folded arms and hands. Soft neutral studio lighting and realistic skin/fabric, sharp face detail.\nBackground: truly transparent PNG alpha around the complete subject, clean natural hair edges, no scenery, no floor, no printed checkerboard, no glow or haze. Preserve transparent isolation.\nConstraints: one image of one person, no collage, no panel, no text caption, no watermark. Facial fidelity to image 1 is highest priority; uniform consistency to image 2 is second. Do not copy any face or accessory from image 2."
+        },
+        "cheering": {
+          "status": "complete",
+          "url": "/images/player-portraits/20261005/21/cheering.png",
+          "file": "/Users/hojunlee/Desktop/coding_server/futsal_team/public/images/player-portraits/20261005/21/cheering.png",
+          "sha256": "f01a1dedb7c026fecdbc11b796d10adf0361e6af18bbc18022691d490f325ff1",
+          "dimensions": [
+            1024,
+            1536
+          ],
+          "transparent": true,
+          "tool": "built-in image_gen",
+          "source": "/Users/hojunlee/.codex/generated_images/01a10ba2-a1f6-73c3-af27-474c22a212b7/exec-3e0e080a-f9f7-4b60-b1c3-b919f9b21dd8.png",
+          "prompt": "Use case: identity-preserve\nAsset type: second pose for an existing transparent ARENA FC full-body player portrait.\nInput images: Image 1 is the EDIT TARGET, the already generated ARMS-CROSSED full-body portrait of 이광민, player ID 21. Image 2 is the SAME PERSON'S ORIGINAL REGISTERED PHOTO, the primary check for facial identity. Image 3 is a POSE GUIDE of another teammate: use ONLY its raised-fist pose, never its head, face, hair or number.\nPrimary request: Create the same player from image 1 in a friendly Korean \"화이팅\" encouragement pose: right elbow bent, naturally clenched right fist beside the shoulder, other arm relaxed at the side, looking at the camera with a natural warm expression. Preserve this player's exact facial identity, hairstyle, glasses if present, age, skin tone and natural body proportions from images 1 and 2. No rejuvenation, no generic model face. Make sure this is the same person as image 2.\nUniform: Keep the precise cyan/light-blue jersey with navy collar and sleeve hems, small circular ARENA FC chest badge (navy patch, thin lime ring, lime A symbol and readable off-white text \"ARENA FC\"), navy shorts, pale blue socks and charcoal shoes from image 1. Preserve the white shorts number 9, not the pose-guide teammate's 19. The chest badge text must read ARENA FC (A R E N A, then F C), clearly letter-for-letter.\nComposition: same centered head-to-toe portrait, complete hair and both shoes within small margins, vertical 2:3 1024x1536, same scale, lighting and detailed photographic realism as image 1. Natural anatomically correct hands and arms.\nBackground: retain genuine transparent alpha, clean silhouette, no background or floor, no printed checkerboard.\nChange the arm pose as requested; preserve individual identity and team outfit. Single person, single image, no montage, no additional props or captions."
+        }
+      }
+    },
+    {
+      "id": 22,
+      "name": "김재겸",
+      "number": 7,
+      "position": "미드필더",
+      "activeAtSnapshot": true,
+      "reference": "/Users/hojunlee/Desktop/coding_server/futsal_team/public/images/players/22.jpg",
+      "referenceSha256": "a3c34ceb48716543e422f972b5a270bb26358a2c31a6108042ee06b067fad4db",
+      "status": "complete",
+      "poses": {
+        "arms-crossed": {
+          "status": "complete",
+          "url": "/images/player-portraits/20261005/22/arms-crossed.png",
+          "file": "/Users/hojunlee/Desktop/coding_server/futsal_team/public/images/player-portraits/20261005/22/arms-crossed.png",
+          "sha256": "66946faa79413fb81ba1c1ac8ec3cf3ea222cb451ee003566cb452e98f737fc3",
+          "dimensions": [
+            1024,
+            1536
+          ],
+          "transparent": true,
+          "tool": "built-in image_gen",
+          "source": "/Users/hojunlee/.codex/generated_images/01a10ba2-a1f6-73c3-af27-474c22a212b7/exec-9a06ffdd-6361-4b0d-b1e7-6917f8a5e516.png",
+          "prompt": "Use case: identity-preserve\nAsset type: photorealistic full-body individual football player cutout for the ARENA FC player-card collection.\nInput images: Image 1 is the ONLY FACIAL IDENTITY reference: the registered photograph of 김재겸, player ID 22. Image 2 is STRICTLY an OUTFIT, BADGE, LIGHTING AND COMPOSITION reference of another teammate. Never transfer the teammate's face, hair, hair accessories, build, or personal features from image 2. Make the person in IMAGE 1, not the man in image 2.\nPrimary request: Create ONE full-body standing portrait of the exact same adult man shown in image 1, confidently and comfortably crossing both arms over his chest, looking at the camera with a natural friendly expression. Preserve his recognisable facial identity: face shape, eyes, nose, mouth, hairline, hairstyle, skin tone, apparent age and smile lines. Preserve center-parted wavy black hair, full rounded face and cheerful expression; no glasses. Retain glasses only when present on the face in image 1; do not remove them. Keep natural visible body proportions; do not give all players the same body or make them uniformly muscular or thin. Do not beautify him into a younger generic model.\nUniform: EXACT approved team outfit from image 2: cyan/light-blue short-sleeved football jersey, dark navy collar and sleeve hems, navy shorts, pale blue football socks and charcoal futsal shoes. On the anatomical LEFT chest (viewer right), reproduce the small circular dark navy ARENA FC badge with thin lime ring, lime A symbol, and off-white text \"ARENA FC\". Match the badge size and placement in image 2. The shorts must show white number 7, not the teammate's 19. Badge text is exactly ARENA FC, spelled A R E N A [space] F C; use clear lettering. No other sponsors, no unrelated brands, no additional lettering.\nComposition: single person, centered, full head-to-toe, both feet and all hair visible inside the image with small margins. Vertical 2:3 1024x1536 framing, same full-body scale as image 2. Naturally planted feet, anatomically correct folded arms and hands. Soft neutral studio lighting and realistic skin/fabric, sharp face detail.\nBackground: truly transparent PNG alpha around the complete subject, clean natural hair edges, no scenery, no floor, no printed checkerboard, no glow or haze. Preserve transparent isolation.\nConstraints: one image of one person, no collage, no panel, no text caption, no watermark. Facial fidelity to image 1 is highest priority; uniform consistency to image 2 is second. Do not copy any face or accessory from image 2."
+        },
+        "cheering": {
+          "status": "complete",
+          "url": "/images/player-portraits/20261005/22/cheering.png",
+          "file": "/Users/hojunlee/Desktop/coding_server/futsal_team/public/images/player-portraits/20261005/22/cheering.png",
+          "sha256": "ca75e19651e54eb38c21e131f12fa05779a730bddea1e768c73381e318fc2cae",
+          "dimensions": [
+            1024,
+            1536
+          ],
+          "transparent": true,
+          "tool": "built-in image_gen",
+          "source": "/Users/hojunlee/.codex/generated_images/01a10ba2-a1f6-73c3-af27-474c22a212b7/exec-c06a7c34-0c38-4f80-a0e9-bcab8661d02e.png",
+          "prompt": "Use case: identity-preserve\nAsset type: second pose for an existing transparent ARENA FC full-body player portrait.\nInput images: Image 1 is the EDIT TARGET, the already generated ARMS-CROSSED full-body portrait of 김재겸, player ID 22. Image 2 is the SAME PERSON'S ORIGINAL REGISTERED PHOTO, the primary check for facial identity. Image 3 is a POSE GUIDE of another teammate: use ONLY its raised-fist pose, never its head, face, hair or number.\nPrimary request: Create the same player from image 1 in a friendly Korean \"화이팅\" encouragement pose: right elbow bent, naturally clenched right fist beside the shoulder, other arm relaxed at the side, looking at the camera with a natural warm expression. Preserve this player's exact facial identity, hairstyle, glasses if present, age, skin tone and natural body proportions from images 1 and 2. No rejuvenation, no generic model face. Make sure this is the same person as image 2.\nUniform: Keep the precise cyan/light-blue jersey with navy collar and sleeve hems, small circular ARENA FC chest badge (navy patch, thin lime ring, lime A symbol and readable off-white text \"ARENA FC\"), navy shorts, pale blue socks and charcoal shoes from image 1. Preserve the white shorts number 7, not number 19. Keep this player's own cap when present in images 1 and 2. Badge text must read ARENA FC, spelled A R E N A [space] F C.\nComposition: same centered head-to-toe portrait, complete hair and both shoes within small margins, vertical 2:3 1024x1536, same scale, lighting and detailed photographic realism as image 1. Natural anatomically correct hands and arms.\nBackground: retain genuine transparent alpha, clean silhouette, no background or floor, no printed checkerboard.\nChange the arm pose as requested; preserve individual identity and team outfit. Single person, single image, no montage, no additional props or captions."
+        }
+      }
+    },
+    {
+      "id": 23,
+      "name": "이동훈",
+      "number": 19,
+      "position": "미드필더",
+      "activeAtSnapshot": true,
+      "reference": "/Users/hojunlee/Desktop/coding_server/futsal_team/public/images/players/23.jpg",
+      "referenceSha256": "8cba07b4bcaf0b65de5e42311c0b91c180229ad5dd91ed0fea174b4389d5eb08",
+      "status": "complete",
+      "poses": {
+        "arms-crossed": {
+          "status": "complete",
+          "url": "/images/player-portraits/20261005/23/arms-crossed.png",
+          "file": "/Users/hojunlee/Desktop/coding_server/futsal_team/public/images/player-portraits/20261005/23/arms-crossed.png",
+          "source": "approved 이동훈 sample",
+          "promptRecord": "/Users/hojunlee/Desktop/coding_server/futsal_team/docs/design-previews/player-portraits-20261005/arena-logo-edit-prompts.json"
+        },
+        "cheering": {
+          "status": "complete",
+          "url": "/images/player-portraits/20261005/23/cheering.png",
+          "file": "/Users/hojunlee/Desktop/coding_server/futsal_team/public/images/player-portraits/20261005/23/cheering.png",
+          "source": "approved 이동훈 sample",
+          "promptRecord": "/Users/hojunlee/Desktop/coding_server/futsal_team/docs/design-previews/player-portraits-20261005/arena-logo-edit-prompts.json"
+        }
+      }
+    },
+    {
+      "id": 24,
+      "name": "이호준",
+      "number": 1,
+      "position": "미드필더",
+      "activeAtSnapshot": true,
+      "reference": "/Users/hojunlee/Desktop/coding_server/futsal_team/public/images/players/24.jpg",
+      "referenceSha256": "7dec4bc1b98fa178c6b23c658f9bfb47bc47d14241a92b60402001a1cd229493",
+      "status": "complete",
+      "poses": {
+        "arms-crossed": {
+          "status": "complete",
+          "url": "/images/player-portraits/20261005/24/arms-crossed.png",
+          "file": "/Users/hojunlee/Desktop/coding_server/futsal_team/public/images/player-portraits/20261005/24/arms-crossed.png",
+          "sha256": "0bcab8c66702ab4cdb89cb0f345acbbaa35056e23c797a4a7c5654e5afc8ab88",
+          "dimensions": [
+            1024,
+            1536
+          ],
+          "transparent": true,
+          "tool": "built-in image_gen",
+          "source": "/Users/hojunlee/.codex/generated_images/01a10ba2-a1f6-73c3-af27-474c22a212b7/exec-728bc875-ffce-4a69-8500-610d149b2ae2.png",
+          "prompt": "Use case: identity-preserve\nAsset type: photorealistic full-body individual football player cutout for the ARENA FC player-card collection.\nInput images: Image 1 is the ONLY FACIAL IDENTITY reference: the registered photograph of 이호준, player ID 24. Image 2 is STRICTLY an OUTFIT, BADGE, LIGHTING AND COMPOSITION reference of another teammate. Never transfer the teammate's face, hair, hair accessories, build, or personal features from image 2. Make the person in IMAGE 1, not the man in image 2.\nPrimary request: Create ONE full-body standing portrait of the exact same adult man shown in image 1, confidently and comfortably crossing both arms over his chest, looking at the camera with a natural friendly expression. Preserve his recognisable facial identity: face shape, eyes, nose, mouth, hairline, hairstyle, skin tone, apparent age and smile lines. Preserve his short curly black hair, fuller face and natural mature features; no glasses. Retain glasses only when present on the face in image 1; do not remove them. Keep natural visible body proportions; do not give all players the same body or make them uniformly muscular or thin. Do not beautify him into a younger generic model.\nUniform: EXACT approved team outfit from image 2: cyan/light-blue short-sleeved football jersey, dark navy collar and sleeve hems, navy shorts, pale blue football socks and charcoal futsal shoes. On the anatomical LEFT chest (viewer right), reproduce the small circular dark navy ARENA FC badge with thin lime ring, lime A symbol, and off-white text \"ARENA FC\". Match the badge size and placement in image 2. The shorts must show white number 1, not the teammate's 19. Badge text is exactly ARENA FC, spelled A R E N A [space] F C; use clear lettering. No other sponsors, no unrelated brands, no additional lettering.\nComposition: single person, centered, full head-to-toe, both feet and all hair visible inside the image with small margins. Vertical 2:3 1024x1536 framing, same full-body scale as image 2. Naturally planted feet, anatomically correct folded arms and hands. Soft neutral studio lighting and realistic skin/fabric, sharp face detail.\nBackground: truly transparent PNG alpha around the complete subject, clean natural hair edges, no scenery, no floor, no printed checkerboard, no glow or haze. Preserve transparent isolation.\nConstraints: one image of one person, no collage, no panel, no text caption, no watermark. Facial fidelity to image 1 is highest priority; uniform consistency to image 2 is second. Do not copy any face or accessory from image 2."
+        },
+        "cheering": {
+          "status": "complete",
+          "url": "/images/player-portraits/20261005/24/cheering.png",
+          "file": "/Users/hojunlee/Desktop/coding_server/futsal_team/public/images/player-portraits/20261005/24/cheering.png",
+          "sha256": "9b9ec5c5aacb9aa226a4be888e84758e47ffb8e66f4dbcccd26c09152e30eee9",
+          "dimensions": [
+            1024,
+            1536
+          ],
+          "transparent": true,
+          "tool": "built-in image_gen",
+          "source": "/Users/hojunlee/.codex/generated_images/01a10ba2-a1f6-73c3-af27-474c22a212b7/exec-2a85f5b3-9f85-4376-a88f-4acc707ef9a6.png",
+          "prompt": "Use case: identity-preserve\nAsset type: second pose for an existing transparent ARENA FC full-body player portrait.\nInput images: Image 1 is the EDIT TARGET, the already generated ARMS-CROSSED full-body portrait of 이호준, player ID 24. Image 2 is the SAME PERSON'S ORIGINAL REGISTERED PHOTO, the primary check for facial identity. Image 3 is a POSE GUIDE of another teammate: use ONLY its raised-fist pose, never its head, face, hair or number.\nPrimary request: Create the same player from image 1 in a friendly Korean \"화이팅\" encouragement pose: right elbow bent, naturally clenched right fist beside the shoulder, other arm relaxed at the side, looking at the camera with a natural warm expression. Preserve this player's exact facial identity, hairstyle, glasses if present, age, skin tone and natural body proportions from images 1 and 2. No rejuvenation, no generic model face. Make sure this is the same person as image 2.\nUniform: Keep the precise cyan/light-blue jersey with navy collar and sleeve hems, small circular ARENA FC chest badge (navy patch, thin lime ring, lime A symbol and readable off-white text \"ARENA FC\"), navy shorts, pale blue socks and charcoal shoes from image 1. Preserve the white shorts number 1, not number 19. Keep this player's own cap when present in images 1 and 2. Badge text must read ARENA FC, spelled A R E N A [space] F C.\nComposition: same centered head-to-toe portrait, complete hair and both shoes within small margins, vertical 2:3 1024x1536, same scale, lighting and detailed photographic realism as image 1. Natural anatomically correct hands and arms.\nBackground: retain genuine transparent alpha, clean silhouette, no background or floor, no printed checkerboard.\nChange the arm pose as requested; preserve individual identity and team outfit. Single person, single image, no montage, no additional props or captions."
+        }
+      }
+    },
+    {
+      "id": 25,
+      "name": "장현부",
+      "number": 78,
+      "position": "미드필더",
+      "activeAtSnapshot": true,
+      "reference": "/Users/hojunlee/Desktop/coding_server/futsal_team/public/images/players/25.jpg",
+      "referenceSha256": "b62ccf0b143a5e533f997a68961292d507ecaae4781f0c2551299d0743c14a24",
+      "status": "complete",
+      "poses": {
+        "arms-crossed": {
+          "status": "complete",
+          "url": "/images/player-portraits/20261005/25/arms-crossed.png",
+          "file": "/Users/hojunlee/Desktop/coding_server/futsal_team/public/images/player-portraits/20261005/25/arms-crossed.png",
+          "sha256": "a95cf079beb0c58800717f5c0484c3d68e4e0488ae737d46f1b7ba9514dba572",
+          "dimensions": [
+            1024,
+            1536
+          ],
+          "transparent": true,
+          "tool": "built-in image_gen",
+          "source": "/Users/hojunlee/.codex/generated_images/01a10ba2-a1f6-73c3-af27-474c22a212b7/exec-f8cc035e-7041-46a1-817d-74ecc6754c09.png",
+          "prompt": "Use case: identity-preserve\nAsset type: photorealistic full-body individual football player cutout for the ARENA FC player-card collection.\nInput images: Image 1 is the ONLY FACIAL IDENTITY reference: the registered photograph of 장현부, player ID 25. Image 2 is STRICTLY an OUTFIT, BADGE, LIGHTING AND COMPOSITION reference of another teammate. Never transfer the teammate's face, hair, hair accessories, build, or personal features from image 2. Make the person in IMAGE 1, not the man in image 2.\nPrimary request: Create ONE full-body standing portrait of the exact same adult man shown in image 1, confidently and comfortably crossing both arms over his chest, looking at the camera with a natural friendly expression. Preserve his recognisable facial identity: face shape, eyes, nose, mouth, hairline, hairstyle, skin tone, apparent age and smile lines. Keep his black baseball cap from the original photo, its natural position, his rounded mature face and slight smile. Do not invent uncovered hair. Retain glasses only when present on the face in image 1; do not remove them. Keep natural visible body proportions; do not give all players the same body or make them uniformly muscular or thin. Do not beautify him into a younger generic model.\nUniform: EXACT approved team outfit from image 2: cyan/light-blue short-sleeved football jersey, dark navy collar and sleeve hems, navy shorts, pale blue football socks and charcoal futsal shoes. On the anatomical LEFT chest (viewer right), reproduce the small circular dark navy ARENA FC badge with thin lime ring, lime A symbol, and off-white text \"ARENA FC\". Match the badge size and placement in image 2. The shorts must show white number 78, not the teammate's 19. Badge text is exactly ARENA FC, spelled A R E N A [space] F C; use clear lettering. No other sponsors, no unrelated brands, no additional lettering.\nComposition: single person, centered, full head-to-toe, both feet and all hair visible inside the image with small margins. Vertical 2:3 1024x1536 framing, same full-body scale as image 2. Naturally planted feet, anatomically correct folded arms and hands. Soft neutral studio lighting and realistic skin/fabric, sharp face detail.\nBackground: truly transparent PNG alpha around the complete subject, clean natural hair edges, no scenery, no floor, no printed checkerboard, no glow or haze. Preserve transparent isolation.\nConstraints: one image of one person, no collage, no panel, no text caption, no watermark. Facial fidelity to image 1 is highest priority; uniform consistency to image 2 is second. Do not copy any face or accessory from image 2."
+        },
+        "cheering": {
+          "status": "complete",
+          "url": "/images/player-portraits/20261005/25/cheering.png",
+          "file": "/Users/hojunlee/Desktop/coding_server/futsal_team/public/images/player-portraits/20261005/25/cheering.png",
+          "sha256": "0a18b854a4cf998b5d187333122ba25fed73665b37ba2fd4e2dda20b73411b77",
+          "dimensions": [
+            1024,
+            1536
+          ],
+          "transparent": true,
+          "tool": "built-in image_gen",
+          "source": "/Users/hojunlee/.codex/generated_images/01a10ba2-a1f6-73c3-af27-474c22a212b7/exec-c2b4384b-59b5-4e47-8751-545516096a24.png",
+          "prompt": "Use case: identity-preserve\nAsset type: second pose for an existing transparent ARENA FC full-body player portrait.\nInput images: Image 1 is the EDIT TARGET, the already generated ARMS-CROSSED full-body portrait of 장현부, player ID 25. Image 2 is the SAME PERSON'S ORIGINAL REGISTERED PHOTO, the primary check for facial identity. Image 3 is a POSE GUIDE of another teammate: use ONLY its raised-fist pose, never its head, face, hair or number.\nPrimary request: Create the same player from image 1 in a friendly Korean \"화이팅\" encouragement pose: right elbow bent, naturally clenched right fist beside the shoulder, other arm relaxed at the side, looking at the camera with a natural warm expression. Preserve this player's exact facial identity, hairstyle, glasses if present, age, skin tone and natural body proportions from images 1 and 2. No rejuvenation, no generic model face. Make sure this is the same person as image 2.\nUniform: Keep the precise cyan/light-blue jersey with navy collar and sleeve hems, small circular ARENA FC chest badge (navy patch, thin lime ring, lime A symbol and readable off-white text \"ARENA FC\"), navy shorts, pale blue socks and charcoal shoes from image 1. Preserve the white shorts number 78, not number 19. Keep this player's own cap when present in images 1 and 2. Badge text must read ARENA FC, spelled A R E N A [space] F C.\nComposition: same centered head-to-toe portrait, complete hair and both shoes within small margins, vertical 2:3 1024x1536, same scale, lighting and detailed photographic realism as image 1. Natural anatomically correct hands and arms.\nBackground: retain genuine transparent alpha, clean silhouette, no background or floor, no printed checkerboard.\nChange the arm pose as requested; preserve individual identity and team outfit. Single person, single image, no montage, no additional props or captions."
+        }
+      }
+    },
+    {
+      "id": 26,
+      "name": "정대규",
+      "number": 75,
+      "position": "미드필더",
+      "activeAtSnapshot": true,
+      "reference": "/Users/hojunlee/Desktop/coding_server/futsal_team/public/images/players/26.jpg",
+      "referenceSha256": "d27c3650f89a8c83292f58d0164dc6f559f791c1441634623096fd1cd1e731e8",
+      "status": "complete",
+      "poses": {
+        "arms-crossed": {
+          "status": "complete",
+          "url": "/images/player-portraits/20261005/26/arms-crossed.png",
+          "file": "/Users/hojunlee/Desktop/coding_server/futsal_team/public/images/player-portraits/20261005/26/arms-crossed.png",
+          "sha256": "dca8e2c32351d050b1c3eb0cbe4eeca7ecc0901ac38abd0d9433d623fcab43e6",
+          "dimensions": [
+            1024,
+            1536
+          ],
+          "transparent": true,
+          "tool": "built-in image_gen",
+          "source": "/Users/hojunlee/.codex/generated_images/01a10ba2-a1f6-73c3-af27-474c22a212b7/exec-526ac1d0-b902-4d17-a05a-0ecb362a3cd8.png",
+          "prompt": "Use case: identity-preserve\nAsset type: photorealistic full-body individual football player cutout for the ARENA FC player-card collection.\nInput images: Image 1 is the ONLY FACIAL IDENTITY reference: the registered photograph of 정대규, player ID 26. Image 2 is STRICTLY an OUTFIT, BADGE, LIGHTING AND COMPOSITION reference of another teammate. Never transfer the teammate's face, hair, hair accessories, build, or personal features from image 2. Make the person in IMAGE 1, not the man in image 2.\nPrimary request: Create ONE full-body standing portrait of the exact same adult man shown in image 1, confidently and comfortably crossing both arms over his chest, looking at the camera with a natural friendly expression. Preserve his recognisable facial identity: face shape, eyes, nose, mouth, hairline, hairstyle, skin tone, apparent age and smile lines. Keep his dark navy baseball cap with its small white circular front mark, mature lean face, smile lines and friendly smile. Do not invent uncovered hair. Retain glasses only when present on the face in image 1; do not remove them. Keep natural visible body proportions; do not give all players the same body or make them uniformly muscular or thin. Do not beautify him into a younger generic model.\nUniform: EXACT approved team outfit from image 2: cyan/light-blue short-sleeved football jersey, dark navy collar and sleeve hems, navy shorts, pale blue football socks and charcoal futsal shoes. On the anatomical LEFT chest (viewer right), reproduce the small circular dark navy ARENA FC badge with thin lime ring, lime A symbol, and off-white text \"ARENA FC\". Match the badge size and placement in image 2. The shorts must show white number 75, not the teammate's 19. Badge text is exactly ARENA FC, spelled A R E N A [space] F C; use clear lettering. No other sponsors, no unrelated brands, no additional lettering.\nComposition: single person, centered, full head-to-toe, both feet and all hair visible inside the image with small margins. Vertical 2:3 1024x1536 framing, same full-body scale as image 2. Naturally planted feet, anatomically correct folded arms and hands. Soft neutral studio lighting and realistic skin/fabric, sharp face detail.\nBackground: truly transparent PNG alpha around the complete subject, clean natural hair edges, no scenery, no floor, no printed checkerboard, no glow or haze. Preserve transparent isolation.\nConstraints: one image of one person, no collage, no panel, no text caption, no watermark. Facial fidelity to image 1 is highest priority; uniform consistency to image 2 is second. Do not copy any face or accessory from image 2."
+        },
+        "cheering": {
+          "status": "complete",
+          "url": "/images/player-portraits/20261005/26/cheering.png",
+          "file": "/Users/hojunlee/Desktop/coding_server/futsal_team/public/images/player-portraits/20261005/26/cheering.png",
+          "sha256": "c822406ec0d72b128a6adc06dd53b7aaac2d9c2e804ff2a633124f1f6ddcd586",
+          "dimensions": [
+            1024,
+            1536
+          ],
+          "transparent": true,
+          "tool": "built-in image_gen",
+          "source": "/Users/hojunlee/.codex/generated_images/01a10ba2-a1f6-73c3-af27-474c22a212b7/exec-2ed6a17b-a465-47a8-a744-6f46ff63ff3e.png",
+          "prompt": "Use case: identity-preserve\nAsset type: second pose for an existing transparent ARENA FC full-body player portrait.\nInput images: Image 1 is the EDIT TARGET, the already generated ARMS-CROSSED full-body portrait of 정대규, player ID 26. Image 2 is the SAME PERSON'S ORIGINAL REGISTERED PHOTO, the primary check for facial identity. Image 3 is a POSE GUIDE of another teammate: use ONLY its raised-fist pose, never its head, face, hair or number.\nPrimary request: Create the same player from image 1 in a friendly Korean \"화이팅\" encouragement pose: right elbow bent, naturally clenched right fist beside the shoulder, other arm relaxed at the side, looking at the camera with a natural warm expression. Preserve this player's exact facial identity, hairstyle, glasses if present, age, skin tone and natural body proportions from images 1 and 2. No rejuvenation, no generic model face. Make sure this is the same person as image 2.\nUniform: Keep the precise cyan/light-blue jersey with navy collar and sleeve hems, small circular ARENA FC chest badge (navy patch, thin lime ring, lime A symbol and readable off-white text \"ARENA FC\"), navy shorts, pale blue socks and charcoal shoes from image 1. Preserve the white shorts number 75, not number 19. Keep this player's own cap when present in images 1 and 2. Badge text must read ARENA FC, spelled A R E N A [space] F C.\nComposition: same centered head-to-toe portrait, complete hair and both shoes within small margins, vertical 2:3 1024x1536, same scale, lighting and detailed photographic realism as image 1. Natural anatomically correct hands and arms.\nBackground: retain genuine transparent alpha, clean silhouette, no background or floor, no printed checkerboard.\nChange the arm pose as requested; preserve individual identity and team outfit. Single person, single image, no montage, no additional props or captions."
+        }
+      }
+    },
+    {
+      "id": 27,
+      "name": "최병훈",
+      "number": 13,
+      "position": "미드필더",
+      "activeAtSnapshot": true,
+      "reference": "/Users/hojunlee/Desktop/coding_server/futsal_team/public/images/players/27.jpg",
+      "referenceSha256": "80fe7a0f0919d1cddc4df8727547b3c4c4cd9ecf04ee803439816026cb310928",
+      "status": "complete",
+      "poses": {
+        "arms-crossed": {
+          "status": "complete",
+          "url": "/images/player-portraits/20261005/27/arms-crossed.png",
+          "file": "/Users/hojunlee/Desktop/coding_server/futsal_team/public/images/player-portraits/20261005/27/arms-crossed.png",
+          "sha256": "dd5496a77344bd0166835b394656032859842c9d2ca7ec2f8e865d4358c08e90",
+          "dimensions": [
+            1024,
+            1536
+          ],
+          "transparent": true,
+          "tool": "built-in image_gen",
+          "source": "/Users/hojunlee/.codex/generated_images/01a10ba2-a1f6-73c3-af27-474c22a212b7/exec-88e383c6-1066-461c-a713-8661c98370df.png",
+          "prompt": "Use case: identity-preserve\nAsset type: photorealistic full-body individual football player cutout for the ARENA FC player-card collection.\nInput images: Image 1 is the ONLY FACIAL IDENTITY reference: the registered photograph of 최병훈, player ID 27. Image 2 is STRICTLY an OUTFIT, BADGE, LIGHTING AND COMPOSITION reference of another teammate. Never transfer the teammate's face, hair, hair accessories, build, or personal features from image 2. Make the person in IMAGE 1, not the man in image 2.\nPrimary request: Create ONE full-body standing portrait of the exact same adult man shown in image 1, confidently and comfortably crossing both arms over his chest, looking at the camera with a natural friendly expression. Preserve his recognisable facial identity: face shape, eyes, nose, mouth, hairline, hairstyle, skin tone, apparent age and smile lines. Keep his black round glasses, short salt-and-pepper hair, receding hairline and mature face. Retain glasses only when present on the face in image 1; do not remove them. Keep natural visible body proportions; do not give all players the same body or make them uniformly muscular or thin. Do not beautify him into a younger generic model.\nUniform: EXACT approved team outfit from image 2: cyan/light-blue short-sleeved football jersey, dark navy collar and sleeve hems, navy shorts, pale blue football socks and charcoal futsal shoes. On the anatomical LEFT chest (viewer right), reproduce the small circular dark navy ARENA FC badge with thin lime ring, lime A symbol, and off-white text \"ARENA FC\". Match the badge size and placement in image 2. The white shorts number must be 13, not 19. Badge lettering must say ARENA FC, spelled A R E N A [space] F C, clear and accurate. No other sponsors, no unrelated brands, no additional lettering.\nComposition: single person, centered, full head-to-toe, both feet and all hair visible inside the image with small margins. Vertical 2:3 1024x1536 framing, same full-body scale as image 2. Naturally planted feet, anatomically correct folded arms and hands. Soft neutral studio lighting and realistic skin/fabric, sharp face detail.\nBackground: truly transparent PNG alpha around the complete subject, clean natural hair edges, no scenery, no floor, no printed checkerboard, no glow or haze. Preserve transparent isolation.\nConstraints: one image of one person, no collage, no panel, no text caption, no watermark. Facial fidelity to image 1 is highest priority; uniform consistency to image 2 is second. Do not copy any face or accessory from image 2."
+        },
+        "cheering": {
+          "status": "complete",
+          "url": "/images/player-portraits/20261005/27/cheering.png",
+          "file": "/Users/hojunlee/Desktop/coding_server/futsal_team/public/images/player-portraits/20261005/27/cheering.png",
+          "sha256": "e7175ad629590f7a6c548fc227841ce736c9fce633a40a1d9f5901b3f6da503c",
+          "dimensions": [
+            1024,
+            1536
+          ],
+          "transparent": true,
+          "tool": "built-in image_gen",
+          "source": "/Users/hojunlee/.codex/generated_images/01a10ba2-a1f6-73c3-af27-474c22a212b7/exec-108c882b-c424-4491-a2a3-11da76c46fe6.png",
+          "prompt": "Use case: identity-preserve\nAsset type: second pose for an existing transparent ARENA FC full-body player portrait.\nInput images: Image 1 is the EDIT TARGET, the already generated ARMS-CROSSED full-body portrait of 최병훈, player ID 27. Image 2 is the SAME PERSON'S ORIGINAL REGISTERED PHOTO, the primary check for facial identity. Image 3 is a POSE GUIDE of another teammate: use ONLY its raised-fist pose, never its head, face, hair or number.\nPrimary request: Create the same player from image 1 in a friendly Korean \"화이팅\" encouragement pose: right elbow bent, naturally clenched right fist beside the shoulder, other arm relaxed at the side, looking at the camera with a natural warm expression. Preserve this player's exact facial identity, hairstyle, glasses if present, age, skin tone and natural body proportions from images 1 and 2. No rejuvenation, no generic model face. Make sure this is the same person as image 2.\nUniform: Keep the precise cyan/light-blue jersey with navy collar and sleeve hems, small circular ARENA FC chest badge (navy patch, thin lime ring, lime A symbol and readable off-white text \"ARENA FC\"), navy shorts, pale blue socks and charcoal shoes from image 1. Preserve the white shorts number 13, not 19. Keep this player's own glasses when present. Badge lettering must read ARENA FC, spelled A R E N A [space] F C.\nComposition: same centered head-to-toe portrait, complete hair and both shoes within small margins, vertical 2:3 1024x1536, same scale, lighting and detailed photographic realism as image 1. Natural anatomically correct hands and arms.\nBackground: retain genuine transparent alpha, clean silhouette, no background or floor, no printed checkerboard.\nChange the arm pose as requested; preserve individual identity and team outfit. Single person, single image, no montage, no additional props or captions."
+        }
+      }
+    },
+    {
+      "id": 29,
+      "name": "김민석",
+      "number": 27,
+      "position": "미드필더",
+      "activeAtSnapshot": true,
+      "reference": "/Users/hojunlee/Desktop/coding_server/futsal_team/public/images/players/29.jpg",
+      "referenceSha256": "5c798538a18da1c847b05ebba3468e2f68f926ec0f049c4a51cf2eb0071698b7",
+      "status": "complete",
+      "poses": {
+        "arms-crossed": {
+          "status": "complete",
+          "url": "/images/player-portraits/20261005/29/arms-crossed.png",
+          "file": "/Users/hojunlee/Desktop/coding_server/futsal_team/public/images/player-portraits/20261005/29/arms-crossed.png",
+          "sha256": "8bf50612a7b449dc84d5dc404293800d7c868ad311474c17dc340df1993600c0",
+          "dimensions": [
+            1024,
+            1536
+          ],
+          "transparent": true,
+          "tool": "built-in image_gen",
+          "source": "/Users/hojunlee/.codex/generated_images/01a10ba2-a1f6-73c3-af27-474c22a212b7/exec-f7473f2a-d9f6-4721-9170-e676df114ff5.png",
+          "prompt": "Use case: identity-preserve\nAsset type: photorealistic full-body individual football player cutout for the ARENA FC player-card collection.\nInput images: Image 1 is the ONLY FACIAL IDENTITY reference: the registered photograph of 김민석, player ID 29. Image 2 is STRICTLY an OUTFIT, BADGE, LIGHTING AND COMPOSITION reference of another teammate. Never transfer the teammate's face, hair, hair accessories, build, or personal features from image 2. Make the person in IMAGE 1, not the man in image 2.\nPrimary request: Create ONE full-body standing portrait of the exact same adult man shown in image 1, confidently and comfortably crossing both arms over his chest, looking at the camera with a natural friendly expression. Preserve his recognisable facial identity: face shape, eyes, nose, mouth, hairline, hairstyle, skin tone, apparent age and smile lines. Preserve straight slightly tousled black fringe, lean oval face, long neck and mature features; no glasses. Retain glasses only when present on the face in image 1; do not remove them. Keep natural visible body proportions; do not give all players the same body or make them uniformly muscular or thin. Do not beautify him into a younger generic model.\nUniform: EXACT approved team outfit from image 2: cyan/light-blue short-sleeved football jersey, dark navy collar and sleeve hems, navy shorts, pale blue football socks and charcoal futsal shoes. On the anatomical LEFT chest (viewer right), reproduce the small circular dark navy ARENA FC badge with thin lime ring, lime A symbol, and off-white text \"ARENA FC\". Match the badge size and placement in image 2. The white shorts number must be 27, not 19. Badge lettering must say ARENA FC, spelled A R E N A [space] F C, clear and accurate. No other sponsors, no unrelated brands, no additional lettering.\nComposition: single person, centered, full head-to-toe, both feet and all hair visible inside the image with small margins. Vertical 2:3 1024x1536 framing, same full-body scale as image 2. Naturally planted feet, anatomically correct folded arms and hands. Soft neutral studio lighting and realistic skin/fabric, sharp face detail.\nBackground: truly transparent PNG alpha around the complete subject, clean natural hair edges, no scenery, no floor, no printed checkerboard, no glow or haze. Preserve transparent isolation.\nConstraints: one image of one person, no collage, no panel, no text caption, no watermark. Facial fidelity to image 1 is highest priority; uniform consistency to image 2 is second. Do not copy any face or accessory from image 2."
+        },
+        "cheering": {
+          "status": "complete",
+          "url": "/images/player-portraits/20261005/29/cheering.png",
+          "file": "/Users/hojunlee/Desktop/coding_server/futsal_team/public/images/player-portraits/20261005/29/cheering.png",
+          "sha256": "891b71414f4cc1bf72cf229eb4fc960afaeec90679c713075bee768cc134e4f2",
+          "dimensions": [
+            1024,
+            1536
+          ],
+          "transparent": true,
+          "tool": "built-in image_gen",
+          "source": "/Users/hojunlee/.codex/generated_images/01a10ba2-a1f6-73c3-af27-474c22a212b7/exec-a8cf009c-b001-4745-a4b8-d50ea3621ee8.png",
+          "prompt": "Use case: identity-preserve\nAsset type: second pose for an existing transparent ARENA FC full-body player portrait.\nInput images: Image 1 is the EDIT TARGET, the already generated ARMS-CROSSED full-body portrait of 김민석, player ID 29. Image 2 is the SAME PERSON'S ORIGINAL REGISTERED PHOTO, the primary check for facial identity. Image 3 is a POSE GUIDE of another teammate: use ONLY its raised-fist pose, never its head, face, hair or number.\nPrimary request: Create the same player from image 1 in a friendly Korean \"화이팅\" encouragement pose: right elbow bent, naturally clenched right fist beside the shoulder, other arm relaxed at the side, looking at the camera with a natural warm expression. Preserve this player's exact facial identity, hairstyle, glasses if present, age, skin tone and natural body proportions from images 1 and 2. No rejuvenation, no generic model face. Make sure this is the same person as image 2.\nUniform: Keep the precise cyan/light-blue jersey with navy collar and sleeve hems, small circular ARENA FC chest badge (navy patch, thin lime ring, lime A symbol and readable off-white text \"ARENA FC\"), navy shorts, pale blue socks and charcoal shoes from image 1. Preserve the white shorts number 27, not 19. Keep this player's own glasses when present. Badge lettering must read ARENA FC, spelled A R E N A [space] F C.\nComposition: same centered head-to-toe portrait, complete hair and both shoes within small margins, vertical 2:3 1024x1536, same scale, lighting and detailed photographic realism as image 1. Natural anatomically correct hands and arms.\nBackground: retain genuine transparent alpha, clean silhouette, no background or floor, no printed checkerboard.\nChange the arm pose as requested; preserve individual identity and team outfit. Single person, single image, no montage, no additional props or captions."
+        }
+      }
+    },
+    {
+      "id": 30,
+      "name": "김민규",
+      "number": 10,
+      "position": "미드필더",
+      "activeAtSnapshot": true,
+      "reference": "/Users/hojunlee/Desktop/coding_server/futsal_team/public/images/players/30.jpg",
+      "referenceSha256": "569981c4ea97a271891828dbf83ddc3a652e95f0e98329b75c343ad2acc7438f",
+      "status": "complete",
+      "poses": {
+        "arms-crossed": {
+          "status": "complete",
+          "url": "/images/player-portraits/20261005/30/arms-crossed.png",
+          "file": "/Users/hojunlee/Desktop/coding_server/futsal_team/public/images/player-portraits/20261005/30/arms-crossed.png",
+          "sha256": "ecd8cfc9823b1c1af44528e03ee6b347a5848c776cce59bd7aabdbd45edcdb25",
+          "dimensions": [
+            1024,
+            1536
+          ],
+          "transparent": true,
+          "tool": "built-in image_gen",
+          "source": "/Users/hojunlee/.codex/generated_images/01a10ba2-a1f6-73c3-af27-474c22a212b7/exec-a2b14e1b-3c06-4e78-a5a4-dd9cbd4f4317.png",
+          "prompt": "Use case: identity-preserve\nAsset type: photorealistic full-body individual football player cutout for the ARENA FC player-card collection.\nInput images: Image 1 is the ONLY FACIAL IDENTITY reference: the registered photograph of 김민규, player ID 30. Image 2 is STRICTLY an OUTFIT, BADGE, LIGHTING AND COMPOSITION reference of another teammate. Never transfer the teammate's face, hair, hair accessories, build, or personal features from image 2. Make the person in IMAGE 1, not the man in image 2.\nPrimary request: Create ONE full-body standing portrait of the exact same adult man shown in image 1, confidently and comfortably crossing both arms over his chest, looking at the camera with a natural friendly expression. Preserve his recognisable facial identity: face shape, eyes, nose, mouth, hairline, hairstyle, skin tone, apparent age and smile lines. Preserve short straight black hair, broad mature face and natural understated expression; no glasses. Retain glasses only when present on the face in image 1; do not remove them. Keep natural visible body proportions; do not give all players the same body or make them uniformly muscular or thin. Do not beautify him into a younger generic model.\nUniform: EXACT approved team outfit from image 2: cyan/light-blue short-sleeved football jersey, dark navy collar and sleeve hems, navy shorts, pale blue football socks and charcoal futsal shoes. On the anatomical LEFT chest (viewer right), reproduce the small circular dark navy ARENA FC badge with thin lime ring, lime A symbol, and off-white text \"ARENA FC\". Match the badge size and placement in image 2. The white shorts number must be 10, not 19. Badge lettering must say ARENA FC, spelled A R E N A [space] F C, clear and accurate. No other sponsors, no unrelated brands, no additional lettering.\nComposition: single person, centered, full head-to-toe, both feet and all hair visible inside the image with small margins. Vertical 2:3 1024x1536 framing, same full-body scale as image 2. Naturally planted feet, anatomically correct folded arms and hands. Soft neutral studio lighting and realistic skin/fabric, sharp face detail.\nBackground: truly transparent PNG alpha around the complete subject, clean natural hair edges, no scenery, no floor, no printed checkerboard, no glow or haze. Preserve transparent isolation.\nConstraints: one image of one person, no collage, no panel, no text caption, no watermark. Facial fidelity to image 1 is highest priority; uniform consistency to image 2 is second. Do not copy any face or accessory from image 2."
+        },
+        "cheering": {
+          "status": "complete",
+          "url": "/images/player-portraits/20261005/30/cheering.png",
+          "file": "/Users/hojunlee/Desktop/coding_server/futsal_team/public/images/player-portraits/20261005/30/cheering.png",
+          "sha256": "8dd61c2b6a14ff07f18dc725dded8d0bda3971e6ba2c0a70a55b4a58d34713e1",
+          "dimensions": [
+            1024,
+            1536
+          ],
+          "transparent": true,
+          "tool": "built-in image_gen",
+          "source": "/Users/hojunlee/.codex/generated_images/01a10ba2-a1f6-73c3-af27-474c22a212b7/exec-c1f598f8-1286-46f7-9b61-f2b94469a258.png",
+          "prompt": "Use case: identity-preserve\nAsset type: second pose for an existing transparent ARENA FC full-body player portrait.\nInput images: Image 1 is the EDIT TARGET, the already generated ARMS-CROSSED full-body portrait of 김민규, player ID 30. Image 2 is the SAME PERSON'S ORIGINAL REGISTERED PHOTO, the primary check for facial identity. Image 3 is a POSE GUIDE of another teammate: use ONLY its raised-fist pose, never its head, face, hair or number.\nPrimary request: Create the same player from image 1 in a friendly Korean \"화이팅\" encouragement pose: right elbow bent, naturally clenched right fist beside the shoulder, other arm relaxed at the side, looking at the camera with a natural warm expression. Preserve this player's exact facial identity, hairstyle, glasses if present, age, skin tone and natural body proportions from images 1 and 2. No rejuvenation, no generic model face. Make sure this is the same person as image 2.\nUniform: Keep the precise cyan/light-blue jersey with navy collar and sleeve hems, small circular ARENA FC chest badge (navy patch, thin lime ring, lime A symbol and readable off-white text \"ARENA FC\"), navy shorts, pale blue socks and charcoal shoes from image 1. Preserve the white shorts number 10, not 19. Keep this player's own glasses when present. Badge lettering must read ARENA FC, spelled A R E N A [space] F C.\nComposition: same centered head-to-toe portrait, complete hair and both shoes within small margins, vertical 2:3 1024x1536, same scale, lighting and detailed photographic realism as image 1. Natural anatomically correct hands and arms.\nBackground: retain genuine transparent alpha, clean silhouette, no background or floor, no printed checkerboard.\nChange the arm pose as requested; preserve individual identity and team outfit. Single person, single image, no montage, no additional props or captions."
+        }
+      }
+    },
+    {
+      "id": 31,
+      "name": "나성욱",
+      "number": 18,
+      "position": "미드필더",
+      "activeAtSnapshot": true,
+      "reference": "/Users/hojunlee/Desktop/coding_server/futsal_team/public/images/players/31.jpg",
+      "referenceSha256": "2622d8e46134aafe11d47c35b1f9ac59e7be44db62f011e08fd7dcf9639c4f95",
+      "status": "complete",
+      "poses": {
+        "arms-crossed": {
+          "status": "complete",
+          "url": "/images/player-portraits/20261005/31/arms-crossed.png",
+          "file": "/Users/hojunlee/Desktop/coding_server/futsal_team/public/images/player-portraits/20261005/31/arms-crossed.png",
+          "sha256": "1a368c978dcba3d4f5e3343edb3635563933fb3c847ba15177ef6d2f6c421908",
+          "dimensions": [
+            1024,
+            1536
+          ],
+          "transparent": true,
+          "tool": "built-in image_gen",
+          "source": "/Users/hojunlee/.codex/generated_images/01a10ba2-a1f6-73c3-af27-474c22a212b7/exec-5c70048a-cf5d-4549-9ce0-a7a83dadafcb.png",
+          "prompt": "Use case: identity-preserve\nAsset type: photorealistic full-body individual football player cutout for the ARENA FC player-card collection.\nInput images: Image 1 is the ONLY FACIAL IDENTITY reference: the registered photograph of 나성욱, player ID 31. Image 2 is STRICTLY an OUTFIT, BADGE, LIGHTING AND COMPOSITION reference of another teammate. Never transfer the teammate's face, hair, hair accessories, build, or personal features from image 2. Make the person in IMAGE 1, not the man in image 2.\nPrimary request: Create ONE full-body standing portrait of the exact same adult man shown in image 1, confidently and comfortably crossing both arms over his chest, looking at the camera with a natural friendly expression. Preserve his recognisable facial identity: face shape, eyes, nose, mouth, hairline, hairstyle, skin tone, apparent age and smile lines. Keep thin round glasses, dense rounded black fringe and lean facial features. Retain glasses only when present on the face in image 1; do not remove them. Keep natural visible body proportions; do not give all players the same body or make them uniformly muscular or thin. Do not beautify him into a younger generic model.\nUniform: EXACT approved team outfit from image 2: cyan/light-blue short-sleeved football jersey, dark navy collar and sleeve hems, navy shorts, pale blue football socks and charcoal futsal shoes. On the anatomical LEFT chest (viewer right), reproduce the small circular dark navy ARENA FC badge with thin lime ring, lime A symbol, and off-white text \"ARENA FC\". Match the badge size and placement in image 2. The white shorts number must be 18, not 19. Badge lettering must say ARENA FC, spelled A R E N A [space] F C, clear and accurate. No other sponsors, no unrelated brands, no additional lettering.\nComposition: single person, centered, full head-to-toe, both feet and all hair visible inside the image with small margins. Vertical 2:3 1024x1536 framing, same full-body scale as image 2. Naturally planted feet, anatomically correct folded arms and hands. Soft neutral studio lighting and realistic skin/fabric, sharp face detail.\nBackground: truly transparent PNG alpha around the complete subject, clean natural hair edges, no scenery, no floor, no printed checkerboard, no glow or haze. Preserve transparent isolation.\nConstraints: one image of one person, no collage, no panel, no text caption, no watermark. Facial fidelity to image 1 is highest priority; uniform consistency to image 2 is second. Do not copy any face or accessory from image 2."
+        },
+        "cheering": {
+          "status": "complete",
+          "url": "/images/player-portraits/20261005/31/cheering.png",
+          "file": "/Users/hojunlee/Desktop/coding_server/futsal_team/public/images/player-portraits/20261005/31/cheering.png",
+          "sha256": "ff91f047c1659e76dfcfbeb311b88c08f556798e27af70e3700461b2fc37ba5b",
+          "dimensions": [
+            1024,
+            1536
+          ],
+          "transparent": true,
+          "tool": "built-in image_gen",
+          "source": "/Users/hojunlee/.codex/generated_images/01a10ba2-a1f6-73c3-af27-474c22a212b7/exec-beab493c-18f6-4ac5-9d22-d70b97249c75.png",
+          "prompt": "Use case: identity-preserve\nAsset type: second pose for an existing transparent ARENA FC full-body player portrait.\nInput images: Image 1 is the EDIT TARGET, the already generated ARMS-CROSSED full-body portrait of 나성욱, player ID 31. Image 2 is the SAME PERSON'S ORIGINAL REGISTERED PHOTO, the primary check for facial identity. Image 3 is a POSE GUIDE of another teammate: use ONLY its raised-fist pose, never its head, face, hair or number.\nPrimary request: Create the same player from image 1 in a friendly Korean \"화이팅\" encouragement pose: right elbow bent, naturally clenched right fist beside the shoulder, other arm relaxed at the side, looking at the camera with a natural warm expression. Preserve this player's exact facial identity, hairstyle, glasses if present, age, skin tone and natural body proportions from images 1 and 2. No rejuvenation, no generic model face. Make sure this is the same person as image 2.\nUniform: Keep the precise cyan/light-blue jersey with navy collar and sleeve hems, small circular ARENA FC chest badge (navy patch, thin lime ring, lime A symbol and readable off-white text \"ARENA FC\"), navy shorts, pale blue socks and charcoal shoes from image 1. Preserve the white shorts number 18, not 19. Keep this player's own glasses when present. Badge lettering must read ARENA FC, spelled A R E N A [space] F C.\nComposition: same centered head-to-toe portrait, complete hair and both shoes within small margins, vertical 2:3 1024x1536, same scale, lighting and detailed photographic realism as image 1. Natural anatomically correct hands and arms.\nBackground: retain genuine transparent alpha, clean silhouette, no background or floor, no printed checkerboard.\nChange the arm pose as requested; preserve individual identity and team outfit. Single person, single image, no montage, no additional props or captions."
+        }
+      }
+    },
+    {
+      "id": 33,
+      "name": "이명재",
+      "number": 16,
+      "position": "미드필더",
+      "activeAtSnapshot": true,
+      "reference": "/Users/hojunlee/Desktop/coding_server/futsal_team/public/images/players/33.jpg",
+      "referenceSha256": "1a4392218da969c03fecee24820b58509cb272340fe06f24697f3c353b772807",
+      "status": "complete",
+      "poses": {
+        "arms-crossed": {
+          "status": "complete",
+          "url": "/images/player-portraits/20261005/33/arms-crossed.png",
+          "file": "/Users/hojunlee/Desktop/coding_server/futsal_team/public/images/player-portraits/20261005/33/arms-crossed.png",
+          "sha256": "5eaaeaeb8ea7f1c9e2d07d1d6955692aef6cf047c452047a2d4fa9b0813947ce",
+          "dimensions": [
+            1024,
+            1536
+          ],
+          "transparent": true,
+          "tool": "built-in image_gen",
+          "source": "/Users/hojunlee/.codex/generated_images/01a10ba2-a1f6-73c3-af27-474c22a212b7/exec-97a9d093-13ee-4808-bbd3-e5b5565c0f26.png",
+          "prompt": "Use case: identity-preserve\nAsset type: photorealistic full-body individual football player cutout for the ARENA FC player-card collection.\nInput images: Image 1 is the ONLY FACIAL IDENTITY reference: the registered photograph of 이명재, player ID 33. Image 2 is STRICTLY an OUTFIT, BADGE, LIGHTING AND COMPOSITION reference of another teammate. Never transfer the teammate's face, hair, hair accessories, build, or personal features from image 2. Make the person in IMAGE 1, not the man in image 2.\nPrimary request: Create ONE full-body standing portrait of the exact same adult man shown in image 1, confidently and comfortably crossing both arms over his chest, looking at the camera with a natural friendly expression. Preserve his recognisable facial identity: face shape, eyes, nose, mouth, hairline, hairstyle, skin tone, apparent age and smile lines. Preserve very short black hair, broad full face and friendly smile. Omit the loose mask below his chin for this sporting portrait; his already visible face stays intact. Retain glasses only when present on the face in image 1; do not remove them. Keep natural visible body proportions; do not give all players the same body or make them uniformly muscular or thin. Do not beautify him into a younger generic model.\nUniform: EXACT approved team outfit from image 2: cyan/light-blue short-sleeved football jersey, dark navy collar and sleeve hems, navy shorts, pale blue football socks and charcoal futsal shoes. On the anatomical LEFT chest (viewer right), reproduce the small circular dark navy ARENA FC badge with thin lime ring, lime A symbol, and off-white text \"ARENA FC\". Match the badge size and placement in image 2. The white shorts number must be 16, not 19. Badge lettering must read ARENA FC, spelled A R E N A [space] F C, clear and accurate. No other sponsors, no unrelated brands, no additional lettering.\nComposition: single person, centered, full head-to-toe, both feet and all hair visible inside the image with small margins. Vertical 2:3 1024x1536 framing, same full-body scale as image 2. Naturally planted feet, anatomically correct folded arms and hands. Soft neutral studio lighting and realistic skin/fabric, sharp face detail.\nBackground: truly transparent PNG alpha around the complete subject, clean natural hair edges, no scenery, no floor, no printed checkerboard, no glow or haze. Preserve transparent isolation.\nConstraints: one image of one person, no collage, no panel, no text caption, no watermark. Facial fidelity to image 1 is highest priority; uniform consistency to image 2 is second. Do not copy any face or accessory from image 2."
+        },
+        "cheering": {
+          "status": "complete",
+          "url": "/images/player-portraits/20261005/33/cheering.png",
+          "file": "/Users/hojunlee/Desktop/coding_server/futsal_team/public/images/player-portraits/20261005/33/cheering.png",
+          "sha256": "57bbc4a12480b18e13177528c3cec73ca7c92cecb01f14b77d1342be32781ea0",
+          "dimensions": [
+            1024,
+            1536
+          ],
+          "transparent": true,
+          "tool": "built-in image_gen",
+          "source": "/Users/hojunlee/.codex/generated_images/01a10ba2-a1f6-73c3-af27-474c22a212b7/exec-024fe635-be72-42d9-87ad-0f8f28b7899a.png",
+          "prompt": "Use case: identity-preserve\nAsset type: second pose for an existing transparent ARENA FC full-body player portrait.\nInput images: Image 1 is the EDIT TARGET, the already generated ARMS-CROSSED full-body portrait of 이명재, player ID 33. Image 2 is the SAME PERSON'S ORIGINAL REGISTERED PHOTO, the primary check for facial identity. Image 3 is a POSE GUIDE of another teammate: use ONLY its raised-fist pose, never its head, face, hair or number.\nPrimary request: Create the same player from image 1 in a friendly Korean \"화이팅\" encouragement pose: right elbow bent, naturally clenched right fist beside the shoulder, other arm relaxed at the side, looking at the camera with a natural warm expression. Preserve this player's exact facial identity, hairstyle, glasses if present, age, skin tone and natural body proportions from images 1 and 2. No rejuvenation, no generic model face. Make sure this is the same person as image 2.\nUniform: Keep the precise cyan/light-blue jersey with navy collar and sleeve hems, small circular ARENA FC chest badge (navy patch, thin lime ring, lime A symbol and readable off-white text \"ARENA FC\"), navy shorts, pale blue socks and charcoal shoes from image 1. Preserve white shorts number 16, not 19. Match this player's own hair and glasses from image 1. Do not add a mask or unrelated accessories from image 2. Badge text must read ARENA FC, spelled A R E N A [space] F C.\nComposition: same centered head-to-toe portrait, complete hair and both shoes within small margins, vertical 2:3 1024x1536, same scale, lighting and detailed photographic realism as image 1. Natural anatomically correct hands and arms.\nBackground: retain genuine transparent alpha, clean silhouette, no background or floor, no printed checkerboard.\nChange the arm pose as requested; preserve individual identity and team outfit. Single person, single image, no montage, no additional props or captions."
+        }
+      }
+    },
+    {
+      "id": 34,
+      "name": "권동혁",
+      "number": 29,
+      "position": "미드필더",
+      "activeAtSnapshot": true,
+      "reference": "/Users/hojunlee/Desktop/coding_server/futsal_team/public/images/players/34.jpg",
+      "referenceSha256": "48d6246d8b550c41e9b5c2136b8ed31e646f0c555f08b8a4d6ca1015c37b12e4",
+      "status": "complete",
+      "poses": {
+        "arms-crossed": {
+          "status": "complete",
+          "url": "/images/player-portraits/20261005/34/arms-crossed.png",
+          "file": "/Users/hojunlee/Desktop/coding_server/futsal_team/public/images/player-portraits/20261005/34/arms-crossed.png",
+          "sha256": "028847ebc4c48664c9e2fdb2158b2f1913671ef40cbb6a8f3fb7fa5df72888f5",
+          "dimensions": [
+            1024,
+            1536
+          ],
+          "transparent": true,
+          "tool": "built-in image_gen",
+          "source": "/Users/hojunlee/.codex/generated_images/01a10ba2-a1f6-73c3-af27-474c22a212b7/exec-9b4744de-ce82-45ab-8124-ac51588f91d3.png",
+          "prompt": "Use case: identity-preserve\nAsset type: photorealistic full-body individual football player cutout for the ARENA FC player-card collection.\nInput images: Image 1 is the ONLY FACIAL IDENTITY reference: the registered photograph of 권동혁, player ID 34. Image 2 is STRICTLY an OUTFIT, BADGE, LIGHTING AND COMPOSITION reference of another teammate. Never transfer the teammate's face, hair, hair accessories, build, or personal features from image 2. Make the person in IMAGE 1, not the man in image 2.\nPrimary request: Create ONE full-body standing portrait of the exact same adult man shown in image 1, confidently and comfortably crossing both arms over his chest, looking at the camera with a natural friendly expression. Preserve his recognisable facial identity: face shape, eyes, nose, mouth, hairline, hairstyle, skin tone, apparent age and smile lines. Preserve neatly parted medium-length black hair, smooth oval face and relaxed expression; no glasses. Retain glasses only when present on the face in image 1; do not remove them. Keep natural visible body proportions; do not give all players the same body or make them uniformly muscular or thin. Do not beautify him into a younger generic model.\nUniform: EXACT approved team outfit from image 2: cyan/light-blue short-sleeved football jersey, dark navy collar and sleeve hems, navy shorts, pale blue football socks and charcoal futsal shoes. On the anatomical LEFT chest (viewer right), reproduce the small circular dark navy ARENA FC badge with thin lime ring, lime A symbol, and off-white text \"ARENA FC\". Match the badge size and placement in image 2. The white shorts number must be 29, not 19. Badge lettering must read ARENA FC, spelled A R E N A [space] F C, clear and accurate. No other sponsors, no unrelated brands, no additional lettering.\nComposition: single person, centered, full head-to-toe, both feet and all hair visible inside the image with small margins. Vertical 2:3 1024x1536 framing, same full-body scale as image 2. Naturally planted feet, anatomically correct folded arms and hands. Soft neutral studio lighting and realistic skin/fabric, sharp face detail.\nBackground: truly transparent PNG alpha around the complete subject, clean natural hair edges, no scenery, no floor, no printed checkerboard, no glow or haze. Preserve transparent isolation.\nConstraints: one image of one person, no collage, no panel, no text caption, no watermark. Facial fidelity to image 1 is highest priority; uniform consistency to image 2 is second. Do not copy any face or accessory from image 2."
+        },
+        "cheering": {
+          "status": "complete",
+          "url": "/images/player-portraits/20261005/34/cheering.png",
+          "file": "/Users/hojunlee/Desktop/coding_server/futsal_team/public/images/player-portraits/20261005/34/cheering.png",
+          "sha256": "80c75399e2ffdfc4f9e19746e726b52f07e7861af0d926f86b8d77f3d0d0d42b",
+          "dimensions": [
+            1024,
+            1536
+          ],
+          "transparent": true,
+          "tool": "built-in image_gen",
+          "source": "/Users/hojunlee/.codex/generated_images/01a10ba2-a1f6-73c3-af27-474c22a212b7/exec-0bcbc8d4-1369-490e-9271-1c7f7b6861e8.png",
+          "prompt": "Use case: identity-preserve\nAsset type: second pose for an existing transparent ARENA FC full-body player portrait.\nInput images: Image 1 is the EDIT TARGET, the already generated ARMS-CROSSED full-body portrait of 권동혁, player ID 34. Image 2 is the SAME PERSON'S ORIGINAL REGISTERED PHOTO, the primary check for facial identity. Image 3 is a POSE GUIDE of another teammate: use ONLY its raised-fist pose, never its head, face, hair or number.\nPrimary request: Create the same player from image 1 in a friendly Korean \"화이팅\" encouragement pose: right elbow bent, naturally clenched right fist beside the shoulder, other arm relaxed at the side, looking at the camera with a natural warm expression. Preserve this player's exact facial identity, hairstyle, glasses if present, age, skin tone and natural body proportions from images 1 and 2. No rejuvenation, no generic model face. Make sure this is the same person as image 2.\nUniform: Keep the precise cyan/light-blue jersey with navy collar and sleeve hems, small circular ARENA FC chest badge (navy patch, thin lime ring, lime A symbol and readable off-white text \"ARENA FC\"), navy shorts, pale blue socks and charcoal shoes from image 1. Preserve white shorts number 29, not 19. Match this player's own hair and glasses from image 1. Do not add a mask or unrelated accessories from image 2. Badge text must read ARENA FC, spelled A R E N A [space] F C.\nComposition: same centered head-to-toe portrait, complete hair and both shoes within small margins, vertical 2:3 1024x1536, same scale, lighting and detailed photographic realism as image 1. Natural anatomically correct hands and arms.\nBackground: retain genuine transparent alpha, clean silhouette, no background or floor, no printed checkerboard.\nChange the arm pose as requested; preserve individual identity and team outfit. Single person, single image, no montage, no additional props or captions."
+        }
+      }
+    },
+    {
+      "id": 35,
+      "name": "김윤태",
+      "number": 8,
+      "position": "미드필더",
+      "activeAtSnapshot": true,
+      "reference": "/Users/hojunlee/Desktop/coding_server/futsal_team/public/images/players/35.jpg",
+      "referenceSha256": "879c80f14ec0928739fec51e48cae0982d8987c6963b24e456262f4c8b8cd135",
+      "status": "complete",
+      "poses": {
+        "arms-crossed": {
+          "status": "complete",
+          "url": "/images/player-portraits/20261005/35/arms-crossed.png",
+          "file": "/Users/hojunlee/Desktop/coding_server/futsal_team/public/images/player-portraits/20261005/35/arms-crossed.png",
+          "sha256": "6a68b952cbce291f7be6f61f913235a6c67e01b6ecef7949aa99e2e158bd790a",
+          "dimensions": [
+            1024,
+            1536
+          ],
+          "transparent": true,
+          "tool": "built-in image_gen",
+          "source": "/Users/hojunlee/.codex/generated_images/01a10ba2-a1f6-73c3-af27-474c22a212b7/exec-b9c17fd9-cf46-4e4e-8fb4-691a42e1a25e.png",
+          "prompt": "Use case: identity-preserve\nAsset type: photorealistic full-body individual football player cutout for the ARENA FC player-card collection.\nInput images: Image 1 is the ONLY FACIAL IDENTITY reference: the registered photograph of 김윤태, player ID 35. Image 2 is STRICTLY an OUTFIT, BADGE, LIGHTING AND COMPOSITION reference of another teammate. Never transfer the teammate's face, hair, hair accessories, build, or personal features from image 2. Make the person in IMAGE 1, not the man in image 2.\nPrimary request: Create ONE full-body standing portrait of the exact same adult man shown in image 1, confidently and comfortably crossing both arms over his chest, looking at the camera with a natural friendly expression. Preserve his recognisable facial identity: face shape, eyes, nose, mouth, hairline, hairstyle, skin tone, apparent age and smile lines. Keep thick distinctive black round glasses, swept short dark hair and mature face. Retain glasses only when present on the face in image 1; do not remove them. Keep natural visible body proportions; do not give all players the same body or make them uniformly muscular or thin. Do not beautify him into a younger generic model.\nUniform: EXACT approved team outfit from image 2: cyan/light-blue short-sleeved football jersey, dark navy collar and sleeve hems, navy shorts, pale blue football socks and charcoal futsal shoes. On the anatomical LEFT chest (viewer right), reproduce the small circular dark navy ARENA FC badge with thin lime ring, lime A symbol, and off-white text \"ARENA FC\". Match the badge size and placement in image 2. The white shorts number must be 8, not 19. Badge lettering must read ARENA FC, spelled A R E N A [space] F C, clear and accurate. No other sponsors, no unrelated brands, no additional lettering.\nComposition: single person, centered, full head-to-toe, both feet and all hair visible inside the image with small margins. Vertical 2:3 1024x1536 framing, same full-body scale as image 2. Naturally planted feet, anatomically correct folded arms and hands. Soft neutral studio lighting and realistic skin/fabric, sharp face detail.\nBackground: truly transparent PNG alpha around the complete subject, clean natural hair edges, no scenery, no floor, no printed checkerboard, no glow or haze. Preserve transparent isolation.\nConstraints: one image of one person, no collage, no panel, no text caption, no watermark. Facial fidelity to image 1 is highest priority; uniform consistency to image 2 is second. Do not copy any face or accessory from image 2."
+        },
+        "cheering": {
+          "status": "complete",
+          "url": "/images/player-portraits/20261005/35/cheering.png",
+          "file": "/Users/hojunlee/Desktop/coding_server/futsal_team/public/images/player-portraits/20261005/35/cheering.png",
+          "sha256": "a3f7bd1183c3d75c4fe3133fdab05f7562a1e137a23e7bbe93e76d623cc3c62b",
+          "dimensions": [
+            1024,
+            1536
+          ],
+          "transparent": true,
+          "tool": "built-in image_gen",
+          "source": "/Users/hojunlee/.codex/generated_images/01a10ba2-a1f6-73c3-af27-474c22a212b7/exec-a7a340e6-4303-4051-ae26-4def0cc9da0d.png",
+          "prompt": "Use case: identity-preserve\nAsset type: second pose for an existing transparent ARENA FC full-body player portrait.\nInput images: Image 1 is the EDIT TARGET, the already generated ARMS-CROSSED full-body portrait of 김윤태, player ID 35. Image 2 is the SAME PERSON'S ORIGINAL REGISTERED PHOTO, the primary check for facial identity. Image 3 is a POSE GUIDE of another teammate: use ONLY its raised-fist pose, never its head, face, hair or number.\nPrimary request: Create the same player from image 1 in a friendly Korean \"화이팅\" encouragement pose: right elbow bent, naturally clenched right fist beside the shoulder, other arm relaxed at the side, looking at the camera with a natural warm expression. Preserve this player's exact facial identity, hairstyle, glasses if present, age, skin tone and natural body proportions from images 1 and 2. No rejuvenation, no generic model face. Make sure this is the same person as image 2.\nUniform: Keep the precise cyan/light-blue jersey with navy collar and sleeve hems, small circular ARENA FC chest badge (navy patch, thin lime ring, lime A symbol and readable off-white text \"ARENA FC\"), navy shorts, pale blue socks and charcoal shoes from image 1. Preserve white shorts number 8, not 19. Match this player's own hair and glasses from image 1. Do not add a mask or unrelated accessories from image 2. Badge text must read ARENA FC, spelled A R E N A [space] F C.\nComposition: same centered head-to-toe portrait, complete hair and both shoes within small margins, vertical 2:3 1024x1536, same scale, lighting and detailed photographic realism as image 1. Natural anatomically correct hands and arms.\nBackground: retain genuine transparent alpha, clean silhouette, no background or floor, no printed checkerboard.\nChange the arm pose as requested; preserve individual identity and team outfit. Single person, single image, no montage, no additional props or captions."
+        }
+      }
+    },
+    {
+      "id": 36,
+      "name": "김대익",
+      "number": 77,
+      "position": "미드필더",
+      "activeAtSnapshot": true,
+      "reference": "/Users/hojunlee/Desktop/coding_server/futsal_team/public/images/players/36.jpg",
+      "referenceSha256": "ca8b88b0c53c78160f38a8606d86f39889f2220aeec61d351a6b34a80d50dae2",
+      "status": "complete",
+      "poses": {
+        "arms-crossed": {
+          "status": "complete",
+          "url": "/images/player-portraits/20261005/36/arms-crossed.png",
+          "file": "/Users/hojunlee/Desktop/coding_server/futsal_team/public/images/player-portraits/20261005/36/arms-crossed.png",
+          "sha256": "721236225d6b5b44bcce505aced750eed57e4e89d3590816e1e2220d4a62dbee",
+          "dimensions": [
+            1024,
+            1536
+          ],
+          "transparent": true,
+          "tool": "built-in image_gen",
+          "source": "/Users/hojunlee/.codex/generated_images/01a10ba2-a1f6-73c3-af27-474c22a212b7/exec-7a5694f8-48bd-4d2d-987b-da14ed5776ba.png",
+          "prompt": "Use case: identity-preserve\nAsset type: photorealistic full-body individual football player cutout for the ARENA FC player-card collection.\nInput images: Image 1 is the ONLY FACIAL IDENTITY reference: the registered photograph of 김대익, player ID 36. Image 2 is STRICTLY an OUTFIT, BADGE, LIGHTING AND COMPOSITION reference of another teammate. Never transfer the teammate's face, hair, hair accessories, build, or personal features from image 2. Make the person in IMAGE 1, not the man in image 2.\nPrimary request: Create ONE full-body standing portrait of the exact same adult man shown in image 1, confidently and comfortably crossing both arms over his chest, looking at the camera with a natural friendly expression. Preserve his recognisable facial identity: face shape, eyes, nose, mouth, hairline, hairstyle, skin tone, apparent age and smile lines. Preserve his short swept salt-and-pepper hair, broad mature face, stockier natural build and calm expression. Retain glasses only when present on the face in image 1; do not remove them. Keep natural visible body proportions; do not give all players the same body or make them uniformly muscular or thin. Do not beautify him into a younger generic model.\nUniform: EXACT approved team outfit from image 2: cyan/light-blue short-sleeved football jersey, dark navy collar and sleeve hems, navy shorts, pale blue football socks and charcoal futsal shoes. On the anatomical LEFT chest (viewer right), reproduce the small circular dark navy ARENA FC badge with thin lime ring, lime A symbol, and off-white text \"ARENA FC\". Match the badge size and placement in image 2. The white shorts number must be 77, not 19. Badge lettering must read ARENA FC, spelled A R E N A [space] F C, clear and accurate. No other sponsors, no unrelated brands, no additional lettering.\nComposition: single person, centered, full head-to-toe, both feet and all hair visible inside the image with small margins. Vertical 2:3 1024x1536 framing, same full-body scale as image 2. Naturally planted feet, anatomically correct folded arms and hands. Soft neutral studio lighting and realistic skin/fabric, sharp face detail.\nBackground: truly transparent PNG alpha around the complete subject, clean natural hair edges, no scenery, no floor, no printed checkerboard, no glow or haze. Preserve transparent isolation.\nConstraints: one image of one person, no collage, no panel, no text caption, no watermark. Facial fidelity to image 1 is highest priority; uniform consistency to image 2 is second. Do not copy any face or accessory from image 2."
+        },
+        "cheering": {
+          "status": "complete",
+          "url": "/images/player-portraits/20261005/36/cheering.png",
+          "file": "/Users/hojunlee/Desktop/coding_server/futsal_team/public/images/player-portraits/20261005/36/cheering.png",
+          "sha256": "16b7e60fa3adc88ff466ac0de67c0d6acdce352aa216b3e8cf7e9532eaf4ee86",
+          "dimensions": [
+            1024,
+            1536
+          ],
+          "transparent": true,
+          "tool": "built-in image_gen",
+          "source": "/Users/hojunlee/.codex/generated_images/01a10ba2-a1f6-73c3-af27-474c22a212b7/exec-57f1251d-ab08-4e46-b354-d72a437ba9e6.png",
+          "prompt": "Use case: identity-preserve\nAsset type: second pose for an existing transparent ARENA FC full-body player portrait.\nInput images: Image 1 is the EDIT TARGET, the already generated ARMS-CROSSED full-body portrait of 김대익, player ID 36. Image 2 is the SAME PERSON'S ORIGINAL REGISTERED PHOTO, the primary check for facial identity. Image 3 is a POSE GUIDE of another teammate: use ONLY its raised-fist pose, never its head, face, hair or number.\nPrimary request: Create the same player from image 1 in a friendly Korean \"화이팅\" encouragement pose: right elbow bent, naturally clenched right fist beside the shoulder, other arm relaxed at the side, looking at the camera with a natural warm expression. Preserve this player's exact facial identity, hairstyle, glasses if present, age, skin tone and natural body proportions from images 1 and 2. No rejuvenation, no generic model face. Make sure this is the same person as image 2.\nUniform: Keep the precise cyan/light-blue jersey with navy collar and sleeve hems, small circular ARENA FC chest badge (navy patch, thin lime ring, lime A symbol and readable off-white text \"ARENA FC\"), navy shorts, pale blue socks and charcoal shoes from image 1. Preserve white shorts number 77, not 19. Match this player's own hair and glasses from image 1. Do not add a mask or unrelated accessories from image 2. Badge text must read ARENA FC, spelled A R E N A [space] F C.\nComposition: same centered head-to-toe portrait, complete hair and both shoes within small margins, vertical 2:3 1024x1536, same scale, lighting and detailed photographic realism as image 1. Natural anatomically correct hands and arms.\nBackground: retain genuine transparent alpha, clean silhouette, no background or floor, no printed checkerboard.\nChange the arm pose as requested; preserve individual identity and team outfit. Single person, single image, no montage, no additional props or captions."
+        }
+      }
+    },
+    {
+      "id": 37,
+      "name": "김민기",
+      "number": 0,
+      "position": "미드필더",
+      "activeAtSnapshot": true,
+      "reference": "/Users/hojunlee/Desktop/coding_server/futsal_team/public/images/players/37.jpg",
+      "referenceSha256": "f0d52e4b0744c85f63a282180e5d2ff41300e497df9186f5ba6c3ace722554fc",
+      "status": "complete",
+      "poses": {
+        "arms-crossed": {
+          "status": "complete",
+          "url": "/images/player-portraits/20261005/37/arms-crossed.png",
+          "file": "/Users/hojunlee/Desktop/coding_server/futsal_team/public/images/player-portraits/20261005/37/arms-crossed.png",
+          "sha256": "f7fb97ab3d543ef79bfd8d2459c4e575fbdc572cb310980cc6aeedeee199b047",
+          "dimensions": [
+            1024,
+            1536
+          ],
+          "transparent": true,
+          "tool": "built-in image_gen",
+          "source": "/Users/hojunlee/.codex/generated_images/01a10ba2-a1f6-73c3-af27-474c22a212b7/exec-87d1c2b7-5b17-4ce8-9fcf-5871b2aea828.png",
+          "prompt": "Use case: identity-preserve\nAsset type: photorealistic full-body individual football player cutout for the ARENA FC player-card collection.\nInput images: Image 1 is the ONLY FACIAL IDENTITY reference: the registered photograph of 김민기, player ID 37. Image 2 is STRICTLY an OUTFIT, BADGE, LIGHTING AND COMPOSITION reference of another teammate. Never transfer the teammate's face, hair, hair accessories, build, or personal features from image 2. Make the person in IMAGE 1, not the man in image 2.\nPrimary request: Create ONE full-body standing portrait of the exact same adult man shown in image 1, confidently and comfortably crossing both arms over his chest, looking at the camera with a natural friendly expression. Preserve his recognisable facial identity: face shape, eyes, nose, mouth, hairline, hairstyle, skin tone, apparent age and smile lines. Preserve thick center-parted dark hair, broad bright smile and rounded face. Shorts number is exactly 0, not blank. Retain glasses only when present on the face in image 1; do not remove them. Keep natural visible body proportions; do not give all players the same body or make them uniformly muscular or thin. Do not beautify him into a younger generic model.\nUniform: EXACT approved team outfit from image 2: cyan/light-blue short-sleeved football jersey, dark navy collar and sleeve hems, navy shorts, pale blue football socks and charcoal futsal shoes. On the anatomical LEFT chest (viewer right), reproduce the small circular dark navy ARENA FC badge with thin lime ring, lime A symbol, and off-white text \"ARENA FC\". Match the badge size and placement in image 2. The white shorts number MUST be 0, not 19. Zero is his actual assigned number: print the single digit 0 clearly. Badge lettering must read ARENA FC, spelled A R E N A [space] F C, clear and accurate. No other sponsors, no unrelated brands, no additional lettering.\nComposition: single person, centered, full head-to-toe, both feet and all hair visible inside the image with small margins. Vertical 2:3 1024x1536 framing, same full-body scale as image 2. Naturally planted feet, anatomically correct folded arms and hands. Soft neutral studio lighting and realistic skin/fabric, sharp face detail.\nBackground: truly transparent PNG alpha around the complete subject, clean natural hair edges, no scenery, no floor, no printed checkerboard, no glow or haze. Preserve transparent isolation.\nConstraints: one image of one person, no collage, no panel, no text caption, no watermark. Facial fidelity to image 1 is highest priority; uniform consistency to image 2 is second. Do not copy any face or accessory from image 2."
+        },
+        "cheering": {
+          "status": "complete",
+          "url": "/images/player-portraits/20261005/37/cheering.png",
+          "file": "/Users/hojunlee/Desktop/coding_server/futsal_team/public/images/player-portraits/20261005/37/cheering.png",
+          "sha256": "2a06f91cd9c276f0ea21f94501faaefda6e81ca329a564751766b70e28aa96ed",
+          "dimensions": [
+            1024,
+            1536
+          ],
+          "transparent": true,
+          "tool": "built-in image_gen",
+          "source": "/Users/hojunlee/.codex/generated_images/01a10ba2-a1f6-73c3-af27-474c22a212b7/exec-8b970bdc-15bf-4002-987b-94ec86de4dd5.png",
+          "prompt": "Use case: identity-preserve\nAsset type: second pose for an existing transparent ARENA FC full-body player portrait.\nInput images: Image 1 is the EDIT TARGET, the already generated ARMS-CROSSED full-body portrait of 김민기, player ID 37. Image 2 is the SAME PERSON'S ORIGINAL REGISTERED PHOTO, the primary check for facial identity. Image 3 is a POSE GUIDE of another teammate: use ONLY its raised-fist pose, never its head, face, hair or number.\nPrimary request: Create the same player from image 1 in a friendly Korean \"화이팅\" encouragement pose: right elbow bent, naturally clenched right fist beside the shoulder, other arm relaxed at the side, looking at the camera with a natural warm expression. Preserve this player's exact facial identity, hairstyle, glasses if present, age, skin tone and natural body proportions from images 1 and 2. No rejuvenation, no generic model face. Make sure this is the same person as image 2.\nUniform: Keep the precise cyan/light-blue jersey with navy collar and sleeve hems, small circular ARENA FC chest badge (navy patch, thin lime ring, lime A symbol and readable off-white text \"ARENA FC\"), navy shorts, pale blue socks and charcoal shoes from image 1. Keep the white shorts number 0, not 19. The digit 0 is intentional and must remain visible. Preserve this player's own hairstyle and glasses if present. The badge must say ARENA FC, spelled A R E N A [space] F C.\nComposition: same centered head-to-toe portrait, complete hair and both shoes within small margins, vertical 2:3 1024x1536, same scale, lighting and detailed photographic realism as image 1. Natural anatomically correct hands and arms.\nBackground: retain genuine transparent alpha, clean silhouette, no background or floor, no printed checkerboard.\nChange the arm pose as requested; preserve individual identity and team outfit. Single person, single image, no montage, no additional props or captions."
+        }
+      }
+    },
+    {
+      "id": 44,
+      "name": "최석훈",
+      "number": null,
+      "position": "미드필더",
+      "activeAtSnapshot": true,
+      "reference": "/Users/hojunlee/Desktop/coding_server/futsal_team/docs/design-previews/player-portraits-20261005/sources/player-44-reference.png",
+      "referenceSha256": "170f49cdb1bb716cac287b230881b5468ceca72bd5f215432d7c46d44b4bbe93",
+      "status": "complete",
+      "poses": {
+        "arms-crossed": {
+          "status": "complete",
+          "url": "/images/player-portraits/20261005/44/arms-crossed.png",
+          "file": "/Users/hojunlee/Desktop/coding_server/futsal_team/public/images/player-portraits/20261005/44/arms-crossed.png",
+          "sha256": "e377c54ad7ad044549048749cd53b3aa1e178fdef8bac04a7ec01e7b006a7a4f",
+          "dimensions": [
+            1024,
+            1536
+          ],
+          "transparent": true,
+          "tool": "built-in image_gen",
+          "source": "/Users/hojunlee/.codex/generated_images/01a10ba2-a1f6-73c3-af27-474c22a212b7/exec-56ea098a-5f94-4a26-9969-2e6a603a34bd.png",
+          "prompt": "Use case: identity-preserve\nAsset type: photorealistic full-body individual football player cutout for the ARENA FC player-card collection.\nInput images: Image 1 is the ONLY FACIAL IDENTITY reference: the registered photograph of 최석훈, player ID 44. Image 2 is STRICTLY an OUTFIT, BADGE, LIGHTING AND COMPOSITION reference of another teammate. Never transfer the teammate's face, hair, hair accessories, build, or personal features from image 2. Make the person in IMAGE 1, not the man in image 2.\nPrimary request: Create ONE full-body standing portrait of the exact same adult man shown in image 1, confidently and comfortably crossing both arms over his chest, looking at the camera with a natural friendly expression. Preserve his recognisable facial identity: face shape, eyes, nose, mouth, hairline, hairstyle, skin tone, apparent age and smile lines. Preserve wavy center-parted black hair, prominent eyes, oval face and slight closed-mouth smile; no glasses. Retain glasses only when present on the face in image 1; do not remove them. Keep natural visible body proportions; do not give all players the same body or make them uniformly muscular or thin. Do not beautify him into a younger generic model.\nUniform: EXACT approved team outfit from image 2: cyan/light-blue short-sleeved football jersey, dark navy collar and sleeve hems, navy shorts, pale blue football socks and charcoal futsal shoes. On the anatomical LEFT chest (viewer right), reproduce the small circular dark navy ARENA FC badge with thin lime ring, lime A symbol, and off-white text \"ARENA FC\". Match the badge size and placement in image 2. This player has NO assigned number. Leave shorts and shirt entirely unnumbered. Do not copy number 19 from the outfit reference. Badge lettering must read ARENA FC, spelled A R E N A [space] F C, clear and accurate. No other sponsors, no unrelated brands, no additional lettering.\nComposition: single person, centered, full head-to-toe, both feet and all hair visible inside the image with small margins. Vertical 2:3 1024x1536 framing, same full-body scale as image 2. Naturally planted feet, anatomically correct folded arms and hands. Soft neutral studio lighting and realistic skin/fabric, sharp face detail.\nBackground: truly transparent PNG alpha around the complete subject, clean natural hair edges, no scenery, no floor, no printed checkerboard, no glow or haze. Preserve transparent isolation.\nConstraints: one image of one person, no collage, no panel, no text caption, no watermark. Facial fidelity to image 1 is highest priority; uniform consistency to image 2 is second. Do not copy any face or accessory from image 2."
+        },
+        "cheering": {
+          "status": "complete",
+          "url": "/images/player-portraits/20261005/44/cheering.png",
+          "file": "/Users/hojunlee/Desktop/coding_server/futsal_team/public/images/player-portraits/20261005/44/cheering.png",
+          "sha256": "27b589d1b85af831d7b128cb69f77a73a7055f07db113411f9951e041c40475a",
+          "dimensions": [
+            1024,
+            1536
+          ],
+          "transparent": true,
+          "tool": "built-in image_gen",
+          "source": "/Users/hojunlee/.codex/generated_images/01a10ba2-a1f6-73c3-af27-474c22a212b7/exec-b4f02a52-70d7-40f0-95fd-8fdd9568bc8d.png",
+          "prompt": "Use case: identity-preserve\nAsset type: second pose for an existing transparent ARENA FC full-body player portrait.\nInput images: Image 1 is the EDIT TARGET, the already generated ARMS-CROSSED full-body portrait of 최석훈, player ID 44. Image 2 is the SAME PERSON'S ORIGINAL REGISTERED PHOTO, the primary check for facial identity. Image 3 is a POSE GUIDE of another teammate: use ONLY its raised-fist pose, never its head, face, hair or number.\nPrimary request: Create the same player from image 1 in a friendly Korean \"화이팅\" encouragement pose: right elbow bent, naturally clenched right fist beside the shoulder, other arm relaxed at the side, looking at the camera with a natural warm expression. Preserve this player's exact facial identity, hairstyle, glasses if present, age, skin tone and natural body proportions from images 1 and 2. No rejuvenation, no generic model face. Make sure this is the same person as image 2.\nUniform: Keep the precise cyan/light-blue jersey with navy collar and sleeve hems, small circular ARENA FC chest badge (navy patch, thin lime ring, lime A symbol and readable off-white text \"ARENA FC\"), navy shorts, pale blue socks and charcoal shoes from image 1. Keep the shorts unnumbered, as in image 1. This player has no assigned number. Do not add 19 or any other number. Preserve this player's own hairstyle and glasses if present. The badge must say ARENA FC, spelled A R E N A [space] F C.\nComposition: same centered head-to-toe portrait, complete hair and both shoes within small margins, vertical 2:3 1024x1536, same scale, lighting and detailed photographic realism as image 1. Natural anatomically correct hands and arms.\nBackground: retain genuine transparent alpha, clean silhouette, no background or floor, no printed checkerboard.\nChange the arm pose as requested; preserve individual identity and team outfit. Single person, single image, no montage, no additional props or captions."
+        }
+      }
+    },
+    {
+      "id": 47,
+      "name": "심현민",
+      "number": 4,
+      "position": "미드필더",
+      "activeAtSnapshot": true,
+      "reference": "/Users/hojunlee/Desktop/coding_server/futsal_team/public/uploads/players/47/1783273498445-8f43fa47-1d5a-46ee-a9e7-4a0f13114cec.png",
+      "referenceSha256": "841570a7597f529aa2165ad13ed36fe00da66d19628ddad9ff89956138358740",
+      "status": "complete",
+      "poses": {
+        "arms-crossed": {
+          "status": "complete",
+          "url": "/images/player-portraits/20261005/47/arms-crossed.png",
+          "file": "/Users/hojunlee/Desktop/coding_server/futsal_team/public/images/player-portraits/20261005/47/arms-crossed.png",
+          "sha256": "784c6e671ae77e592aae75376ee2bea2e4bb031b7222eae8740afe3a574a618d",
+          "dimensions": [
+            1024,
+            1536
+          ],
+          "transparent": true,
+          "tool": "built-in image_gen",
+          "source": "/Users/hojunlee/.codex/generated_images/01a10ba2-a1f6-73c3-af27-474c22a212b7/exec-e17508b0-947c-48fb-950c-30d310ab2699.png",
+          "prompt": "Use case: identity-preserve\nAsset type: photorealistic full-body individual football player cutout for the ARENA FC player-card collection.\nInput images: Image 1 is the ONLY FACIAL IDENTITY reference: the registered photograph of 심현민, player ID 47. Image 2 is STRICTLY an OUTFIT, BADGE, LIGHTING AND COMPOSITION reference of another teammate. Never transfer the teammate's face, hair, hair accessories, build, or personal features from image 2. Make the person in IMAGE 1, not the man in image 2.\nPrimary request: Create ONE full-body standing portrait of the exact same adult man shown in image 1, confidently and comfortably crossing both arms over his chest, looking at the camera with a natural friendly expression. Preserve his recognisable facial identity: face shape, eyes, nose, mouth, hairline, hairstyle, skin tone, apparent age and smile lines. Keep his dark rectangular eyeglasses, neat thick black fringe, youthful adult facial features and gentle smile. Retain glasses only when present on the face in image 1; do not remove them. Keep natural visible body proportions; do not give all players the same body or make them uniformly muscular or thin. Do not beautify him into a younger generic model.\nUniform: EXACT approved team outfit from image 2: cyan/light-blue short-sleeved football jersey, dark navy collar and sleeve hems, navy shorts, pale blue football socks and charcoal futsal shoes. On the anatomical LEFT chest (viewer right), reproduce the small circular dark navy ARENA FC badge with thin lime ring, lime A symbol, and off-white text \"ARENA FC\". Match the badge size and placement in image 2. The white shorts number MUST be 4, not 19. Badge lettering must read ARENA FC, spelled A R E N A [space] F C, clear and accurate. No other sponsors, no unrelated brands, no additional lettering.\nComposition: single person, centered, full head-to-toe, both feet and all hair visible inside the image with small margins. Vertical 2:3 1024x1536 framing, same full-body scale as image 2. Naturally planted feet, anatomically correct folded arms and hands. Soft neutral studio lighting and realistic skin/fabric, sharp face detail.\nBackground: truly transparent PNG alpha around the complete subject, clean natural hair edges, no scenery, no floor, no printed checkerboard, no glow or haze. Preserve transparent isolation.\nConstraints: one image of one person, no collage, no panel, no text caption, no watermark. Facial fidelity to image 1 is highest priority; uniform consistency to image 2 is second. Do not copy any face or accessory from image 2."
+        },
+        "cheering": {
+          "status": "complete",
+          "url": "/images/player-portraits/20261005/47/cheering.png",
+          "file": "/Users/hojunlee/Desktop/coding_server/futsal_team/public/images/player-portraits/20261005/47/cheering.png",
+          "sha256": "322aafc61c97b1baae264e95120521095b44dbf40c81868b6e1d205f621ddeac",
+          "dimensions": [
+            1024,
+            1536
+          ],
+          "transparent": true,
+          "tool": "built-in image_gen",
+          "source": "/Users/hojunlee/.codex/generated_images/01a10ba2-a1f6-73c3-af27-474c22a212b7/exec-e8ab987d-de75-4443-b556-af13be1eefb4.png",
+          "prompt": "Use case: identity-preserve\nAsset type: second pose for an existing transparent ARENA FC full-body player portrait.\nInput images: Image 1 is the EDIT TARGET, the already generated ARMS-CROSSED full-body portrait of 심현민, player ID 47. Image 2 is the SAME PERSON'S ORIGINAL REGISTERED PHOTO, the primary check for facial identity. Image 3 is a POSE GUIDE of another teammate: use ONLY its raised-fist pose, never its head, face, hair or number.\nPrimary request: Create the same player from image 1 in a friendly Korean \"화이팅\" encouragement pose: right elbow bent, naturally clenched right fist beside the shoulder, other arm relaxed at the side, looking at the camera with a natural warm expression. Preserve this player's exact facial identity, hairstyle, glasses if present, age, skin tone and natural body proportions from images 1 and 2. No rejuvenation, no generic model face. Make sure this is the same person as image 2.\nUniform: Keep the precise cyan/light-blue jersey with navy collar and sleeve hems, small circular ARENA FC chest badge (navy patch, thin lime ring, lime A symbol and readable off-white text \"ARENA FC\"), navy shorts, pale blue socks and charcoal shoes from image 1. Keep the white shorts number 4, not 19. Preserve this player's own hairstyle and glasses if present. The badge must say ARENA FC, spelled A R E N A [space] F C.\nComposition: same centered head-to-toe portrait, complete hair and both shoes within small margins, vertical 2:3 1024x1536, same scale, lighting and detailed photographic realism as image 1. Natural anatomically correct hands and arms.\nBackground: retain genuine transparent alpha, clean silhouette, no background or floor, no printed checkerboard.\nChange the arm pose as requested; preserve individual identity and team outfit. Single person, single image, no montage, no additional props or captions."
+        }
+      }
+    },
+    {
+      "id": 65,
+      "name": "유훈",
+      "number": 99,
+      "position": "미드필더",
+      "activeAtSnapshot": true,
+      "reference": "/Users/hojunlee/Desktop/coding_server/futsal_team/docs/design-previews/player-portraits-20261005/sources/player-65-reference.png",
+      "referenceSha256": "eaccc8d017544d358c68c209b1133693f8c2dea4787349cddbc3395d5ff70d1b",
+      "status": "complete",
+      "poses": {
+        "arms-crossed": {
+          "status": "complete",
+          "url": "/images/player-portraits/20261005/65/arms-crossed.png",
+          "file": "/Users/hojunlee/Desktop/coding_server/futsal_team/public/images/player-portraits/20261005/65/arms-crossed.png",
+          "sha256": "a95b8ecbfb64296b204eefc503c6d4586e145d12ffb3599795d5b624cb2a6b38",
+          "dimensions": [
+            1024,
+            1536
+          ],
+          "transparent": true,
+          "tool": "built-in image_gen",
+          "source": "/Users/hojunlee/.codex/generated_images/01a10ba2-a1f6-73c3-af27-474c22a212b7/exec-dcdb9499-ac99-49d1-a1be-ef9d41f6fde1.png",
+          "prompt": "Use case: identity-preserve\nAsset type: photorealistic full-body individual football player cutout for the ARENA FC player-card collection.\nInput images: Image 1 is the ONLY FACIAL IDENTITY reference: the registered photograph of 유훈, player ID 65. Image 2 is STRICTLY an OUTFIT, BADGE, LIGHTING AND COMPOSITION reference of another teammate. Never transfer the teammate's face, hair, hair accessories, build, or personal features from image 2. Make the person in IMAGE 1, not the man in image 2.\nPrimary request: Create ONE full-body standing portrait of the exact same adult man shown in image 1, confidently and comfortably crossing both arms over his chest, looking at the camera with a natural friendly expression. Preserve his recognisable facial identity: face shape, eyes, nose, mouth, hairline, hairstyle, skin tone, apparent age and smile lines. Preserve short swept-back black hair and hairline, thick eyebrows, broad face, natural stockier build and neutral confident expression; no glasses. Retain glasses only when present on the face in image 1; do not remove them. Keep natural visible body proportions; do not give all players the same body or make them uniformly muscular or thin. Do not beautify him into a younger generic model.\nUniform: EXACT approved team outfit from image 2: cyan/light-blue short-sleeved football jersey, dark navy collar and sleeve hems, navy shorts, pale blue football socks and charcoal futsal shoes. On the anatomical LEFT chest (viewer right), reproduce the small circular dark navy ARENA FC badge with thin lime ring, lime A symbol, and off-white text \"ARENA FC\". Match the badge size and placement in image 2. The white shorts number MUST be 99, not 19. Badge lettering must read ARENA FC, spelled A R E N A [space] F C, clear and accurate. No other sponsors, no unrelated brands, no additional lettering.\nComposition: single person, centered, full head-to-toe, both feet and all hair visible inside the image with small margins. Vertical 2:3 1024x1536 framing, same full-body scale as image 2. Naturally planted feet, anatomically correct folded arms and hands. Soft neutral studio lighting and realistic skin/fabric, sharp face detail.\nBackground: truly transparent PNG alpha around the complete subject, clean natural hair edges, no scenery, no floor, no printed checkerboard, no glow or haze. Preserve transparent isolation.\nConstraints: one image of one person, no collage, no panel, no text caption, no watermark. Facial fidelity to image 1 is highest priority; uniform consistency to image 2 is second. Do not copy any face or accessory from image 2."
+        },
+        "cheering": {
+          "status": "complete",
+          "url": "/images/player-portraits/20261005/65/cheering.png",
+          "file": "/Users/hojunlee/Desktop/coding_server/futsal_team/public/images/player-portraits/20261005/65/cheering.png",
+          "sha256": "65273345ace6e72a02ae6b3ff4a8c7f89f937a74c2cfdb3fcb2d12bc6752f273",
+          "dimensions": [
+            1024,
+            1536
+          ],
+          "transparent": true,
+          "tool": "built-in image_gen",
+          "source": "/Users/hojunlee/.codex/generated_images/01a10ba2-a1f6-73c3-af27-474c22a212b7/exec-95407245-cc48-45bb-a3d7-46dee543d714.png",
+          "prompt": "Use case: identity-preserve\nAsset type: second pose for an existing transparent ARENA FC full-body player portrait.\nInput images: Image 1 is the EDIT TARGET, the already generated ARMS-CROSSED full-body portrait of 유훈, player ID 65. Image 2 is the SAME PERSON'S ORIGINAL REGISTERED PHOTO, the primary check for facial identity. Image 3 is a POSE GUIDE of another teammate: use ONLY its raised-fist pose, never its head, face, hair or number.\nPrimary request: Create the same player from image 1 in a friendly Korean \"화이팅\" encouragement pose: right elbow bent, naturally clenched right fist beside the shoulder, other arm relaxed at the side, looking at the camera with a natural warm expression. Preserve this player's exact facial identity, hairstyle, glasses if present, age, skin tone and natural body proportions from images 1 and 2. No rejuvenation, no generic model face. Make sure this is the same person as image 2.\nUniform: Keep the precise cyan/light-blue jersey with navy collar and sleeve hems, small circular ARENA FC chest badge (navy patch, thin lime ring, lime A symbol and readable off-white text \"ARENA FC\"), navy shorts, pale blue socks and charcoal shoes from image 1. Keep the white shorts number 99, not 19. Preserve this player's own hairstyle and glasses if present. The badge must say ARENA FC, spelled A R E N A [space] F C.\nComposition: same centered head-to-toe portrait, complete hair and both shoes within small margins, vertical 2:3 1024x1536, same scale, lighting and detailed photographic realism as image 1. Natural anatomically correct hands and arms.\nBackground: retain genuine transparent alpha, clean silhouette, no background or floor, no printed checkerboard.\nChange the arm pose as requested; preserve individual identity and team outfit. Single person, single image, no montage, no additional props or captions."
+        }
+      }
+    },
+    {
+      "id": 66,
+      "name": "이상헌",
+      "number": 15,
+      "position": "미드필더",
+      "activeAtSnapshot": true,
+      "reference": "/Users/hojunlee/Desktop/coding_server/futsal_team/public/images/players/66.jpg",
+      "referenceSha256": null,
+      "status": "missing_reference",
+      "poses": {}
+    },
+    {
+      "id": 68,
+      "name": "김성년",
+      "number": null,
+      "position": "미드필더",
+      "activeAtSnapshot": true,
+      "reference": "/Users/hojunlee/Desktop/coding_server/futsal_team/public/images/players/68.jpg",
+      "referenceSha256": null,
+      "status": "missing_reference",
+      "poses": {}
+    }
+  ]
+}

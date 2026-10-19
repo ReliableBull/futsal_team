@@ -1,0 +1,6 @@
+{
+  "API_BASE_URL": "https://arena.example.com",
+  "PRIVACY_POLICY_URL": "https://arena.example.com/privacy",
+  "SUPPORT_URL": "https://arena.example.com/support",
+  "CLUB_API_BASE_URL": "https://club-api.example.com"
+}

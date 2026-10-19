@@ -1,0 +1,18 @@
+import assert from "node:assert/strict";
+import { id, date, range, page, matchInput, playerInput } from "../lib/mobile/validation";
+import { throttleLogin, tokenHash } from "../lib/mobile/auth";
+const payload = { matchDate: "2026-09-22", status: "COMPLETED", location: "구장", teamAName: "A", teamBName: "B", teamAScore: 1, teamBScore: 0, teamAPlayerIds: [1,2], teamBPlayerIds: [3], goalsByPlayerId: {1:1}, assistsByPlayerId: {2:2}, goalAssistPlayerIdsByScorerId: {1:["UNKNOWN"]}, chairmanTeamMvpIds: [1,2], managerTeamMvpIds: [], memo: null };
+assert.equal(matchInput(payload).assistsByPlayerId[2], 2);
+assert.equal(matchInput({...payload, goalAssistPlayerIdsByScorerId:{1:[2]}}).assistsByPlayerId[2], 1);
+for (const bad of [0, -1, 1.1, "NaN", "1e2", Number.MAX_SAFE_INTEGER + 1]) assert.throws(() => id(bad));
+assert.throws(() => date("2026-02-30"));
+assert.throws(() => range(new URLSearchParams("startDate=2026-09-22&endDate=2026-01-01")));
+assert.throws(() => page(new URLSearchParams("limit=101")));
+for (const change of [{teamAScore: -1}, {teamAScore: 1.1}, {teamAPlayerIds:[1,1]}, {status:"bad"}, {teamBName:"A"}, {goalsByPlayerId:{1:101}}, {goalsByPlayerId:{9:1}}, {goalAssistPlayerIdsByScorerId:{1:[2,2]}}]) assert.throws(() => matchInput({...payload,...change}));
+assert.throws(() => playerInput({name:"",position:"미드필더",isActive:true}));
+assert.throws(() => playerInput({name:"김",position:"미드필더",isActive:true, profileImageUrl:"javascript:alert(1)"}));
+assert.equal(tokenHash("a").length,64);
+for (let i=0;i<10;i++) throttleLogin("validation-test",1);
+assert.throws(() => throttleLogin("validation-test",1));
+throttleLogin("validation-test", 15*60*1000+2);
+console.log("Mobile validation: all assertions passed");
