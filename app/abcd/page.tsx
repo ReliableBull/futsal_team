@@ -42,6 +42,9 @@ export default async function AdminPage() {
             <a className="rounded-md border border-arena-cyan px-4 py-2 text-sm font-bold text-arena-cyan transition hover:bg-arena-cyan hover:text-arena-black" href="/api/export/analysis-text">
               분석 텍스트 다운로드
             </a>
+            <Link className="rounded-md border border-arena-line px-4 py-2 text-sm font-bold text-slate-200 transition hover:border-arena-cyan hover:text-white" href="/abcd/access-logs">
+              접속 로그
+            </Link>
             <form action={logoutAdmin}>
               <button className="rounded-md border border-arena-line px-4 py-2 text-sm font-bold text-slate-200 transition hover:border-arena-cyan hover:text-white" type="submit">
                 로그아웃

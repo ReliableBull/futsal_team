@@ -174,6 +174,7 @@ npm run import:sqlite-export -- /path/to/futsal-sqlite-export.json
 - `/abcd/login` 관리자 로그인
 - `/abcd` 관리자 페이지
 - `/abcd/matches/[id]/edit` 경기 수정
+- `/abcd/access-logs` 접속 로그
 
 ### 선수 목록 엑셀 다운로드
 
@@ -225,6 +226,15 @@ PC와 모바일에서 로그인 없이 사용할 수 있고, 현재 표시된 �
 - `GET /api/matches/[id]`
 - `PUT /api/matches/[id]` 관리자만 가능
 - `DELETE /api/matches/[id]` 관리자만 가능
+
+### 접속 로그
+
+관리자 페이지의 `접속 로그` 버튼(`/abcd/access-logs`)에서 방문 기록을 확인합니다. 오늘·최근 7일 페이지뷰와 방문 IP 수, 많이 접속한 IP, 많이 본 페이지, 상세 기록(접속 시간·IP·페이지·기기/브라우저·유입 경로)을 보여주며 기간·IP·경로·관리자 접속 제외로 필터링할 수 있습니다. 시간은 한국 시간 기준입니다.
+
+- 브라우저가 페이지를 열 때마다(화면 내 이동 포함) `POST /api/access-log`로 한 건을 기록합니다. JavaScript를 실행하지 않는 봇·링크 미리보기 요청은 기록되지 않습니다. 같은 IP의 같은 페이지 3초 내 반복은 한 번으로, IP당 분당 30건까지만 저장합니다.
+- IP는 MOM 투표와 같은 방식으로 실제 TCP 접속 주소를 사용하므로 `X-Forwarded-For` 위조로 바꿀 수 없습니다. 리버스 프록시를 쓰는 경우 `MOM_VOTE_TRUSTED_PROXY_IPS` 설정이 접속 로그에도 적용됩니다. 프록시 뒤에서 이 값을 비워두면 모든 접속이 프록시 IP로 기록됩니다.
+- 원본 IP를 저장하므로 `ACCESS_LOG_RETENTION_DAYS`(기본 90일)가 지난 기록은 자동 삭제됩니다.
+- 배포 전에 `20261020000000_add_access_logs` 마이그레이션을 적용합니다. 검증: `npm run test:access-logs`.
 
 ## 다음 단계
 

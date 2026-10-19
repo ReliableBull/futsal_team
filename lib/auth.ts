@@ -68,6 +68,13 @@ function verifySession(value?: string) {
   return { adminId, username };
 }
 
+export const adminSessionCookieName = sessionCookieName;
+
+/** For Pages API routes, where next/headers cookies() is unavailable. */
+export function isAdminSessionValue(value?: string) {
+  return verifySession(value) !== null;
+}
+
 export async function getCurrentAdmin() {
   const session = verifySession(cookies().get(sessionCookieName)?.value);
   if (!session) return null;

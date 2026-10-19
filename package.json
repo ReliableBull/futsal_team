@@ -16,6 +16,7 @@
     "test:player-list-excel": "tsx scripts/test-player-list-excel.ts",
     "test:mom": "tsx scripts/test-mom-votes.ts",
     "test:mom:integration": "tsx scripts/test-mom-votes-integration.ts",
+    "test:access-logs": "tsx scripts/test-access-logs.ts",
     "import:sqlite-export": "node scripts/import-sqlite-export-to-postgres.mjs",
     "test:mobile": "node --import tsx scripts/test-mobile-validation.ts",
     "test:mobile:integration": "node --import tsx scripts/test-mobile-api.ts"

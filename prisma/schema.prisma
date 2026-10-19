@@ -126,3 +126,16 @@ model MobileSession {
   @@index([expiresAt])
   @@index([adminId])
 }
+
+model AccessLog {
+  id        Int      @id @default(autoincrement())
+  ip        String   @db.VarChar(45)
+  path      String   @db.VarChar(512)
+  referrer  String?  @db.VarChar(512)
+  userAgent String?  @db.VarChar(512)
+  isAdmin   Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  @@index([createdAt])
+  @@index([ip, createdAt])
+}

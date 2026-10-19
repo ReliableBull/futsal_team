@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { AccessLogBeacon } from "@/components/AccessLogBeacon";
 import { DesktopNav } from "@/components/DesktopNav";
 import { MobileNavMenu } from "@/components/MobileNavMenu";
 import "./globals.css";
@@ -46,6 +47,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="ko">
       <body className="arena-light min-h-screen bg-[#f4f6f8] text-slate-900">
+        <AccessLogBeacon />
         <header className="sticky top-0 z-50 border-b border-arena-line bg-arena-navy/95 shadow-sm backdrop-blur-md">
           <div className="relative mx-auto flex min-h-16 max-w-[1480px] items-center justify-between px-4 sm:px-6">
             <div className="flex items-center gap-3">
