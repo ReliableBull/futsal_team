@@ -4,7 +4,8 @@
  * 연속 기록 정책(향후 변경 시 이 파일만 수정하면 된다):
  * - 선수가 "출전한 경기"만 순서대로 늘어놓고 계산한다. 결장한 경기는 계산에서 제외한다.
  *   (득점 → 결장 → 득점 은 2경기 연속 득점으로 인정된다.)
- * - 출전했지만 조건을 충족하지 못하면(무득점 / 무도움 / 비승리) 연속 기록이 끊긴다.
+ * - 무승부는 연승을 유지하되 승수에 더하지 않고, 패배하면 연승이 끊긴다.
+ * - 출전했지만 득점/도움 조건을 충족하지 못하면 해당 연속 기록이 끊긴다.
  * - 한 경기에서 2골 이상을 넣어도 연속 기록에서는 1경기로 계산한다.
  * - 항상 경기 날짜 오름차순으로 정렬한 뒤 계산하며, 현재 진행 중인 연속 기록이 아니라
  *   역대 최대 연속 기록을 반환한다.
@@ -60,7 +61,7 @@ export function calculateLongestStreak(
 }
 
 export function calculateLongestWinStreak(appearances: StreakAppearance[]) {
-  return calculateLongestStreak(appearances, streakPolicies.win);
+  return calculateLongestStreak(appearances.filter((appearance) => appearance.result !== "DRAW"), streakPolicies.win);
 }
 
 export function calculateLongestScoringStreak(appearances: StreakAppearance[]) {

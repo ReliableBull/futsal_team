@@ -12,6 +12,7 @@
     "seed": "prisma db seed",
     "import:list": "node scripts/import-futsal-list.mjs",
     "test:hall-of-fame": "tsx scripts/test-hall-of-fame.ts",
+    "test:streaks": "tsx scripts/test-streaks.ts",
     "test:web-features": "tsx scripts/test-web-features.ts",
     "test:player-list-excel": "tsx scripts/test-player-list-excel.ts",
     "test:mom": "tsx scripts/test-mom-votes.ts",

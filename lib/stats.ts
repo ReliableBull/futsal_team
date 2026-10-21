@@ -124,7 +124,8 @@ export function calculatePlayerStreakHistories(matchPlayers: MatchPlayerForStats
   const records = getChronologicalRecords(matchPlayers);
 
   return {
-    win: buildBestStreakHistory(records, (record) => record.result === matchResult.win),
+    // 무승부는 연승 횟수와 승리 경기의 시작/종료일에 포함하지 않는다.
+    win: buildBestStreakHistory(records.filter((record) => record.result !== matchResult.draw), (record) => record.result === matchResult.win),
     goal: buildBestStreakHistory(records, (record) => record.goals > 0),
     assist: buildBestStreakHistory(records, (record) => record.assists > 0)
   };
@@ -150,7 +151,7 @@ export function calculatePlayerStats(player: Player & { matchPlayers: MatchPlaye
     goals,
     assists,
     mvpCount,
-    currentWinStreak: countCurrentStreak(recentRecords, (record) => record.result === matchResult.win),
+    currentWinStreak: countCurrentStreak(recentRecords.filter((record) => record.result !== matchResult.draw), (record) => record.result === matchResult.win),
     currentGoalStreak: countCurrentStreak(recentRecords, (record) => record.goals > 0),
     currentAssistStreak: countCurrentStreak(recentRecords, (record) => record.assists > 0)
   };

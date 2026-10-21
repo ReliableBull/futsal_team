@@ -7,8 +7,9 @@
 /// * The result of an appearance comes from the team scores.
 /// * Win rate = wins / completed appearances; draws stay in the denominator.
 /// * Streaks walk the player's own completed appearances in (date, id) order.
-///   Missing a match does not break a streak; playing without meeting the
-///   condition does. Multiple goals in one match count as one streak match.
+///   Missing a match does not break a streak. Draws preserve win streaks without
+///   adding a win; losses break them. Goal/assist streaks break when their
+///   condition is not met. Multiple goals in one match count as one streak match.
 /// * Rankings use competition ranking (1, 1, 3) and keep ties together.
 library;
 
@@ -187,9 +188,13 @@ class PlayerAggregate {
   int wins = 0, losses = 0, draws = 0, goals = 0, assists = 0, mom = 0;
   int get matches => appearances.length;
   double get rate => winRate(wins, matches);
-  int current(String rule) => currentStreak(appearances, streakRules[rule]!);
+  List<Appearance> _streakAppearances(String rule) => rule == 'win'
+      ? appearances.where((a) => a.result != 'D').toList()
+      : appearances;
+  int current(String rule) =>
+      currentStreak(_streakAppearances(rule), streakRules[rule]!);
   int best(String rule) {
-    final runs = bestStreaks(appearances, streakRules[rule]!);
+    final runs = bestStreaks(_streakAppearances(rule), streakRules[rule]!);
     return runs.isEmpty ? 0 : runs.first['length'] as int;
   }
 
@@ -213,7 +218,7 @@ class PlayerAggregate {
         ...summary(),
         'bestStreaks': {
           for (final rule in streakRules.keys)
-            rule: bestStreaks(appearances, streakRules[rule]!),
+            rule: bestStreaks(_streakAppearances(rule), streakRules[rule]!),
         },
         'history': appearances.reversed.map((a) => a.toJson()).toList(),
       };
@@ -283,7 +288,7 @@ Json dashboardRankings(List<PlayerAggregate> aggregates, int minWinRateMatches) 
 const hallCategories = [
   ('mostWins', '최다승', '출전한 경기에서 소속팀이 승리한 횟수', '승'),
   ('mostAppearances', '최다 출전', '실제로 출전한 완료 경기 수', '경기'),
-  ('longestWinStreak', '최다 연승', '출전 경기 기준 최다 연속 승리', '연승'),
+  ('longestWinStreak', '최다 연승', '출전 경기 기준 최다 연승 (무승부는 유지, 승수 제외)', '연승'),
   ('longestScoringStreak', '최다 연속골', '출전 경기 기준 최다 연속 득점 경기', '경기 연속골'),
   ('longestAssistStreak', '최다 연속도움', '출전 경기 기준 최다 연속 도움 경기', '경기 연속도움'),
   ('mostGoals', '최다 득점', '완료 경기 총 득점', '골'),

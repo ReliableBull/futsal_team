@@ -140,7 +140,7 @@ const categoryMetas: CategoryMeta[] = [
     key: "longestWinStreak",
     title: "최다 연승",
     englishTitle: "LONGEST WIN STREAK",
-    description: "출전 경기 기준 역대 최다 연속 승리",
+    description: "출전 경기 기준 역대 최다 연승 (무승부는 유지, 승수 제외)",
     icon: "flame",
     formatValue: (value) => `${value}연승`
   },

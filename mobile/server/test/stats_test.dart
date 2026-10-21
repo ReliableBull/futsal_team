@@ -51,6 +51,47 @@ void main() {
       expect(best.single, containsPair('endDate', '2026-01-03'));
     });
 
+    test('무승부는 연승을 유지하고 승수에 더하지 않으며 패배는 초기화한다', () {
+      PlayerAggregate aggregate(List<String> results) => aggregatePlayers(players, [
+        for (var i = 0; i < results.length; i++)
+          m(i + 1, '2026-01-${(i + 1).toString().padLeft(2, '0')}',
+              results[i] == 'W' ? 1 : 0, results[i] == 'L' ? 1 : 0,
+              [StatLine(1, 'A', results[i] == 'W' ? 1 : 0, results[i] == 'W' ? 1 : 0, false)]),
+      ].reversed.toList(), const Period(null, null)).first;
+
+      for (final (results, current, best) in <(List<String>, int, int)>[
+        ([], 0, 0),
+        (['D', 'D'], 0, 0),
+        (['W', 'W', 'W', 'W', 'W', 'W', 'D'], 6, 6),
+        (['W', 'W', 'W', 'W', 'W', 'W', 'D', 'W'], 7, 7),
+        (['D', 'W', 'D', 'D', 'W', 'D'], 2, 2),
+        (['W', 'D', 'W', 'L', 'D'], 0, 2),
+        (['W', 'D', 'W', 'L', 'D', 'W', 'D'], 1, 2),
+      ]) {
+        final a = aggregate(results);
+        expect(a.current('win'), current, reason: '$results 현재 연승');
+        expect(a.best('win'), best, reason: '$results 최고 연승');
+        final history = a.detail()['bestStreaks']['win'] as List;
+        expect(history.isEmpty ? 0 : history.first['length'], best);
+      }
+
+      final a = aggregate(['D', 'W', 'D', 'W', 'D']);
+      expect([a.wins, a.draws, a.losses, a.matches, a.rate], [2, 3, 0, 5, 40.0]);
+      expect(a.current('goal'), 0);
+      expect(a.current('assist'), 0);
+      expect(a.best('goal'), 1);
+      expect(a.best('assist'), 1);
+      final win = (a.detail()['bestStreaks']['win'] as List).single;
+      expect(win, containsPair('startMatchId', 2));
+      expect(win, containsPair('endMatchId', 4));
+      expect(win, containsPair('ongoing', true));
+      final ended = aggregate(['W', 'D', 'W', 'L', 'D']);
+      expect((ended.detail()['bestStreaks']['win'] as List).single, containsPair('ongoing', false));
+      final tied = aggregate(['W', 'D', 'W', 'L', 'W', 'D', 'W', 'D']);
+      final runs = tied.detail()['bestStreaks']['win'] as List;
+      expect(runs.map((run) => [run['length'], run['startMatchId'], run['endMatchId']]), [[2, 5, 7], [2, 1, 3]]);
+    });
+
     test('공동 순위는 1, 1, 3 방식으로 처리한다', () {
       final matches = [
         m(1, '2026-01-01', 3, 0, [const StatLine(1, 'A', 2, 0, false), const StatLine(2, 'A', 1, 0, false)]),
@@ -93,7 +134,8 @@ void main() {
       expect(goals.take(2).map((r) => r['rank']), [1, 1]);
       expect(goals.take(2).map((r) => r['value']), [6, 6]);
       expect((dash['rankings']['winStreak'] as List).first['player']['id'], p2);
-      expect((dash['rankings']['winStreak'] as List).first['value'], 4);
+      // p2: 승 → 무 → 승 → 승 → 승 → 승. 무승부는 연승에서 제외한다.
+      expect((dash['rankings']['winStreak'] as List).first['value'], 5);
       final hall = (await h.get('/clubs/$night/hall-of-fame')).json['hallOfFame'];
       final mostGoals = (hall['categories'] as List).firstWhere((c) => c['key'] == 'mostGoals');
       expect((mostGoals['entries'] as List).where((e) => e['rank'] == 1).length, 2);
