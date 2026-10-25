@@ -1,6 +1,7 @@
 "use client";
 
-import Link from "next/link";
+import { useTeamPath } from "@/components/TeamProvider";
+import Link from "@/components/TeamLink";
 import { usePathname } from "next/navigation";
 
 type NavItem = {
@@ -10,11 +11,12 @@ type NavItem = {
 
 export function DesktopNav({ items }: { items: NavItem[] }) {
   const pathname = usePathname() ?? "";
+  const path = useTeamPath();
 
   return (
     <nav className="hidden h-full items-stretch md:flex" aria-label="주요 메뉴">
       {items.map((item) => {
-        const isActive = item.href === "/" ? pathname === item.href : pathname.startsWith(item.href);
+        const isActive = item.href === "/" ? pathname === path("/") : pathname.startsWith(path(item.href));
 
         return (
           <Link

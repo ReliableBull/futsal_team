@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "@/components/TeamLink";
 import { MedalBadge, getMedalTone } from "@/components/HallOfFameMedalBadge";
 import { PlayerAvatar } from "@/components/PlayerAvatar";
 import type { HallOfFameSlot } from "@/lib/hall-of-fame";

@@ -1,6 +1,7 @@
 "use client";
+import { useTeam } from "@/components/TeamProvider";
 
-import Link from "next/link";
+import Link from "@/components/TeamLink";
 import { useMemo, useState } from "react";
 import { PlayerAvatar } from "@/components/PlayerAvatar";
 
@@ -92,6 +93,7 @@ function SortButton({ sortKey, label, activeKey, direction, align = "right", onC
 }
 
 export function PlayersSortableList({ players, startDate, endDate }: { players: SortablePlayer[]; startDate: string; endDate: string }) {
+  const team = useTeam();
   const [sortKey, setSortKey] = useState<SortKey>("totalMatches");
   const [direction, setDirection] = useState<SortDirection>("desc");
   const [exporting, setExporting] = useState(false);
@@ -125,6 +127,7 @@ export function PlayersSortableList({ players, startDate, endDate }: { players: 
     try {
       const { createPlayerListWorkbook, playerListExcelType } = await import("@/lib/player-list-excel");
       const bytes = createPlayerListWorkbook(sortedPlayers, {
+        teamName: team.name,
         startDate, endDate, sortLabel: sortOptions.find((option) => option.key === sortKey)!.label, direction
       });
       const url = URL.createObjectURL(new Blob([bytes], { type: playerListExcelType }));

@@ -3,6 +3,9 @@ const siteUrl = process.env.NEXT_PUBLIC_SITE_URL;
 const allowedOrigin = siteUrl ? new URL(siteUrl).host : undefined;
 
 const nextConfig = {
+  // Keep internal tenant rewrites on the server's original origin, including
+  // numeric loopback/LAN addresses. NextURL otherwise normalizes loopback.
+  skipMiddlewareUrlNormalize: true,
   experimental: {
     serverActions: {
       bodySizeLimit: "22mb",

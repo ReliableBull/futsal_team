@@ -21,6 +21,7 @@ async function resetSequence(table) {
 }
 
 async function main() {
+  if (await prisma.team.count({ where: { id: { not: 1 } } })) throw new Error("Legacy seed/import is disabled when multiple teams exist. Restore into a separate database.");
   const data = JSON.parse(await readFile(exportPath, "utf8"));
 
   await prisma.matchPlayer.deleteMany();
@@ -29,7 +30,7 @@ async function main() {
   await prisma.admin.deleteMany();
 
   for (const admin of data.admins) {
-    await prisma.admin.create({ data: reviveDates({ ...admin }) });
+    await prisma.admin.create({ data: { ...reviveDates({ ...admin }), teams: { create: { teamId: 1, role: "PRESIDENT" } } } });
   }
 
   for (const player of data.players) {

@@ -2,6 +2,8 @@ import { createHmac, pbkdf2Sync, randomBytes, timingSafeEqual } from "node:crypt
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
+import { currentTeamPath, getCurrentTeam } from "@/lib/teams";
+import { clubMembership } from "@/lib/team-roles";
 
 const sessionCookieName = "arena_admin_session";
 const sessionMaxAge = 60 * 60 * 8;
@@ -71,11 +73,12 @@ function verifySession(value?: string) {
 export const adminSessionCookieName = sessionCookieName;
 
 /** For Pages API routes, where next/headers cookies() is unavailable. */
-export function isAdminSessionValue(value?: string) {
-  return verifySession(value) !== null;
+export async function isTeamAdminSession(value: string | undefined, teamId: number) {
+  const session = verifySession(value);
+  return session ? canManageTeam(session.adminId, teamId) : false;
 }
 
-export async function getCurrentAdmin() {
+export async function getSignedInAdmin() {
   const session = verifySession(cookies().get(sessionCookieName)?.value);
   if (!session) return null;
 
@@ -85,10 +88,27 @@ export async function getCurrentAdmin() {
   });
 }
 
+export async function getTeamRole(adminId: number, teamId: number) {
+  const membership = await prisma.teamAdmin.findUnique({
+    where: { teamId_adminId: { teamId, adminId } }, select: { role: true }
+  });
+  return clubMembership(membership?.role).role;
+}
+
+export async function canManageTeam(adminId: number, teamId: number) {
+  return await getTeamRole(adminId, teamId) === "PRESIDENT";
+}
+
+export async function getCurrentAdmin() {
+  const admin = await getSignedInAdmin();
+  if (!admin) return null;
+  return await canManageTeam(admin.id, (await getCurrentTeam()).id) ? admin : null;
+}
+
 export async function requireAdmin() {
   const admin = await getCurrentAdmin();
   if (!admin) {
-    redirect("/abcd/login");
+    redirect(currentTeamPath("/abcd/login"));
   }
 
   return admin;

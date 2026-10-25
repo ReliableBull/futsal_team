@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "@/components/TeamLink";
 import { PlayerAvatar } from "@/components/PlayerAvatar";
 import { parsePlayerPosition } from "@/lib/player-position";
 import type { PlayerWithStats } from "@/lib/stats";

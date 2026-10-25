@@ -1,9 +1,10 @@
-import { prisma } from "@/lib/prisma";
+import { getTeamPrisma } from "@/lib/teams";
 import { calculatePlayerChemistry, type ChemistryFilters } from "@/lib/player-chemistry";
 
 const playerSelect = { id: true, name: true, nickname: true, isActive: true } as const;
 
-export function getChemistryPlayers() {
+export async function getChemistryPlayers() {
+  const prisma = await getTeamPrisma();
   return prisma.player.findMany({
     where: { OR: [{ isActive: true }, { matchPlayers: { some: { match: { status: "COMPLETED" } } } }] },
     select: playerSelect,
@@ -12,6 +13,7 @@ export function getChemistryPlayers() {
 }
 
 export async function getPlayerChemistry(playerId: number, filters: ChemistryFilters) {
+  const prisma = await getTeamPrisma();
   const matches = await prisma.match.findMany({
     where: {
       status: "COMPLETED",

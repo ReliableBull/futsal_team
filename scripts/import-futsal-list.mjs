@@ -31,6 +31,7 @@ function memoFor(match) {
 }
 
 async function main() {
+  if (await prisma.team.count({ where: { id: { not: 1 } } })) throw new Error("Legacy seed/import is disabled when multiple teams exist. Restore into a separate database.");
   await prisma.matchPlayer.deleteMany();
   await prisma.match.deleteMany();
   await prisma.player.deleteMany();

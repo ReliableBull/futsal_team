@@ -8,7 +8,7 @@ import {
   parseMatchJson,
   updateMatchRecord
 } from "@/lib/matches";
-import { prisma } from "@/lib/prisma";
+import { getTeamPrisma } from "@/lib/teams";
 
 function parseMatchId(id: string) {
   const matchId = Number(id);
@@ -24,6 +24,7 @@ function errorResponse(error: unknown) {
 }
 
 export async function GET(_request: Request, { params }: { params: { id: string } }) {
+  const prisma = await getTeamPrisma();
   const matchId = parseMatchId(params.id);
   if (!matchId) {
     return NextResponse.json({ error: "경기 ID가 올바르지 않습니다." }, { status: 400 });

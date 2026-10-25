@@ -147,7 +147,7 @@ export function getRetentionDays(value = process.env.ACCESS_LOG_RETENTION_DAYS) 
 const allowAccessLog = createAccessRateLimiter({ limit: 30, windowMs: 60 * 1000, duplicateMs: 3000 });
 let lastCleanupAt = 0;
 
-export async function recordAccessLog(entry: { ip: string; path: string; referrer: string | null; userAgent: string | null; isAdmin: boolean }) {
+export async function recordAccessLog(entry: { teamId: number; ip: string; path: string; referrer: string | null; userAgent: string | null; isAdmin: boolean }) {
   if (!allowAccessLog(entry.ip, entry.path)) return false;
   await prisma.accessLog.create({ data: entry });
 

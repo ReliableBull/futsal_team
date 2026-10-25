@@ -1,15 +1,20 @@
-import Link from "next/link";
+import { getDashboardData } from "@/lib/stats-data";
+import { PlatformHome } from "@/components/PlatformHome";
+import { getCurrentTeam, getTeamBasePath, isLegacyMode } from "@/lib/teams";
+import Link from "@/components/TeamLink";
 import { MatchPosterGallery } from "@/components/MatchPosterGallery";
 import { RankingTable } from "@/components/RankingTable";
 import { TeamHeroSection } from "@/components/TeamHeroSection";
 import { WeeklyWeatherCard } from "@/components/WeeklyWeatherCard";
 import { WinnerBadge } from "@/components/WinnerBadge";
-import { formatDate, getDashboardData, matchStatus } from "@/lib/stats";
+import { formatDate, matchStatus } from "@/lib/stats";
 import { getWeeklyWeather } from "@/lib/weather";
 
 export const dynamic = "force-dynamic";
 
 export default async function HomePage() {
+  if (!isLegacyMode() && !getTeamBasePath()) return <PlatformHome />;
+  const team = await getCurrentTeam();
   const [
     {
       recentMatches,
@@ -23,11 +28,11 @@ export default async function HomePage() {
       posters
     },
     weeklyWeather
-  ] = await Promise.all([getDashboardData(), getWeeklyWeather()]);
+  ] = await Promise.all([getDashboardData(), team.slug === "arena-fc" ? getWeeklyWeather() : Promise.resolve(null)]);
 
   return (
     <div className="space-y-4 sm:space-y-5">
-      <TeamHeroSection latestMatch={recentMatches[0]} />
+      <TeamHeroSection latestMatch={recentMatches[0]} team={team} />
 
       <div className="grid gap-3 lg:grid-cols-2 xl:grid-cols-[1.45fr_repeat(4,minmax(0,1fr))]">
         <section className="border border-arena-line bg-arena-panel shadow-xl shadow-black/20 lg:col-span-2 xl:col-span-1">
@@ -91,7 +96,7 @@ export default async function HomePage() {
       </section>
 
       <MatchPosterGallery posters={posters} />
-      <WeeklyWeatherCard weather={weeklyWeather} />
+      {weeklyWeather && <WeeklyWeatherCard weather={weeklyWeather} />}
     </div>
   );
 }

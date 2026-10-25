@@ -1,14 +1,20 @@
 "use server";
 
+import { adminLoginReturnPath } from "./login-return";
 import { randomUUID } from "node:crypto";
 import { mkdir, unlink, writeFile } from "node:fs/promises";
 import { extname, join } from "node:path";
 import { revalidatePath } from "next/cache";
-import { redirect } from "next/navigation";
-import { clearAdminSession, requireAdmin, setAdminSession, verifyPassword } from "@/lib/auth";
+import { redirectToTeam as redirect, currentTeamPath, getCurrentTeam } from "@/lib/teams";
+import { canManageTeam, clearAdminSession, requireAdmin, setAdminSession, verifyPassword } from "@/lib/auth";
 import { createMatchRecord, deleteMatchRecord, parseMatchFormData, updateMatchRecord } from "@/lib/matches";
 import { parsePlayerPosition } from "@/lib/player-position";
-import { prisma } from "@/lib/prisma";
+import { getTeamPrisma } from "@/lib/teams";
+import { prisma as accountDb } from "@/lib/prisma";
+
+function revalidateTeamPath(path: string) {
+  revalidatePath(currentTeamPath(path));
+}
 
 function getString(formData: FormData, key: string) {
   const value = formData.get(key);
@@ -42,6 +48,7 @@ async function deleteLocalUpload(publicUrl: string | null | undefined) {
 }
 
 export async function createPlayer(formData: FormData) {
+  const prisma = await getTeamPrisma();
   await requireAdmin();
 
   const name = getString(formData, "name");
@@ -63,13 +70,14 @@ export async function createPlayer(formData: FormData) {
     }
   });
 
-  revalidatePath("/");
-  revalidatePath("/players");
-  revalidatePath("/abcd");
+  revalidateTeamPath("/");
+  revalidateTeamPath("/players");
+  revalidateTeamPath("/abcd");
   redirect("/abcd");
 }
 
 export async function updatePlayer(playerId: number, formData: FormData) {
+  const prisma = await getTeamPrisma();
   await requireAdmin();
 
   const name = getString(formData, "name");
@@ -100,14 +108,15 @@ export async function updatePlayer(playerId: number, formData: FormData) {
     await deleteLocalUpload(currentPlayer?.profileImageUrl);
   }
 
-  revalidatePath("/");
-  revalidatePath("/players");
-  revalidatePath(`/players/${playerId}`);
-  revalidatePath("/abcd");
+  revalidateTeamPath("/");
+  revalidateTeamPath("/players");
+  revalidateTeamPath(`/players/${playerId}`);
+  revalidateTeamPath("/abcd");
   redirect("/abcd");
 }
 
 export async function deletePlayer(playerId: number) {
+  const prisma = await getTeamPrisma();
   await requireAdmin();
 
   const player = await prisma.player.findUnique({
@@ -132,9 +141,9 @@ export async function deletePlayer(playerId: number) {
   await prisma.player.delete({ where: { id: playerId } });
   await deleteLocalUpload(player.profileImageUrl);
 
-  revalidatePath("/");
-  revalidatePath("/players");
-  revalidatePath("/abcd");
+  revalidateTeamPath("/");
+  revalidateTeamPath("/players");
+  revalidateTeamPath("/abcd");
   redirect("/abcd");
 }
 
@@ -143,10 +152,10 @@ export async function createMatch(formData: FormData) {
 
   await createMatchRecord(parseMatchFormData(formData));
 
-  revalidatePath("/");
-  revalidatePath("/matches");
-  revalidatePath("/players");
-  revalidatePath("/abcd");
+  revalidateTeamPath("/");
+  revalidateTeamPath("/matches");
+  revalidateTeamPath("/players");
+  revalidateTeamPath("/abcd");
   redirect("/abcd");
 }
 
@@ -155,11 +164,11 @@ export async function updateMatch(matchId: number, formData: FormData) {
 
   await updateMatchRecord(matchId, parseMatchFormData(formData));
 
-  revalidatePath("/");
-  revalidatePath("/matches");
-  revalidatePath(`/matches/${matchId}`);
-  revalidatePath("/players");
-  revalidatePath("/abcd");
+  revalidateTeamPath("/");
+  revalidateTeamPath("/matches");
+  revalidateTeamPath(`/matches/${matchId}`);
+  revalidateTeamPath("/players");
+  revalidateTeamPath("/abcd");
   redirect("/abcd");
 }
 
@@ -168,11 +177,11 @@ export async function deleteMatch(matchId: number) {
 
   await deleteMatchRecord(matchId);
 
-  revalidatePath("/");
-  revalidatePath("/matches");
-  revalidatePath(`/matches/${matchId}`);
-  revalidatePath("/players");
-  revalidatePath("/abcd");
+  revalidateTeamPath("/");
+  revalidateTeamPath("/matches");
+  revalidateTeamPath(`/matches/${matchId}`);
+  revalidateTeamPath("/players");
+  revalidateTeamPath("/abcd");
   redirect("/abcd");
 }
 
@@ -185,6 +194,7 @@ function getPublicUrl(matchId: number, fileName: string) {
 }
 
 export async function uploadMatchPoster(matchId: number, formData: FormData) {
+  const prisma = await getTeamPrisma();
   await requireAdmin();
 
   const match = await prisma.match.findUnique({ where: { id: matchId }, select: { id: true } });
@@ -224,13 +234,14 @@ export async function uploadMatchPoster(matchId: number, formData: FormData) {
     }
   });
 
-  revalidatePath(`/matches/${matchId}`);
-  revalidatePath("/matches");
-  revalidatePath("/");
-  revalidatePath(`/abcd/matches/${matchId}/edit`);
+  revalidateTeamPath(`/matches/${matchId}`);
+  revalidateTeamPath("/matches");
+  revalidateTeamPath("/");
+  revalidateTeamPath(`/abcd/matches/${matchId}/edit`);
 }
 
 export async function deleteMatchPoster(matchId: number, posterId: number) {
+  const prisma = await getTeamPrisma();
   await requireAdmin();
 
   const poster = await prisma.matchPoster.findFirst({
@@ -247,23 +258,24 @@ export async function deleteMatchPoster(matchId: number, posterId: number) {
   const absolutePath = join(process.cwd(), "public", relativePath);
   await unlink(absolutePath).catch(() => undefined);
 
-  revalidatePath(`/matches/${matchId}`);
-  revalidatePath("/matches");
-  revalidatePath("/");
-  revalidatePath(`/abcd/matches/${matchId}/edit`);
+  revalidateTeamPath(`/matches/${matchId}`);
+  revalidateTeamPath("/matches");
+  revalidateTeamPath("/");
+  revalidateTeamPath(`/abcd/matches/${matchId}/edit`);
 }
 
 export async function loginAdmin(formData: FormData) {
+  const next = adminLoginReturnPath(formData.get("next"));
   const username = getString(formData, "username");
-  const password = getString(formData, "password");
+  const password = String(formData.get("password") ?? "");
 
-  const admin = await prisma.admin.findUnique({ where: { username } });
-  if (!admin || !verifyPassword(password, admin.passwordHash)) {
-    redirect("/abcd/login?error=1");
+  const admin = await accountDb.admin.findUnique({ where: { username } });
+  if (!admin || !verifyPassword(password, admin.passwordHash) || !await canManageTeam(admin.id, (await getCurrentTeam()).id)) {
+    redirect(`/abcd/login?error=1&next=${encodeURIComponent(next)}`);
   }
 
   setAdminSession({ id: admin.id, username: admin.username });
-  redirect("/abcd");
+  redirect(next);
 }
 
 export async function logoutAdmin() {

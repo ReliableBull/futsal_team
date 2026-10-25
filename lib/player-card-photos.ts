@@ -10,8 +10,9 @@ export type PlayerCardPhoto = {
 };
 
 /** Match by player ID and use the manifest's final, versioned image paths. */
-export function getPlayerCardPhotos(playerId: number, profileUrl: string): PlayerCardPhoto[] {
+export function getPlayerCardPhotos(playerId: number, profileUrl: string, includeLegacyPhotos = true): PlayerCardPhoto[] {
   const photos: PlayerCardPhoto[] = [{ id: "profile", label: "기존 프로필", url: profileUrl, fit: "cover" }];
+  if (!includeLegacyPhotos) return photos;
   const player = portraits.players.find((item) => item.id === playerId);
   if (player) {
     photos.push(

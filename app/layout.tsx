@@ -1,72 +1,27 @@
 import type { Metadata } from "next";
-import Link from "next/link";
-import { AccessLogBeacon } from "@/components/AccessLogBeacon";
-import { DesktopNav } from "@/components/DesktopNav";
-import { MobileNavMenu } from "@/components/MobileNavMenu";
+import { headers } from "next/headers";
+import { getCurrentTeam, getTeamBasePath, isLegacyMode } from "@/lib/teams";
 import "./globals.css";
+import { isPlatformPath } from "@/lib/team-paths";
+import { isStandaloneVotePath } from "@/lib/poll-paths";
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
-const ogImageUrl = new URL("/images/arena-team.jpg", siteUrl).toString();
-
-export const metadata: Metadata = {
-  metadataBase: new URL(siteUrl),
-  title: "ARENA FC",
-  description: "함께 뛰는 시간, 하나가 되는 ARENA FC",
-  openGraph: {
-    title: "ARENA FC",
-    description: "함께 뛰는 시간, 하나가 되는 ARENA FC",
-    url: siteUrl,
-    siteName: "ARENA FC",
-    type: "website",
-    images: [
-      {
-        url: ogImageUrl,
-        width: 1200,
-        height: 630,
-        alt: "ARENA FC team group photo"
-      }
-    ]
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "ARENA FC",
-    description: "함께 뛰는 시간, 하나가 되는 ARENA FC",
-    images: [ogImageUrl]
-  }
-};
-
-const navItems = [
-  { href: "/", label: "홈" },
-  { href: "/players", label: "선수목록" },
-  { href: "/matches", label: "경기결과" },
-  { href: "/chemistry", label: "조합 분석" },
-  { href: "/hall-of-fame", label: "🏆 명예의 전당" }
-];
-
+export const dynamic = "force-dynamic";
+export async function generateMetadata(): Promise<Metadata> {
+  const pathname = headers().get("x-futsal-path") || "/";
+  if (isLegacyMode() && isStandaloneVotePath(pathname)) return {
+    title: "투표 참여", description: "이름을 입력하고 투표에 참여해주세요. 제출 후 변경할 수 없습니다.",
+    robots: { index: false, follow: false },
+    openGraph: { title: "투표 참여", description: "로그인 없이 이름으로 참여하는 투표입니다.", images: [] },
+    twitter: { card: "summary", title: "투표 참여", images: [] }
+  };
+  const platform = !isLegacyMode() && !getTeamBasePath() && isPlatformPath(pathname);
+  const team = platform ? null : await getCurrentTeam();
+  const title = team?.name || "ARENA · 축구와 풋살, 함께 뛰는 시작";
+  const description = team?.description || "축구·풋살 동호회를 찾고, 함께 뛸 구장을 둘러보세요. 동호회 운영과 경기 기록까지 ARENA에서.";
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
+  const images = team?.slug === "arena-fc" ? [{ url: "/images/arena-team.jpg", width: 1200, height: 630, alt: team.name }] : [];
+  return { metadataBase: new URL(siteUrl), title, description, openGraph: { title, description, siteName: title, type: "website", images }, twitter: { card: images.length ? "summary_large_image" : "summary", title, description, images: images.map(image => image.url) } };
+}
 export default function RootLayout({ children }: { children: React.ReactNode }) {
-  return (
-    <html lang="ko">
-      <body className="arena-light min-h-screen bg-[#f4f6f8] text-slate-900">
-        <AccessLogBeacon />
-        <header className="sticky top-0 z-50 border-b border-arena-line bg-arena-navy/95 shadow-sm backdrop-blur-md">
-          <div className="relative mx-auto flex min-h-16 max-w-[1480px] items-center justify-between px-4 sm:px-6">
-            <div className="flex items-center gap-3">
-              <MobileNavMenu items={navItems} />
-              <Link href="/" className="group flex items-center gap-2.5 text-xl font-black text-white sm:text-2xl">
-                <span className="grid h-8 w-8 -skew-x-6 place-items-center border-2 border-arena-red text-base font-black text-arena-red transition group-hover:bg-arena-red group-hover:text-white">
-                  A
-                </span>
-                <span className="italic">ARENA FC</span>
-              </Link>
-            </div>
-            <DesktopNav items={navItems} />
-            <span className="hidden border border-arena-line bg-white/[0.03] px-3 py-2 text-xs font-bold text-slate-500 lg:block">
-              2026 SEASON RECORD
-            </span>
-          </div>
-        </header>
-        <main className="mx-auto max-w-[1480px] px-4 py-5 sm:px-6 sm:py-7">{children}</main>
-      </body>
-    </html>
-  );
+  return <html lang="ko"><body className="arena-light min-h-screen bg-[#f4f6f8] text-slate-900">{children}</body></html>;
 }

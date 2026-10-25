@@ -1,9 +1,11 @@
 "use client";
+import { useTeamPath } from "@/components/TeamProvider";
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import type { MomPoll } from "@/lib/mom-vote-types";
 
 export function MomVoteForm({ matchId }: { matchId: number }) {
+  const scopedPath = useTeamPath();
   const [poll, setPoll] = useState<MomPoll | null>(null);
   const [selected, setSelected] = useState<{ A?: number; B?: number }>({});
   const [error, setError] = useState("");
@@ -11,7 +13,7 @@ export function MomVoteForm({ matchId }: { matchId: number }) {
   const [busy, setBusy] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const pending = useRef(false);
-  const endpoint = `/api/matches/${matchId}/mom-vote`;
+  const endpoint = scopedPath(`/api/matches/${matchId}/mom-vote`);
 
   const refresh = useCallback(async (signal?: AbortSignal) => {
     try {

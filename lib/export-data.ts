@@ -1,4 +1,4 @@
-import { prisma } from "@/lib/prisma";
+import { getTeamPrisma } from "@/lib/teams";
 import { calculatePlayerStats, formatDate, getMatchStatusLabel, getResultLabel, getTeamMvpNames, getWinnerLabel, matchStatus } from "@/lib/stats";
 
 export type ExportMatch = Awaited<ReturnType<typeof getExportData>>["matches"][number];
@@ -62,6 +62,7 @@ export function chunk<T>(items: T[], size: number) {
 }
 
 export async function getExportData() {
+  const prisma = await getTeamPrisma();
   return Promise.all([
     prisma.match.findMany({
       include: {
@@ -90,16 +91,16 @@ export function buildMatchRows(matches: ExportMatch[]) {
       "경기일",
       "상태",
       "장소",
-      "회장팀",
-      "회장팀 선수",
-      "총무팀",
-      "총무팀 선수",
-      "회장팀 점수",
-      "총무팀 점수",
+      "A팀",
+      "A팀 선수",
+      "B팀",
+      "B팀 선수",
+      "A팀 점수",
+      "B팀 점수",
       "승리팀",
       "승리 결과",
-      "회장팀 MOM",
-      "총무팀 MOM",
+      "A팀 MOM",
+      "B팀 MOM",
       "메모"
     ],
     ...matches.map((match) => [

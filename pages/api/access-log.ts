@@ -1,7 +1,8 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { normalizeAccessPath, normalizeReferrer, normalizeUserAgent, recordAccessLog } from "@/lib/access-logs";
-import { adminSessionCookieName, isAdminSessionValue } from "@/lib/auth";
+import { adminSessionCookieName, isTeamAdminSession } from "@/lib/auth";
 import { getVoteClientIp } from "@/lib/mom-vote-ip";
+import { getPagesTeam } from "@/lib/teams";
 
 // Pages API provides the real TCP peer, so visitors cannot forge the logged IP
 // with X-Forwarded-For. Proxy trust follows MOM_VOTE_TRUSTED_PROXY_IPS.
@@ -41,12 +42,15 @@ export default async function handler(request: NextApiRequest, response: NextApi
   if (!path) return response.status(400).end();
 
   try {
+    const team = await getPagesTeam(request.headers["x-futsal-team"]);
+    if (!team) return response.status(404).end();
     await recordAccessLog({
+      teamId: team.id,
       ip: resolveClientIp(request),
       path,
       referrer: normalizeReferrer(request.body?.referrer),
       userAgent: normalizeUserAgent(request.headers["user-agent"]),
-      isAdmin: isAdminSessionValue(request.cookies[adminSessionCookieName])
+      isAdmin: await isTeamAdminSession(request.cookies[adminSessionCookieName], team.id)
     });
   } catch (error) {
     console.error("Access log write failed:", error instanceof Error ? error.message : "UnknownError");

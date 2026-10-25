@@ -1,5 +1,6 @@
+import type { TeamDb } from "@/lib/team-db";
 import { Prisma } from "@prisma/client";
-import { prisma } from "@/lib/prisma";
+import { getTeamPrisma } from "@/lib/teams";
 import { matchResult, matchStatus, type MatchResultValue, type MatchStatusValue } from "@/lib/stats";
 
 export class MatchValidationError extends Error {
@@ -128,8 +129,8 @@ export function parseMatchFormData(formData: FormData): MatchPayload {
     location: asString(formData.get("location")),
     teamAName: asString(formData.get("teamAName")) || "회장팀",
     teamBName: asString(formData.get("teamBName")) || "총무팀",
-    teamAScore: asNumber(asString(formData.get("teamAScore")), "회장팀 점수"),
-    teamBScore: asNumber(asString(formData.get("teamBScore")), "총무팀 점수"),
+    teamAScore: asNumber(asString(formData.get("teamAScore")), "A팀 점수"),
+    teamBScore: asNumber(asString(formData.get("teamBScore")), "B팀 점수"),
     teamAPlayerIds: uniqueIds(formData.getAll("teamAPlayers")),
     teamBPlayerIds: uniqueIds(formData.getAll("teamBPlayers")),
     goalsByPlayerId,
@@ -160,8 +161,8 @@ export function parseMatchJson(input: unknown): MatchPayload {
     location: String(body.location ?? "").trim(),
     teamAName: String(body.teamAName ?? "회장팀").trim() || "회장팀",
     teamBName: String(body.teamBName ?? "총무팀").trim() || "총무팀",
-    teamAScore: asNumber(body.teamAScore, "회장팀 점수"),
-    teamBScore: asNumber(body.teamBScore, "총무팀 점수"),
+    teamAScore: asNumber(body.teamAScore, "A팀 점수"),
+    teamBScore: asNumber(body.teamBScore, "B팀 점수"),
     teamAPlayerIds,
     teamBPlayerIds,
     goalsByPlayerId,
@@ -187,7 +188,7 @@ export function parseMatchJson(input: unknown): MatchPayload {
   };
 }
 
-async function prepareMatchData(payload: MatchPayload) {
+async function prepareMatchData(payload: MatchPayload, prisma: TeamDb) {
   if (!payload.matchDate || Number.isNaN(new Date(payload.matchDate).getTime())) {
     throw new MatchValidationError("경기 날짜를 입력해주세요.");
   }
@@ -195,12 +196,12 @@ async function prepareMatchData(payload: MatchPayload) {
     throw new MatchValidationError("장소를 입력해주세요.");
   }
   if (payload.teamAPlayerIds.length === 0 || payload.teamBPlayerIds.length === 0) {
-    throw new MatchValidationError("회장팀과 총무팀에 각각 최소 1명 이상의 선수를 선택해주세요.");
+    throw new MatchValidationError("A팀과 B팀에 각각 최소 1명 이상의 선수를 선택해주세요.");
   }
 
   const duplicatedPlayer = payload.teamAPlayerIds.find((id) => payload.teamBPlayerIds.includes(id));
   if (duplicatedPlayer) {
-    throw new MatchValidationError("같은 선수를 회장팀과 총무팀에 동시에 등록할 수 없습니다.");
+    throw new MatchValidationError("같은 선수를 A팀과 B팀에 동시에 등록할 수 없습니다.");
   }
 
   if (payload.chairmanTeamMvpIds.some((playerId) => !payload.teamAPlayerIds.includes(playerId))) {
@@ -309,8 +310,9 @@ async function prepareMatchData(payload: MatchPayload) {
   };
 }
 
-export async function createMatchRecord(payload: MatchPayload) {
-  const data = await prepareMatchData(payload);
+export async function createMatchRecord(payload: MatchPayload, database?: TeamDb) {
+  const prisma = database ?? await getTeamPrisma();
+  const data = await prepareMatchData(payload, prisma);
 
   return prisma.match.create({
     data: {
@@ -326,13 +328,14 @@ export async function createMatchRecord(payload: MatchPayload) {
   });
 }
 
-export async function updateMatchRecord(matchId: number, payload: MatchPayload) {
+export async function updateMatchRecord(matchId: number, payload: MatchPayload, database?: TeamDb) {
+  const prisma = database ?? await getTeamPrisma();
   const existingMatch = await prisma.match.findUnique({ where: { id: matchId }, select: { id: true } });
   if (!existingMatch) {
     throw new MatchNotFoundError("존재하지 않는 경기입니다.");
   }
 
-  const data = await prepareMatchData(payload);
+  const data = await prepareMatchData(payload, prisma);
 
   return prisma.match.update({
     where: { id: matchId },
@@ -351,7 +354,8 @@ export async function updateMatchRecord(matchId: number, payload: MatchPayload) 
   });
 }
 
-export async function deleteMatchRecord(matchId: number) {
+export async function deleteMatchRecord(matchId: number, database?: TeamDb) {
+  const prisma = database ?? await getTeamPrisma();
   const existingMatch = await prisma.match.findUnique({ where: { id: matchId }, select: { id: true } });
   if (!existingMatch) {
     throw new MatchNotFoundError("존재하지 않는 경기입니다.");

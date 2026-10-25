@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "@/components/TeamLink";
 import type { ChemistryPlayer, ChemistryRecord, PlayerChemistry } from "@/lib/player-chemistry";
 
 function PlayerName({ player }: { player: ChemistryPlayer }) {

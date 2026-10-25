@@ -1,5 +1,5 @@
 import Image from "next/image";
-import Link from "next/link";
+import Link from "@/components/TeamLink";
 import type { Match, MatchPoster } from "@prisma/client";
 import { formatDate } from "@/lib/stats";
 

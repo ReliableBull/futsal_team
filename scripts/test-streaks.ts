@@ -5,7 +5,7 @@ import { calculateLongestWinStreak } from "../lib/record-streaks";
 
 const date = new Date("2026-01-01T00:00:00Z");
 const player: Player = {
-  id: 1, name: "연승 테스트", nickname: null, profileImageUrl: null,
+  teamId: 1, id: 1, name: "연승 테스트", nickname: null, profileImageUrl: null,
   position: "미드필더", number: 1, isActive: true, createdAt: date, updatedAt: date
 };
 

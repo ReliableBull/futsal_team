@@ -1,10 +1,11 @@
+import { getDashboardData, getPlayersWithStats } from "@/lib/stats-data";
 import { NextResponse } from "next/server";
 import { revalidatePath } from "next/cache";
 import { Prisma } from "@prisma/client";
-import { prisma } from "@/lib/prisma";
+import { getTeamPrisma, currentTeamPath } from "@/lib/teams";
 import { authenticate, login } from "@/lib/mobile/auth";
 import { ApiError, id, matchInput, page, playerInput, range } from "@/lib/mobile/validation";
-import { calculatePlayerStats, calculatePlayerStreakHistories, getDashboardData, getPlayersWithStats } from "@/lib/stats";
+import { calculatePlayerStats, calculatePlayerStreakHistories, } from "@/lib/stats";
 import { getHallOfFameData } from "@/lib/hall-of-fame";
 import { createMatchRecord, updateMatchRecord, deleteMatchRecord, matchInclude, MatchNotFoundError, MatchValidationError } from "@/lib/matches";
 import { saveImage, removeImage } from "@/lib/mobile/images";
@@ -28,9 +29,10 @@ async function body(request: Request) {
   catch { throw new ApiError(400, "JSON 형식이 올바르지 않습니다."); }
 }
 function invalidate() {
-  for (const path of ["/", "/players", "/matches", "/hall-of-fame", "/abcd"]) revalidatePath(path, "layout");
+  for (const path of ["/", "/players", "/matches", "/hall-of-fame", "/abcd"]) revalidatePath(currentTeamPath(path), "layout");
 }
 async function handle(request: Request, { params }: { params: { path: string[] } }) {
+  const prisma = await getTeamPrisma();
   try {
     const path = params.path, key = path.join("/"), method = request.method;
     const search = new URL(request.url).searchParams;
@@ -121,6 +123,7 @@ async function handle(request: Request, { params }: { params: { path: string[] }
     else throw new ApiError(404, "지원하지 않는 API입니다.");
     invalidate(); return json(result, status);
   } catch (error) {
+    if (error && typeof error === "object" && "digest" in error && error.digest === "NEXT_NOT_FOUND") return NextResponse.json({ error: "팀을 찾을 수 없습니다." }, { status: 404 });
     if (error instanceof ApiError || error instanceof MatchValidationError || error instanceof MatchNotFoundError) return json({ error: error.message }, error.status);
     if (error instanceof Prisma.PrismaClientKnownRequestError) {
       if (error.code === "P2025") return json({ error: "대상을 찾을 수 없습니다." }, 404);

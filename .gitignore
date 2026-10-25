@@ -13,6 +13,7 @@ public/uploads
 forserver.md
 
 .next-mobile-*
+.next-dev-*
 *.tsbuildinfo
 
 .arena-production.pid

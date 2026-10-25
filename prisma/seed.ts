@@ -17,6 +17,7 @@ function hashPassword(password: string) {
 }
 
 async function main() {
+  if (await prisma.team.count({ where: { id: { not: 1 } } })) throw new Error("Legacy seed/import is disabled when multiple teams exist. Restore into a separate database.");
   await prisma.matchGoal.deleteMany();
   await prisma.matchPlayer.deleteMany();
   await prisma.match.deleteMany();
@@ -26,6 +27,7 @@ async function main() {
   await prisma.admin.create({
     data: {
       username: "admin",
+      teams: { create: { teamId: 1, role: "PRESIDENT" } },
       passwordHash: hashPassword("dlGhwns12!")
     }
   });

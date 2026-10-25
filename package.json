@@ -3,10 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "node scripts/run-server.mjs dev",
     "prebuild": "prisma generate",
     "build": "next build",
-    "start": "next start",
+    "start": "node scripts/run-server.mjs start",
     "lint": "next lint",
     "postinstall": "prisma generate",
     "seed": "prisma db seed",
@@ -20,7 +20,15 @@
     "test:access-logs": "tsx scripts/test-access-logs.ts",
     "import:sqlite-export": "node scripts/import-sqlite-export-to-postgres.mjs",
     "test:mobile": "node --import tsx scripts/test-mobile-validation.ts",
-    "test:mobile:integration": "node --import tsx scripts/test-mobile-api.ts"
+    "test:mobile:integration": "node --import tsx scripts/test-mobile-api.ts",
+    "dev:legacy": "node scripts/run-server.mjs dev --mode legacy",
+    "start:legacy": "node scripts/run-server.mjs start --mode legacy",
+    "test:teams": "tsx scripts/test-teams.ts",
+    "test:teams:integration": "tsx scripts/test-teams-integration.ts",
+    "test:community": "tsx scripts/test-community.ts",
+    "test:polls": "tsx scripts/test-club-polls.ts",
+    "test:polls:integration": "tsx scripts/test-club-polls-integration.ts",
+    "test:polls:legacy": "tsx scripts/test-legacy-polls-integration.ts"
   },
   "prisma": {
     "seed": "tsx prisma/seed.ts"

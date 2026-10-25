@@ -1,6 +1,7 @@
 import { HallOfFameIcon } from "@/components/HallOfFameIcon";
 
 type HallOfFameHeroProps = {
+  teamName: string;
   updatedAtLabel: string;
   totalMatches: number;
   totalPlayers: number;
@@ -8,7 +9,7 @@ type HallOfFameHeroProps = {
 
 const goldAccent = "#c19a3d";
 
-export function HallOfFameHero({ updatedAtLabel, totalMatches, totalPlayers }: HallOfFameHeroProps) {
+export function HallOfFameHero({ teamName, updatedAtLabel, totalMatches, totalPlayers }: HallOfFameHeroProps) {
   return (
     <section className="arena-dark relative overflow-hidden border border-arena-line bg-[#0b0d10] shadow-xl shadow-black/30">
       <span
@@ -29,12 +30,12 @@ export function HallOfFameHero({ updatedAtLabel, totalMatches, totalPlayers }: H
             <span className="grid h-6 w-6 -skew-x-6 place-items-center border-2 border-arena-red text-[11px] font-black text-arena-red">
               A
             </span>
-            <p className="text-xs font-black uppercase tracking-[0.3em] text-slate-400">ARENA FC</p>
+            <p className="text-xs font-black uppercase tracking-[0.3em] text-slate-400">{teamName}</p>
           </div>
           <h1 className="mt-3 text-3xl font-black italic leading-none text-white sm:text-5xl">
             HALL OF <span style={{ color: goldAccent }}>FAME</span>
           </h1>
-          <p className="mt-3 text-sm font-bold text-slate-300 sm:text-base">아레나 FC의 기록을 만들어가는 선수들</p>
+          <p className="mt-3 text-sm font-bold text-slate-300 sm:text-base">{teamName}의 기록을 만들어가는 선수들</p>
           <p className="mt-1 text-xs font-bold uppercase tracking-[0.2em] text-slate-500">THE RECORD HOLDERS</p>
         </div>
 

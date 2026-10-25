@@ -18,6 +18,7 @@ export type PlayerListExportRow = {
 };
 
 type ExportContext = {
+  teamName?: string;
   startDate: string;
   endDate: string;
   sortLabel: string;
@@ -39,7 +40,7 @@ export function createPlayerListWorkbook(players: PlayerListExportRow[], context
     autoFilter: `A${headerRow}:N${headerRow + players.length}`,
     table: players.length ? { name: "ArenaPlayerRecords", ref: `A${headerRow}:N${headerRow + players.length}`, columns: headers } : undefined,
     rows: [
-      [{ value: "ARENA FC 선수 기록", style: 7 }],
+      [{ value: `${context.teamName || "ARENA FC"} 선수 기록`, style: 7 }],
       [`조회 기간: ${context.startDate} ~ ${context.endDate}`],
       [`정렬: ${context.sortLabel} · ${context.direction === "asc" ? "오름차순" : "내림차순"} | 완료된 경기 기준 · 공격 포인트 = 득점 + 도움 · 경기당 공격 포인트 = 공격 포인트 ÷ 출전 경기 수`],
       ["사용법: 열 제목 옆 ▼를 눌러 오름차순·내림차순 정렬 또는 값 필터를 선택하세요."],

@@ -1,5 +1,6 @@
 export type MatchSharePlayer = { id: number; name: string; goals: number; assists: number; isMvp: boolean };
 export type MatchShareData = {
+  teamName?: string;
   id: number;
   date: string;
   location: string;
@@ -72,7 +73,7 @@ export function drawMatchShareCard(canvas: HTMLCanvasElement, data: MatchShareDa
   ctx.beginPath();
   ctx.moveTo(760, 12); ctx.lineTo(1080, 12); ctx.lineTo(1080, 490); ctx.lineTo(560, 490); ctx.closePath(); ctx.fill();
 
-  text("ARENA FC", 64, 76, 40, "#ffffff", 540, "left", 900);
+  text(data.teamName || "ARENA FC", 64, 76, 40, "#ffffff", 540, "left", 900);
   text(data.completed ? "MATCH RESULT" : "LIVE · 경기 진행 중", 1016, 76, 22, data.completed ? "#94a3b8" : "#fbbf24", 370, "right");
   text(data.date.replaceAll("-", "."), 64, 134, 25, "#cbd5e1", 300);
   text(data.location, 1016, 134, 25, "#cbd5e1", 620, "right", 500);
@@ -114,5 +115,5 @@ export function drawMatchShareCard(canvas: HTMLCanvasElement, data: MatchShareDa
 
   text("MOM · 경기 최우수 선수", 64, height - 74, 21, "#94a3b8", 620, "left", 500);
   text(`MATCH #${data.id}`, 1016, height - 74, 21, "#94a3b8", 320, "right");
-  text("함께 뛰는 시간, 하나가 되는 ARENA FC", 64, height - 38, 21, "#94a3b8", 952, "left", 500);
+  text(`함께 뛰는 시간, 하나가 되는 ${data.teamName || "ARENA FC"}`, 64, height - 38, 21, "#94a3b8", 952, "left", 500);
 }

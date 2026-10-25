@@ -1,6 +1,7 @@
 "use client";
 
-import Link from "next/link";
+import { useTeam, useTeamPath } from "@/components/TeamProvider";
+import Link from "@/components/TeamLink";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 
@@ -16,8 +17,10 @@ type MobileNavMenuProps = {
 export function MobileNavMenu({ items }: MobileNavMenuProps) {
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname() ?? "";
+  const path = useTeamPath();
+  const team = useTeam();
 
-  const isActive = (href: string) => (href === "/" ? pathname === href : pathname.startsWith(href));
+  const isActive = (href: string) => (href === "/" ? pathname === path("/") : pathname.startsWith(path(href)));
 
   return (
     <div className="md:hidden">
@@ -54,7 +57,7 @@ export function MobileNavMenu({ items }: MobileNavMenuProps) {
         <div className="flex items-center justify-between border-b border-arena-line px-5 py-4">
           <Link className="flex items-center gap-2 text-xl font-black italic text-white" href="/" onClick={() => setIsOpen(false)}>
             <span className="grid h-7 w-7 -skew-x-6 place-items-center border-2 border-arena-red text-sm text-arena-red">A</span>
-            ARENA FC
+            {team.name}
           </Link>
           <button className="grid h-9 w-9 place-items-center border border-arena-line text-xl font-bold text-slate-300" aria-label="메뉴 닫기" type="button" onClick={() => setIsOpen(false)}>
             ×

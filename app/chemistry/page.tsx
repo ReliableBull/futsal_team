@@ -1,11 +1,12 @@
+import { currentTeamPath, getCurrentTeam } from "@/lib/teams";
 import type { Metadata } from "next";
-import Link from "next/link";
+import Link from "@/components/TeamLink";
 import { ChemistryResults } from "@/components/ChemistryResults";
 import { getChemistryPlayers, getPlayerChemistry } from "@/lib/player-chemistry-data";
 import { parseChemistryFilters, type ChemistryFilters } from "@/lib/player-chemistry";
 
 export const dynamic = "force-dynamic";
-export const metadata: Metadata = { title: "선수 조합 분석 | ARENA FC" };
+export async function generateMetadata(): Promise<Metadata> { return { title: `선수 조합 분석 | ${(await getCurrentTeam()).name}` }; }
 
 export default async function ChemistryPage({ searchParams }: { searchParams: Record<string, string | string[] | undefined> }) {
   const players = await getChemistryPlayers();
@@ -27,7 +28,7 @@ export default async function ChemistryPage({ searchParams }: { searchParams: Re
         <p className="mt-2 text-sm leading-6 text-slate-500">함께 이긴 동료, 맞붙었던 상대, 골을 만든 파트너를 기록으로 확인하세요.</p>
       </div>
       {players.length === 0 ? <p className="rounded-xl border border-arena-line bg-white p-6 text-slate-500">등록된 선수가 없습니다.</p> : (
-        <form key={JSON.stringify(filters)} action="/chemistry" className="rounded-xl border border-arena-line bg-white p-4 sm:p-6">
+        <form key={JSON.stringify(filters)} action={currentTeamPath("/chemistry")} className="rounded-xl border border-arena-line bg-white p-4 sm:p-6">
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1fr_auto] lg:items-end">
             <label className="min-w-0 text-sm font-bold text-slate-700">기준 선수
               <select className={fieldClass} name="playerId" defaultValue={player?.id}>

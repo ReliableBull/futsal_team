@@ -142,3 +142,45 @@ textarea::placeholder {
 .lotto-ball {
   animation: lotto-pop 0.34s ease-in-out infinite alternate;
 }
+
+@layer components {
+  .platform-input { @apply mt-2 w-full min-w-0 rounded-xl border border-slate-300 bg-white px-3 py-3 text-sm font-normal text-slate-900 outline-none focus:border-slate-700 focus:ring-2 focus:ring-slate-200; }
+  .platform-label { @apply block space-y-2 text-sm font-bold text-slate-800; }
+  .platform-button { @apply rounded-xl bg-slate-900 px-6 py-3.5 text-sm font-black text-[#fff] transition hover:bg-slate-700; }
+}
+
+@layer components {
+  .community-eyebrow { @apply text-[10px] font-black tracking-[.2em] text-emerald-800 sm:text-xs; }
+  .community-tag { @apply inline-flex items-center rounded-md bg-slate-100 px-2.5 py-1.5 text-[11px] font-bold text-slate-500; }
+  .community-tab { @apply rounded-lg px-4 py-2 text-sm font-bold text-slate-500; }
+  .community-tab-active { @apply bg-[#173b2f] text-[#fff]; }
+}
+
+.pitch-art { position: relative; height: 210px; overflow: hidden; background: #60796d; isolation: isolate; }
+.pitch-art::before { content: ""; position: absolute; inset: 0; background: repeating-linear-gradient(90deg, transparent 0 29px, #ffffff06 29px 30px), repeating-linear-gradient(0deg, transparent 0 29px, #ffffff06 29px 30px); }
+.pitch-surround { position: absolute; inset: 22% 11%; transform: rotate(-15deg) skewX(10deg); padding: 10px; background: #bdc4ad; border-radius: 3px; box-shadow: 12px 25px 0 #1b362d30, 14px 32px 30px #0a201b40; }
+.pitch-field { position: relative; height: 100%; min-height: 100%; padding: 9px; background: repeating-linear-gradient(90deg, #52866c 0 12.5%, #477b61 12.5% 25%); box-shadow: inset 0 0 0 2px #315541; }
+.pitch-touchline { position: relative; height: 100%; border: 1px solid #f1f4d9aa; }
+.pitch-half { position: absolute; inset: 0 50% 0 0; border-right: 1px solid #f1f4d9aa; }
+.pitch-circle { position: absolute; left: 50%; top: 50%; width: 22%; aspect-ratio: 1; transform: translate(-50%, -50%); border: 1px solid #f1f4d9aa; border-radius: 50%; }
+.pitch-box { position: absolute; top: 22%; bottom: 22%; width: 17%; border: 1px solid #f1f4d9aa; }
+.pitch-box-left { left: -1px; } .pitch-box-right { right: -1px; }
+.pitch-dot { position: absolute; width: 7px; height: 7px; background: #efdfaa; border-radius: 50%; box-shadow: 2px 3px 0 #132a3050; }
+.pitch-dot-one { left: 24%; top: 35%; } .pitch-dot-two { left: 45%; top: 65%; } .pitch-dot-three { right: 25%; top: 40%; background: #e3eeec; } .pitch-dot-four { right: 40%; top: 23%; background: #e3eeec; }
+.pitch-art-caption { position: absolute; bottom: 12px; left: 16px; color: #f0f4ebbb; font-size: 7px; font-weight: 700; letter-spacing: .15em; }
+.pitch-art-rooftop { background: #8c9d98; }
+.pitch-art-rooftop .pitch-surround { background: #b4b3a4; box-shadow: 8px 12px 0 #64756c, 12px 20px 0 #4d6259, 14px 28px 0 #3d514a, 18px 40px 35px #17332950; }
+.pitch-art-indoor { background: #898c85; }
+.pitch-art-indoor .pitch-surround { background: #d0c4a7; box-shadow: 0 -8px 0 #465d56, 0 -20px 0 #567167, 8px 24px 30px #1b352e60; }
+.pitch-art-indoor .pitch-field { background: repeating-linear-gradient(90deg, #457c80 0 12.5%, #3c7076 12.5% 25%); }
+.pitch-art-night { background: radial-gradient(ellipse at 25% 25%, #5b786e, #203d37 70%); }
+.pitch-art-night .pitch-surround { background: #90a590; box-shadow: 0 0 50px #c1e3bf30, 12px 25px 20px #091d1870; }
+.pitch-art-large { height: 320px; }
+.pitch-art-large .pitch-surround { inset: 22% 13%; padding: 16px; }
+.pitch-art-large .pitch-field { padding: 14px; }
+.home-field-scene .pitch-art { height: 390px; background: transparent; overflow: visible; }
+.home-field-scene .pitch-art::before, .home-field-scene .pitch-art-caption { display: none; }
+.home-field-scene .pitch-surround { inset: 28% 6% 24% 3%; transform: rotate(-24deg) skewX(12deg); background: #567463; box-shadow: 8px 12px 0 #23483b, 12px 20px 0 #1e4035, 18px 32px 40px #061f1850; }
+.home-field-scene .pitch-field { background: repeating-linear-gradient(90deg, #426e53 0 12.5%, #365f48 12.5% 25%); }
+@media (max-width: 639px) { .pitch-art-large { height: 240px; } }
+@media (prefers-reduced-motion: reduce) { .platform-button, article { transition: none !important; } }

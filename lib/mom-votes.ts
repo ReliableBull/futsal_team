@@ -1,5 +1,6 @@
 import { Prisma } from "@prisma/client";
-import { prisma } from "./prisma";
+import { getTeamPrisma } from "./teams";
+import type { TeamDb } from "./team-db";
 import type { MomPoll, MomTeam } from "./mom-vote-types";
 
 export class MomVoteError extends Error {
@@ -35,7 +36,8 @@ export function parseMomChoices(value: unknown): { teamAPlayerId: number; teamBP
   return { teamAPlayerId, teamBPlayerId };
 }
 
-export async function getMomPoll(matchId: number, voterHash: string): Promise<MomPoll> {
+export async function getMomPoll(matchId: number, voterHash: string, database?: TeamDb): Promise<MomPoll> {
+  const prisma = database ?? await getTeamPrisma();
   const [match, ballot] = await Promise.all([
     prisma.match.findUnique({ where: { id: matchId }, select: pollSelect }),
     prisma.momBallot.findUnique({ where: { matchId_voterHash: { matchId, voterHash } }, select: { id: true } })
@@ -44,13 +46,16 @@ export async function getMomPoll(matchId: number, voterHash: string): Promise<Mo
   return { matchId, status: match.status, matchDate: match.matchDate.toISOString(), location: match.location, teams: teamsFor(match), hasVoted: Boolean(ballot) };
 }
 
-export async function submitMomBallot(matchId: number, voterHash: string, input: unknown) {
+export async function submitMomBallot(matchId: number, voterHash: string, input: unknown, database?: TeamDb) {
+  const prisma = database ?? await getTeamPrisma();
+  const target = await prisma.match.findUnique({ where: { id: matchId }, select: { teamId: true } });
+  if (!target) throw new MomVoteError(404, "존재하지 않는 경기입니다.");
   const choices = parseMomChoices(input);
   try {
     await prisma.$transaction(async (tx) => {
       // Serialize against other votes and the existing Match UPDATE used when
       // closing a match or replacing its lineup. Recheck everything under the lock.
-      const locked = await tx.$queryRaw<Array<{ id: number }>>`SELECT "id" FROM "Match" WHERE "id" = ${matchId} FOR UPDATE`;
+      const locked = await tx.$queryRaw<Array<{ id: number }>>`SELECT "id" FROM "Match" WHERE "id" = ${matchId} AND "teamId" = ${target.teamId} FOR UPDATE`;
       if (!locked.length) throw new MomVoteError(404, "존재하지 않는 경기입니다.");
       const match = await tx.match.findUniqueOrThrow({ where: { id: matchId }, select: pollSelect });
       if (match.status !== "IN_PROGRESS") throw new MomVoteError(409, "경기가 종료되어 MOM 투표가 마감되었습니다.");
@@ -69,7 +74,8 @@ export async function submitMomBallot(matchId: number, voterHash: string, input:
 }
 
 /** Called only from the admin edit page, after requireAdmin(). */
-export async function getMomResults(matchId: number) {
+export async function getMomResults(matchId: number, database?: TeamDb) {
+  const prisma = database ?? await getTeamPrisma();
   const [match, ballots] = await Promise.all([
     prisma.match.findUnique({ where: { id: matchId }, select: pollSelect }),
     prisma.momBallot.findMany({ where: { matchId }, select: { teamAPlayerId: true, teamBPlayerId: true } })

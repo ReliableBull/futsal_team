@@ -1,0 +1,14 @@
+{
+  "passed": true,
+  "checks": [
+    "desktop and mobile layout",
+    "signup and team creation",
+    "scoped player Server Action and redirect",
+    "team settings",
+    "scoped date filter",
+    "team switching and my-team filter",
+    "signed-in creation",
+    "mobile navigation"
+  ],
+  "errors": []
+}

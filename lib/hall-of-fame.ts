@@ -1,4 +1,4 @@
-import { prisma } from "@/lib/prisma";
+import { getTeamPrisma } from "@/lib/teams";
 import { parsePlayerPosition } from "@/lib/player-position";
 import {
   calculateLongestAssistStreak,
@@ -93,6 +93,7 @@ type CategoryMeta = {
 };
 
 type PlayerProfile = {
+  teamId?: number;
   id: number;
   name: string;
   nickname: string | null;
@@ -194,8 +195,8 @@ const categoryMetas: CategoryMeta[] = [
   }
 ];
 
-export function getPlayerPhotoUrl(player: Pick<PlayerProfile, "id" | "profileImageUrl">) {
-  return player.profileImageUrl || `/images/players/${player.id}.jpg`;
+export function getPlayerPhotoUrl(player: Pick<PlayerProfile, "id" | "profileImageUrl" | "teamId">) {
+  return player.profileImageUrl || (player.teamId === undefined || player.teamId === 1 ? `/images/players/${player.id}.jpg` : "");
 }
 
 /**
@@ -324,12 +325,13 @@ export function buildHallOfFameCategories(aggregates: PlayerAggregate[]): HallOf
  * 연속 기록만 서버 메모리에서 한 번 순회해 계산한다.
  */
 export async function getHallOfFameData(): Promise<HallOfFameData> {
+  const prisma = await getTeamPrisma();
   const completedMatchFilter = { status: matchStatus.completed };
 
   const [players, matchPlayers, totalMatches, latestMatch, latestMatchPlayer] = await Promise.all([
     prisma.player.findMany({
       where: { isActive: true },
-      select: { id: true, name: true, nickname: true, position: true, profileImageUrl: true },
+      select: { teamId: true, id: true, name: true, nickname: true, position: true, profileImageUrl: true },
       orderBy: [{ number: "asc" }, { name: "asc" }]
     }),
     prisma.matchPlayer.findMany({

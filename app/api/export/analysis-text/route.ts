@@ -1,3 +1,4 @@
+import { getCurrentTeam } from "@/lib/teams";
 import { NextResponse } from "next/server";
 import { getCurrentAdmin } from "@/lib/auth";
 import { buildHistoryRows, buildMatchRows, buildPlayerRows, getExportData, getScoreSummary, getTeamPlayerNames, todayFileLabel } from "@/lib/export-data";
@@ -19,8 +20,8 @@ function getPlayerPerformanceLines(match: Awaited<ReturnType<typeof getExportDat
     .join("\n");
 }
 
-function buildAnalysisText() {
-  return `# ARENA Futsal Record - ChatGPT 분석 요청서
+function buildAnalysisText(teamName: string) {
+  return `# ${teamName} Futsal Record - ChatGPT 분석 요청서
 
 아래 데이터는 동호회 풋살 경기 기록이다. 이 내용을 기반으로 선수 조합, 팀 구성, 승패 원인, 득점/도움/MOM 패턴을 상세 분석해줘.
 
@@ -52,7 +53,7 @@ export async function GET() {
   const playerStats = players.map(calculatePlayerStats);
 
   const sections = [
-    buildAnalysisText(),
+    buildAnalysisText((await getCurrentTeam()).name),
     `## 데이터 요약
 
 - 전체 경기 수: ${matches.length}

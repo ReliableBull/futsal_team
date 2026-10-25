@@ -1,3 +1,4 @@
+import { scopeTeamDb } from "../lib/team-db";
 import assert from "node:assert/strict";
 import { prisma } from "../lib/prisma";
 import { hashVoteIp } from "../lib/mom-vote-ip";
@@ -6,6 +7,7 @@ import { updateMatchRecord, type MatchPayload } from "../lib/matches";
 
 const database = new URL(process.env.DATABASE_URL ?? "http://invalid");
 if (!database.pathname.startsWith("/arena_mom_test_") || process.env.ALLOW_MOM_TEST_DB !== "1") throw new Error("Use an isolated arena_mom_test_* database and ALLOW_MOM_TEST_DB=1.");
+const teamDb = scopeTeamDb(prisma, 1);
 const base = process.env.MOM_TEST_URL ?? "http://127.0.0.1:3107";
 if (!["localhost", "127.0.0.1"].includes(new URL(base).hostname)) throw new Error("Only a local test server is allowed.");
 
@@ -43,16 +45,16 @@ async function main() {
     assert.equal(await prisma.matchPlayer.count({ where: { matchId: id, isMvp: true } }), 0, "votes must not change official MOMs");
     const otherMatch = await fixture();
     assert.equal((await call(otherMatch, "POST", choices)).status, 201, "same IP may vote in another match");
-    await submitMomBallot(id, hash(id, "22"), { teamAPlayerId: b, teamBPlayerId: d });
-    let results = await getMomResults(id);
+    await submitMomBallot(id, hash(id, "22"), { teamAPlayerId: b, teamBPlayerId: d }, teamDb);
+    let results = await getMomResults(id, teamDb);
     assert.equal(results.totalBallots, 2);
     assert.deepEqual(results.teams.map((team) => team.players.map((p) => p.votes)), [[1, 1], [1, 1]], "ties preserved for administrator decision");
-    await updateMatchRecord(id, { ...payload, chairmanTeamMvpIds: [b], managerTeamMvpIds: [d] });
+    await updateMatchRecord(id, { ...payload, chairmanTeamMvpIds: [b], managerTeamMvpIds: [d] }, teamDb);
     assert.equal(await prisma.momBallot.count({ where: { matchId: id } }), 2, "editing recreates MatchPlayers but preserves ballots");
     assert.equal(await prisma.matchPlayer.count({ where: { matchId: id, isMvp: true } }), 2);
-    await updateMatchRecord(id, { ...payload, teamAPlayerIds: [b], chairmanTeamMvpIds: [b], managerTeamMvpIds: [d] });
-    results = await getMomResults(id); assert.equal(results.teams[0].excludedVotes, 1);
-    await assert.rejects(() => submitMomBallot(id, hash(id, "23"), choices), (e: unknown) => e instanceof MomVoteError && e.status === 400);
+    await updateMatchRecord(id, { ...payload, teamAPlayerIds: [b], chairmanTeamMvpIds: [b], managerTeamMvpIds: [d] }, teamDb);
+    results = await getMomResults(id, teamDb); assert.equal(results.teams[0].excludedVotes, 1);
+    await assert.rejects(() => submitMomBallot(id, hash(id, "23"), choices, teamDb), (e: unknown) => e instanceof MomVoteError && e.status === 400);
     const closed = await fixture("COMPLETED");
     assert.equal((await call(closed, "POST", choices)).status, 409);
     // A submit already in flight must observe a concurrent closing transaction.
@@ -65,11 +67,11 @@ async function main() {
       locked(); await canCommit;
     });
     await lockReady;
-    const staleSubmit = assert.rejects(() => submitMomBallot(closing, hash(closing, "24"), choices), (e: unknown) => e instanceof MomVoteError && e.status === 409);
+    const staleSubmit = assert.rejects(() => submitMomBallot(closing, hash(closing, "24"), choices, teamDb), (e: unknown) => e instanceof MomVoteError && e.status === 409);
     release(); await Promise.all([close, staleSubmit]);
     assert.equal(await prisma.momBallot.count({ where: { matchId: closing } }), 0);
     await prisma.$disconnect();
-    assert.equal((await getMomPoll(id, hash(id, "22"))).hasVoted, true, "ballot survives a database client reconnect");
+    assert.equal((await getMomPoll(id, hash(id, "22"), teamDb)).hasVoted, true, "ballot survives a database client reconnect");
     await prisma.match.delete({ where: { id } });
     assert.equal(await prisma.momBallot.count({ where: { matchId: id } }), 0, "match deletion cascades to ballots");
     console.log("MOM integration passed: HTTP validation, header spoofing, 8 concurrent requests, per-match limits, eligible rosters, ties, admin edits, closing race, persistence and cascade.");

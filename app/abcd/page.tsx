@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "@/components/TeamLink";
 import { AdminMatchForm } from "@/components/AdminMatchForm";
 import { AdminPlayerEditor } from "@/components/AdminPlayerEditor";
 import { DeleteMatchButton } from "@/components/DeleteMatchButton";
@@ -6,7 +6,7 @@ import { MatchStatusBadge } from "@/components/MatchStatusBadge";
 import { createMatch, createPlayer, deleteMatch, deletePlayer, logoutAdmin, updatePlayer } from "@/lib/actions";
 import { requireAdmin } from "@/lib/auth";
 import { defaultPlayerPosition, playerPositions } from "@/lib/player-position";
-import { prisma } from "@/lib/prisma";
+import { getTeamPrisma, getCurrentTeam, currentTeamPath, isLegacyMode } from "@/lib/teams";
 import { formatDate, getTeamMvpNames, matchStatus } from "@/lib/stats";
 
 function toInputDate(date: Date) {
@@ -14,6 +14,8 @@ function toInputDate(date: Date) {
 }
 
 export default async function AdminPage() {
+  const prisma = await getTeamPrisma();
+  const team = await getCurrentTeam();
   const admin = await requireAdmin();
   const [players, matches] = await Promise.all([
     prisma.player.findMany({
@@ -36,10 +38,13 @@ export default async function AdminPage() {
             <p className="mt-2 text-sm text-slate-400">{admin.username} 계정으로 로그인됨</p>
           </div>
           <div className="flex flex-wrap gap-2">
-            <a className="rounded-md bg-arena-lime px-4 py-2 text-sm font-black text-arena-black transition hover:bg-white" href="/api/export/matches">
+            <Link className="rounded-md border border-arena-line px-4 py-2 text-sm font-bold" href="/polls">투표 관리</Link>
+            <Link className="rounded-md border border-arena-line px-4 py-2 text-sm font-bold" href="/polls/new">투표 만들기</Link>
+            {!isLegacyMode() && <Link className="rounded-md border border-arena-line px-4 py-2 text-sm font-bold" href="/abcd/team">팀 정보 관리</Link>}
+            <a className="rounded-md bg-arena-lime px-4 py-2 text-sm font-black text-arena-black transition hover:bg-white" href={currentTeamPath("/api/export/matches")}>
               엑셀 다운로드
             </a>
-            <a className="rounded-md border border-arena-cyan px-4 py-2 text-sm font-bold text-arena-cyan transition hover:bg-arena-cyan hover:text-arena-black" href="/api/export/analysis-text">
+            <a className="rounded-md border border-arena-cyan px-4 py-2 text-sm font-bold text-arena-cyan transition hover:bg-arena-cyan hover:text-arena-black" href={currentTeamPath("/api/export/analysis-text")}>
               분석 텍스트 다운로드
             </a>
             <Link className="rounded-md border border-arena-line px-4 py-2 text-sm font-bold text-slate-200 transition hover:border-arena-cyan hover:text-white" href="/abcd/access-logs">
@@ -127,8 +132,8 @@ export default async function AdminPage() {
             matchDate: toInputDate(new Date()),
             status: matchStatus.inProgress,
             location: "",
-            teamAName: "회장팀",
-            teamBName: "총무팀",
+            teamAName: team.slug === "arena-fc" ? "회장팀" : "A팀",
+            teamBName: team.slug === "arena-fc" ? "총무팀" : "B팀",
             teamAScore: 0,
             teamBScore: 0,
             teamAPlayerIds: [],

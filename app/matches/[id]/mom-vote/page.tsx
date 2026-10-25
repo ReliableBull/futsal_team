@@ -1,19 +1,21 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import Link from "@/components/TeamLink";
 import { notFound } from "next/navigation";
 import { MomVoteForm } from "@/components/MomVoteForm";
-import { prisma } from "@/lib/prisma";
+import { getTeamPrisma, getCurrentTeam, currentTeamPath } from "@/lib/teams";
 import { formatDate } from "@/lib/stats";
 
 export const dynamic = "force-dynamic";
 
 export async function generateMetadata({ params }: { params: { id: string } }): Promise<Metadata> {
-  const title = "오늘의 MOM 투표 | ARENA FC";
+  const title = `오늘의 MOM 투표 | ${(await getCurrentTeam()).name}`;
   const description = "진행 중인 경기의 MOM을 각 팀에서 1명씩 선택해주세요. 로그인 없이 참여할 수 있습니다.";
-  return { title, description, robots: { index: false, follow: false }, openGraph: { title, description, url: `/matches/${params.id}/mom-vote` } };
+  return { title, description, robots: { index: false, follow: false }, openGraph: { title, description, url: currentTeamPath(`/matches/${params.id}/mom-vote`) } };
 }
 
 export default async function MomVotePage({ params }: { params: { id: string } }) {
+  const team = await getCurrentTeam();
+  const prisma = await getTeamPrisma();
   const id = /^[1-9]\d*$/.test(params.id) ? Number(params.id) : NaN;
   if (!Number.isSafeInteger(id) || id > 2147483647) notFound();
   const match = await prisma.match.findUnique({ where: { id }, select: { matchDate: true, location: true, teamAName: true, teamBName: true } });
@@ -21,7 +23,7 @@ export default async function MomVotePage({ params }: { params: { id: string } }
   return (
     <div className="mx-auto max-w-3xl space-y-6">
       <section className="rounded-xl border border-arena-line bg-white p-5 sm:p-7">
-        <p className="text-xs font-black tracking-widest text-arena-red">ARENA FC · MOM VOTE</p>
+        <p className="text-xs font-black tracking-widest text-arena-red">{team.name} · MOM VOTE</p>
         <h1 className="mt-3 break-keep text-3xl font-black text-slate-900">오늘의 MOM 투표</h1>
         <p className="mt-3 break-keep font-bold text-slate-700">{match.teamAName} vs {match.teamBName}</p>
         <p className="mt-2 text-sm text-slate-500">{formatDate(match.matchDate)} · {match.location}</p>

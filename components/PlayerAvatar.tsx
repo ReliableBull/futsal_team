@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { useTeam } from "@/components/TeamProvider";
 import { useEffect, useState } from "react";
 
 type PlayerAvatarProps = {
@@ -31,8 +32,9 @@ function getInitial(name: string) {
 }
 
 export function PlayerAvatar({ playerId, name, profileImageUrl, size = "md" }: PlayerAvatarProps) {
+  const team = useTeam();
   const [imageFailed, setImageFailed] = useState(false);
-  const imageSrc = profileImageUrl || `/images/players/${playerId}.jpg`;
+  const imageSrc = profileImageUrl || (team.slug === "arena-fc" ? `/images/players/${playerId}.jpg` : "");
   const isLocalPreview = imageSrc.startsWith("blob:") || imageSrc.startsWith("data:");
 
   useEffect(() => {
@@ -41,9 +43,10 @@ export function PlayerAvatar({ playerId, name, profileImageUrl, size = "md" }: P
 
   return (
     <span className={`relative inline-grid shrink-0 place-items-center overflow-hidden rounded-full border border-arena-line bg-[radial-gradient(circle_at_30%_20%,rgba(239,65,54,0.32),transparent_34%),#111315] font-black text-arena-red shadow-lg shadow-black/20 ${sizeClass[size]}`}>
-      {!imageFailed && isLocalPreview ? (
+      <span>{getInitial(name)}</span>
+      {imageSrc && !imageFailed && isLocalPreview ? (
         <span className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: `url("${imageSrc}")` }} />
-      ) : !imageFailed ? (
+      ) : imageSrc && !imageFailed ? (
         <Image
           fill
           alt={`${name} 프로필 사진`}
@@ -52,9 +55,7 @@ export function PlayerAvatar({ playerId, name, profileImageUrl, size = "md" }: P
           sizes={sizeHint[size]}
           src={imageSrc}
         />
-      ) : (
-        <span>{getInitial(name)}</span>
-      )}
+      ) : null}
     </span>
   );
 }

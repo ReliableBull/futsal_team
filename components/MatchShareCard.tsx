@@ -1,10 +1,13 @@
 "use client";
+import { useTeamPath, useTeam } from "@/components/TeamProvider";
 
 import { useEffect, useRef, useState } from "react";
 import { CardImageSave } from "@/components/CardImageSave";
 import { drawMatchShareCard, matchShareTitle, type MatchShareData } from "@/lib/match-share-card";
 
 export function MatchShareCard({ data }: { data: MatchShareData }) {
+  const scopedPath = useTeamPath();
+  const team = useTeam();
   const [open, setOpen] = useState(false);
   const [imageUrl, setImageUrl] = useState("");
   const [imageBlob, setImageBlob] = useState<Blob | null>(null);
@@ -27,7 +30,7 @@ export function MatchShareCard({ data }: { data: MatchShareData }) {
         await document.fonts.ready;
         if (cancelled) return;
         const canvas = document.createElement("canvas");
-        drawMatchShareCard(canvas, data);
+        drawMatchShareCard(canvas, { ...data, teamName: team.name });
         const blob = await new Promise<Blob>((resolve, reject) => canvas.toBlob((value) => value ? resolve(value) : reject(new Error("이미지 생성 실패")), "image/png"));
         if (cancelled) return;
         objectUrl = URL.createObjectURL(blob);
@@ -39,14 +42,14 @@ export function MatchShareCard({ data }: { data: MatchShareData }) {
     }
     void render();
     return () => { cancelled = true; if (objectUrl) URL.revokeObjectURL(objectUrl); };
-  }, [open, data, retry]);
+  }, [open, data, retry, team.name]);
 
   useEffect(() => {
     if (manualLink) { manualInput.current?.focus(); manualInput.current?.select(); }
   }, [manualLink]);
 
   async function copyLink() {
-    const url = new URL(`/matches/${data.id}`, window.location.origin).href;
+    const url = new URL(scopedPath(`/matches/${data.id}`), window.location.origin).href;
     setMessage("");
     try {
       if (!navigator.clipboard?.writeText) throw new Error("Clipboard unavailable");

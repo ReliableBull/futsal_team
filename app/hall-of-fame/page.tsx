@@ -1,24 +1,23 @@
+import { getCurrentTeam } from "@/lib/teams";
 import type { Metadata } from "next";
-import Link from "next/link";
+import Link from "@/components/TeamLink";
 import { HallOfFameHero } from "@/components/HallOfFameHero";
 import { HallOfFameRecordCard } from "@/components/HallOfFameRecordCard";
 import { formatHallOfFameUpdatedAt, getHallOfFameData } from "@/lib/hall-of-fame";
 
 export const dynamic = "force-dynamic";
 
-export const metadata: Metadata = {
-  title: "명예의 전당 | ARENA FC",
-  description:
-    "ARENA FC 실시간 기록 보유자 - 최다승, 최다 출전, 최다 연승, 최다 연속골, 최다 연속도움, 최다 득점, 최다 도움, 최다 공격 포인트, 최다 MOM"
-};
+export async function generateMetadata(): Promise<Metadata> { return { title: `명예의 전당 | ${(await getCurrentTeam()).name}` }; }
 
 export default async function HallOfFamePage() {
+  const team = await getCurrentTeam();
   const { categories, updatedAt, totalMatches, totalPlayers } = await getHallOfFameData();
   const hasAnyRecord = categories.some((category) => category.slots.length > 0);
 
   return (
     <div className="space-y-4 sm:space-y-5">
       <HallOfFameHero
+        teamName={team.name}
         totalMatches={totalMatches}
         totalPlayers={totalPlayers}
         updatedAtLabel={formatHallOfFameUpdatedAt(updatedAt)}

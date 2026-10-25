@@ -1,8 +1,10 @@
+import { getCurrentTeam } from "@/lib/teams";
 import { cardImageFilename, cardImageStore, isCardPng, MAX_CARD_IMAGE_BYTES } from "@/lib/card-image-store";
 
 export const runtime = "nodejs";
 
 export async function POST(request: Request) {
+  await getCurrentTeam();
   const origin = request.headers.get("origin");
   if (origin) {
     let allowed = false;

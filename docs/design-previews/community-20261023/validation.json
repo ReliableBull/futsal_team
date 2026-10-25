@@ -1,0 +1,18 @@
+{
+  "build": "passed",
+  "communityUnitChecks": "passed",
+  "teamValidation": "passed",
+  "teamIntegrationHttpChecks": 49,
+  "platformPreview": "http://127.0.0.1:3110",
+  "legacyPreview": "http://127.0.0.1:3111",
+  "database": "isolated copy of futsal_team with additive migrations",
+  "productionDatabaseCounts": {
+    "players": 53,
+    "matches": 42,
+    "admins": 1
+  },
+  "productionRestarted": false,
+  "realReservations": false,
+  "browserFlow": "see browser-validation.json",
+  "browserTestFixturesRemoved": true
+}

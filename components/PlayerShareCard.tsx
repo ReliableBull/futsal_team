@@ -1,4 +1,5 @@
 "use client";
+import { useTeam } from "@/components/TeamProvider";
 
 import Image from "next/image";
 import { useEffect, useMemo, useState } from "react";
@@ -30,9 +31,10 @@ function DesignSwatch({ theme }: { theme: (typeof playerCardThemes)[number] }) {
 }
 
 export function PlayerShareCard({ data }: { data: PlayerCardData }) {
+  const team = useTeam();
   const [open, setOpen] = useState(false);
   const [theme, setTheme] = useState<PlayerCardTheme>("arena");
-  const photos = useMemo(() => getPlayerCardPhotos(data.id, data.photoUrl), [data.id, data.photoUrl]);
+  const photos = useMemo(() => getPlayerCardPhotos(data.id, data.photoUrl, team.slug === "arena-fc"), [data.id, data.photoUrl, team.slug]);
   const [photoId, setPhotoId] = useState<PlayerCardPhoto["id"]>("profile");
   const selectedPhoto = photos.find((photo) => photo.id === photoId) ?? photos[0];
   const [retry, setRetry] = useState(0);
@@ -51,7 +53,7 @@ export function PlayerShareCard({ data }: { data: PlayerCardData }) {
         const [photo] = await Promise.all([loadPlayerCardPhoto(selectedPhoto.url, controller.signal), document.fonts.ready]);
         if (controller.signal.aborted) return;
         const canvas = document.createElement("canvas");
-        drawPlayerCard(canvas, data, theme, photo, selectedPhoto.fit);
+        drawPlayerCard(canvas, { ...data, teamName: team.name }, theme, photo, selectedPhoto.fit);
         const blob = await new Promise<Blob>((resolve, reject) => canvas.toBlob((value) => value ? resolve(value) : reject(new Error("이미지 생성 실패")), "image/png"));
         if (controller.signal.aborted) return;
         objectUrl = URL.createObjectURL(blob);
@@ -62,13 +64,13 @@ export function PlayerShareCard({ data }: { data: PlayerCardData }) {
     }
     void render();
     return () => { controller.abort(); if (objectUrl) URL.revokeObjectURL(objectUrl); };
-  }, [open, theme, data, selectedPhoto, retry]);
+  }, [open, theme, data, selectedPhoto, retry, team.name]);
 
   return (
     <section aria-labelledby="player-card-title" className="overflow-hidden rounded-xl border border-arena-line bg-white">
       <div className="flex flex-wrap items-center justify-between gap-4 p-5 sm:p-6">
         <div>
-          <p className="text-xs font-black tracking-widest text-arena-red">ARENA PLAYER CARD</p>
+          <p className="text-xs font-black tracking-widest text-arena-red">{team.name} · PLAYER CARD</p>
           <h2 id="player-card-title" className="mt-1 text-xl font-black text-slate-900">나만의 선수 카드</h2>
           <p className="mt-2 text-sm leading-6 text-slate-500">내 사진과 통산 기록으로 만드는 선수 카드. 사진과 디자인을 골라 PNG로 간직하세요.</p>
         </div>
@@ -86,7 +88,7 @@ export function PlayerShareCard({ data }: { data: PlayerCardData }) {
                   <label key={`${data.id}-${item.id}`} className={`min-w-0 cursor-pointer overflow-hidden rounded-lg border-2 bg-white p-2 transition focus-within:ring-2 focus-within:ring-slate-500 focus-within:ring-offset-2 ${selectedPhoto.id === item.id ? "border-slate-900 shadow-sm" : "border-slate-200 hover:border-slate-400"}`}>
                     <div className="relative aspect-[2/3] overflow-hidden rounded bg-slate-100">
                       <span aria-hidden="true" className="absolute inset-0 grid place-items-center text-2xl font-black text-slate-300">{data.name.slice(0, 1)}</span>
-                      <Image src={item.url} alt={`${data.name} · ${item.label}`} width={160} height={240} sizes="(min-width: 1024px) 160px, 30vw" unoptimized={item.id === "profile"} onLoad={(event) => { event.currentTarget.style.visibility = "visible"; }} onError={(event) => { event.currentTarget.style.visibility = "hidden"; }} className={`relative h-full w-full ${item.fit === "contain" ? "object-contain" : "object-cover object-top"}`} />
+                      {item.url && <Image src={item.url} alt={`${data.name} · ${item.label}`} width={160} height={240} sizes="(min-width: 1024px) 160px, 30vw" unoptimized={item.id === "profile"} onLoad={(event) => { event.currentTarget.style.visibility = "visible"; }} onError={(event) => { event.currentTarget.style.visibility = "hidden"; }} className={`relative h-full w-full ${item.fit === "contain" ? "object-contain" : "object-cover object-top"}`} />}
                     </div>
                     <span className="mt-2 flex items-center justify-center gap-1.5 text-xs font-bold text-slate-700 sm:text-sm">
                       <input type="radio" name={`player-card-photo-${data.id}`} value={item.id} aria-label={item.label} checked={selectedPhoto.id === item.id} onChange={() => setPhotoId(item.id)} className="shrink-0 accent-slate-900" />

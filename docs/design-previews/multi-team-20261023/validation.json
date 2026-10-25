@@ -1,0 +1,67 @@
+{
+  "date": "2026-10-23",
+  "environment": "isolated local PostgreSQL databases; production database and running server unchanged",
+  "build": "passed",
+  "typecheck": "passed",
+  "schemaMigrationDiff": "no difference",
+  "migratedLegacyCounts": {
+    "players": 53,
+    "matches": 42,
+    "admins": 1
+  },
+  "teamIntegration": {
+    "httpChecks": 37,
+    "passed": true,
+    "sameBuildForBothModes": true
+  },
+  "mobileIntegration": {
+    "httpChecks": 50,
+    "passed": true
+  },
+  "momIntegration": {
+    "passed": true,
+    "concurrentVotes": 8,
+    "checks": [
+      "header spoofing",
+      "lineup validation",
+      "closing race",
+      "persistence",
+      "cascade"
+    ]
+  },
+  "regressionSuites": [
+    "teams",
+    "streaks",
+    "web-features",
+    "hall-of-fame (57 checks)",
+    "player-list-excel",
+    "access-logs",
+    "mobile validation",
+    "mom"
+  ],
+  "browser": {
+    "passed": true,
+    "widths": [
+      390,
+      768,
+      1024,
+      1440
+    ],
+    "checks": [
+      "team creation and signup",
+      "scoped player creation",
+      "team settings",
+      "date filters",
+      "team switching",
+      "mobile menu",
+      "name avatar for new teams",
+      "player card rendering"
+    ],
+    "pageErrors": []
+  },
+  "legacyMode": {
+    "teamRoutesBlocked": true,
+    "originalDataOnly": true,
+    "rebuildRequiredToSwitch": false
+  }
+}

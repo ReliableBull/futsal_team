@@ -1,4 +1,5 @@
-import Link from "next/link";
+import { currentTeamPath } from "@/lib/teams";
+import Link from "@/components/TeamLink";
 import { quickDateRanges, type DateRange } from "@/lib/date-range";
 
 type DateRangeFilterProps = {
@@ -8,7 +9,7 @@ type DateRangeFilterProps = {
 
 export function DateRangeFilter({ actionPath, range }: DateRangeFilterProps) {
   return (
-    <form key={`${range.startDate}-${range.endDate}`} action={actionPath} className="rounded-lg border border-arena-line bg-arena-panel p-4">
+    <form key={`${range.startDate}-${range.endDate}`} action={currentTeamPath(actionPath)} className="rounded-lg border border-arena-line bg-arena-panel p-4">
       <div className="grid gap-3 lg:grid-cols-[1fr_1fr_auto] lg:items-end">
         <label className="block space-y-2 text-sm font-semibold text-slate-200">
           시작일

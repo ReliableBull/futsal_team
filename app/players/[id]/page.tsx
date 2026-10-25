@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "@/components/TeamLink";
 import { notFound } from "next/navigation";
 import { PlayerAvatar } from "@/components/PlayerAvatar";
 import { PlayerShareCard } from "@/components/PlayerShareCard";
@@ -6,10 +6,11 @@ import { buildPlayerCardData } from "@/lib/player-card";
 import { StatCard } from "@/components/StatCard";
 import { getDateRange, quickDateRanges } from "@/lib/date-range";
 import { parsePlayerPosition } from "@/lib/player-position";
-import { prisma } from "@/lib/prisma";
+import { getTeamPrisma } from "@/lib/teams";
 import { calculatePlayerStats, calculatePlayerStreakHistories, formatDate, formatPlayerRecord, getResultLabel, matchStatus, type PlayerStreakRecord, type PlayerWithStats } from "@/lib/stats";
 
 export default async function PlayerDetailPage({ params }: { params: { id: string } }) {
+  const prisma = await getTeamPrisma();
   const player = await prisma.player.findFirst({
     where: { id: Number(params.id), isActive: true },
     include: {

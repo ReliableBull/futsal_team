@@ -1,15 +1,16 @@
 import Image from "next/image";
-import Link from "next/link";
+import Link from "@/components/TeamLink";
 import { notFound } from "next/navigation";
 import { WinnerBadge } from "@/components/WinnerBadge";
 import { MatchShareCard } from "@/components/MatchShareCard";
 import { MomVoteShare } from "@/components/MomVoteShare";
 import { buildMatchShareData } from "@/lib/match-share-card";
 import { matchInclude } from "@/lib/matches";
-import { prisma } from "@/lib/prisma";
+import { getTeamPrisma } from "@/lib/teams";
 import { formatDate, getTeamMvpNames, matchStatus } from "@/lib/stats";
 
 export default async function MatchDetailPage({ params }: { params: { id: string } }) {
+  const prisma = await getTeamPrisma();
   const match = await prisma.match.findUnique({
     where: { id: Number(params.id) },
     include: matchInclude

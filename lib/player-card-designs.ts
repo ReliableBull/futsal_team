@@ -105,11 +105,11 @@ export function drawPlayerCardDesign(ctx: CanvasRenderingContext2D, data: Player
     if (design === "editorial") {
       const ink = "#20221f", muted = "#77796d";
       rect(0, 0, 540, 720, "#f3f0e8");
-      text("ARENA FC", 30, 38, 22, ink, 230, { weight: 900, font: narrow });
+      text(data.teamName || "ARENA FC", 30, 38, 22, ink, 230, { weight: 900, font: narrow });
       text("THE PLAYER SERIES", 510, 33, 8, muted, 200, { font: "monospace", align: "right" });
       text("ALL-TIME RECORD", 510, 46, 8, muted, 200, { font: "monospace", align: "right" });
       line(30, 65, 510, 65, ink);
-      text("ARENA", 24, 134, 125, ink, 486, { font: 'Impact, "Arial Narrow", sans-serif', weight: 900 });
+      text(data.teamName && data.teamName !== "ARENA FC" ? data.teamName : "ARENA", 24, 134, 125, ink, 486, { font: 'Impact, "Arial Narrow", sans-serif', weight: 900 });
       portraitAt(246, 92, 264, 326, "#dedbd1", "#77796d");
       ctx.strokeStyle = "#ffffff8a"; ctx.lineWidth = 1; ctx.strokeRect(420, 106, 76, 24);
       text(`PLAYER / ${number}`, 458, 118, 9, "#ffffff", 64, { align: "center" });
@@ -118,7 +118,7 @@ export function drawPlayerCardDesign(ctx: CanvasRenderingContext2D, data: Player
       rect(31, 362, 7, 7, "#d53c27");
       text(data.position, 46, 366, 12, ink, 184, { weight: 600 });
       text(data.name, 27, 444, 57, ink, 304, { weight: 900 });
-      text("ARENA FOOTBALL CLUB", 510, 432, 9, ink, 157, { align: "right" });
+      text(data.teamName || "ARENA FOOTBALL CLUB", 510, 432, 9, ink, 157, { align: "right" });
       text(record, 510, 450, 10, ink, 157, { align: "right" });
       line(30, 483, 510, 483, ink);
       statistics(30, 521, 480, 73, 36, ink, muted, narrow, false);
@@ -139,12 +139,12 @@ export function drawPlayerCardDesign(ctx: CanvasRenderingContext2D, data: Player
       }
       ctx.fillStyle = fade; ctx.fillRect(0, 0, 540, 530);
       ctx.strokeStyle = "#d4d3c82a"; ctx.lineWidth = 1; ctx.strokeRect(19, 19, 502, 682);
-      text("ARENA", 35, 49, 25, ink, 220, { font: serif });
+      text(data.teamName && data.teamName !== "ARENA FC" ? data.teamName : "ARENA", 35, 49, 25, ink, 220, { font: serif });
       text("SIGNATURE COLLECTION", 505, 49, 8, "#cbc7b3", 220, { align: "right", font: "monospace" });
       text(number, 35, 132, 62, ink, 190, { font: light, weight: 200 });
       text("SQUAD NO.", 37, 175, 8, "#c5c5ba", 160, { font: "monospace" });
       ctx.save(); ctx.translate(503, 122); ctx.rotate(Math.PI / 2);
-      text("ARENA FOOTBALL CLUB / PLAYER PORTRAIT", 0, 0, 8, "#c2c3b7", 330, { font: "monospace" }); ctx.restore();
+      text(`${data.teamName || "ARENA FOOTBALL CLUB"} / PLAYER PORTRAIT`, 0, 0, 8, "#c2c3b7", 330, { font: "monospace" }); ctx.restore();
       text("THE PLAYER", 270, 385, 9, "#cbc7b3", 440, { align: "center", font: "monospace" });
       text(data.name, 270, 429, 48, ink, 442, { align: "center", weight: 500 });
       text(`${data.position} · ${record}`, 270, 474, 11, muted, 442, { align: "center" });
@@ -154,12 +154,12 @@ export function drawPlayerCardDesign(ctx: CanvasRenderingContext2D, data: Player
       text(data.periodLabel, 270, 660, 9, muted, 450, { align: "center" });
       line(39, 688, 60, 688, "#aea889");
       text("완료된 경기 · 통산 기록", 69, 688, 9, muted, 260);
-      text(`ARENA FC / ${number}`, 501, 688, 9, muted, 140, { align: "right" });
+      text(`${data.teamName || "ARENA FC"} / ${number}`, 501, 688, 9, muted, 140, { align: "right" });
     } else {
       const cream = "#f2f0dc", muted = "#c5d2b4";
       rect(0, 0, 540, 720, "#123f35");
       ctx.strokeStyle = "#e8e8ce5a"; ctx.lineWidth = 1; ctx.strokeRect(15, 15, 510, 690);
-      text("ARENA FC", 30, 42, 21, cream, 260, { weight: 900 });
+      text(data.teamName || "ARENA FC", 30, 42, 21, cream, 260, { weight: 900 });
       text(`PLAYER ARCHIVE / ${number}`, 510, 42, 8, muted, 204, { align: "right", font: "monospace" });
       line(30, 67, 510, 67, "#ebe5ca70");
       // Arched portrait frame, matching the approved club-ticket mockup.
@@ -188,7 +188,7 @@ export function drawPlayerCardDesign(ctx: CanvasRenderingContext2D, data: Player
       for (const x of [0, 540]) { ctx.beginPath(); ctx.arc(x, 659, 9, 0, Math.PI * 2); ctx.fill(); } ctx.restore();
       text("완료된 경기 · 통산 기록", 35, 687, 9, muted, 195);
       for (let x = 255; x < 329; x += 12) { rect(x, 680, 1, 14, "#d0dabc"); rect(x + 3, 680, 2, 14, "#d0dabc"); rect(x + 7, 680, 1, 14, "#d0dabc"); }
-      text(`ARENA / ${number}`, 505, 687, 9, muted, 140, { align: "right" });
+      text(`${data.teamName || "ARENA"} / ${number}`, 505, 687, 9, muted, 140, { align: "right" });
     }
   } finally { ctx.restore(); }
 }

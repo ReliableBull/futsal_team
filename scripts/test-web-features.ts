@@ -116,6 +116,8 @@ assert.equal(emptyCard.photoUrl, "/images/players/42.jpg");
 assert.equal(emptyCard.number, null);
 assert.equal(emptyCard.periodLabel, "아직 완료된 출전 경기가 없습니다");
 assert.equal(emptyCard.attackPoints, 0);
+assert.equal(buildPlayerCardData({ ...playerCardSource, teamId: 2, profileImageUrl: null }, []).photoUrl, "", "new teams must not inherit legacy player photos by numeric ID");
+assert.deepEqual(getPlayerCardPhotos(23, "", false).map(photo => photo.id), ["profile"], "legacy pose collections are restricted to ARENA FC");
 const posePhotos = getPlayerCardPhotos(23, playerCardSource.profileImageUrl);
 assert.deepEqual(posePhotos.map((photo) => photo.id), ["profile", "arms-crossed", "cheering", "cartoon-arms-crossed", "cartoon-cheering"]);
 assert.equal(posePhotos[0].url, playerCardSource.profileImageUrl, "pose choices must preserve the current uploaded profile");

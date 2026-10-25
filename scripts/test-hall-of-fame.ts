@@ -259,6 +259,7 @@ console.log("\n[3] 공동 순위 (Competition Ranking: 1, 1, 3)");
 console.log("\n[4] 선수 사진 연결");
 {
   check("업로드된 사진 우선", getPlayerPhotoUrl({ id: 7, profileImageUrl: "/uploads/players/7-abc.jpg" }), "/uploads/players/7-abc.jpg");
+  check("다른 팀은 기존 선수 사진을 사용하지 않음", getPlayerPhotoUrl({ id: 7, teamId: 2, profileImageUrl: null }), "");
   check("사진이 없으면 기본 선수 이미지 경로", getPlayerPhotoUrl({ id: 7, profileImageUrl: null }), "/images/players/7.jpg");
 
   const { slots } = buildHallOfFameSlots([{ profile: profile(7, "무사진", null), value: 3 }], (value) => `${value}골`);

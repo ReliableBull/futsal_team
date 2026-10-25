@@ -1,0 +1,14 @@
+{
+  "passed": true,
+  "checks": [
+    "club sport + region + recruitment filters and example profile",
+    "real club signup, persisted sport/schedule/recruitment, safe contact link, settings and my clubs",
+    "venue filters and empty result",
+    "demo booking request, persistence, duplicate prevention, cross-tab cancellation sync and browser isolation",
+    "malformed browser storage recovery",
+    "390/768/1024/1440px no horizontal overflow on five routes"
+  ],
+  "errors": [],
+  "testClub": "club-78715a0b",
+  "testAccount": "community_78715a0b"
+}

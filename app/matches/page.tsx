@@ -1,13 +1,14 @@
-import Link from "next/link";
+import Link from "@/components/TeamLink";
 import { DateRangeFilter } from "@/components/DateRangeFilter";
 import { getDateRange, getMatchDateWhere } from "@/lib/date-range";
 import { WinnerBadge } from "@/components/WinnerBadge";
-import { prisma } from "@/lib/prisma";
+import { getTeamPrisma } from "@/lib/teams";
 import { formatDate, getTeamMvpNames, matchStatus } from "@/lib/stats";
 
 export const dynamic = "force-dynamic";
 
 export default async function MatchesPage({ searchParams }: { searchParams: { startDate?: string; endDate?: string } }) {
+  const prisma = await getTeamPrisma();
   const dateRange = getDateRange(searchParams);
   const matches = await prisma.match.findMany({
     where: { matchDate: getMatchDateWhere(dateRange) },

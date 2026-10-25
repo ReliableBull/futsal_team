@@ -1,6 +1,7 @@
 import { createHash, randomBytes } from "node:crypto";
 import { prisma } from "@/lib/prisma";
-import { verifyPassword } from "@/lib/auth";
+import { canManageTeam, verifyPassword } from "@/lib/auth";
+import { getCurrentTeam } from "@/lib/teams";
 import { ApiError, object, string } from "./validation";
 
 export const tokenHash = (token: string) => createHash("sha256").update(token).digest("hex");
@@ -23,6 +24,7 @@ export async function login(input: unknown) {
   throttleLogin(username);
   const admin = await prisma.admin.findUnique({ where: { username } });
   if (!admin || !verifyPassword(b.password, admin.passwordHash)) throw new ApiError(401, "아이디 또는 비밀번호가 올바르지 않습니다.");
+  if (!await canManageTeam(admin.id, (await getCurrentTeam()).id)) throw new ApiError(403, "이 팀의 관리자 권한이 없습니다.");
   const token = randomBytes(32).toString("base64url");
   const expiresAt = new Date(Date.now() + duration);
   await prisma.mobileSession.deleteMany({ where: { expiresAt: { lte: new Date() } } });
@@ -35,5 +37,6 @@ export async function authenticate(request: Request) {
   const hash = tokenHash(value.slice(7));
   const session = await prisma.mobileSession.findUnique({ where: { tokenHash: hash }, include: { admin: true } });
   if (!session || session.expiresAt.getTime() <= Date.now() || session.passwordVersion !== tokenHash(session.admin.passwordHash)) throw new ApiError(401, "로그인이 만료되었습니다. 다시 로그인해주세요.");
+  if (!await canManageTeam(session.admin.id, (await getCurrentTeam()).id)) throw new ApiError(403, "이 팀의 관리자 권한이 없습니다.");
   return { hash, admin: { id: session.admin.id, username: session.admin.username } };
 }

@@ -4,6 +4,11 @@ set -euo pipefail
 APP_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 SERVICE_NAME="${SERVICE_NAME:-arena-fc}"
 PORT="${PORT:-3000}"
+APP_MODE="${APP_MODE:-platform}"
+if [[ "$APP_MODE" != "platform" && "$APP_MODE" != "legacy" ]]; then
+  echo "APP_MODE must be platform or legacy" >&2
+  exit 1
+fi
 RUN_USER="${RUN_USER:-$(id -un)}"
 NODE_BIN="$(command -v node)"
 NPM_BIN="$(command -v npm)"
@@ -23,6 +28,7 @@ Type=simple
 User=${RUN_USER}
 WorkingDirectory=${APP_DIR}
 Environment=NODE_ENV=production
+Environment=APP_MODE=${APP_MODE}
 Environment=PORT=${PORT}
 Environment=HOSTNAME=0.0.0.0
 Environment=PATH=$(dirname "$NODE_BIN"):/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin

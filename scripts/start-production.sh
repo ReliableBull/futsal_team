@@ -13,5 +13,5 @@ if [ ! -f "$ARENA_BUILD_DIR/BUILD_ID" ]; then
   npm run build
 fi
 
-echo "Starting ARENA FC on http://${ARENA_BIND_HOST}:${PORT}"
+echo "Starting ARENA (${APP_MODE:-platform}) on http://${ARENA_BIND_HOST}:${PORT}"
 exec npm run start -- --hostname "$ARENA_BIND_HOST" --port "$PORT"

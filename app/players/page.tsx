@@ -2,7 +2,7 @@ import { PlayersSortableList, type SortablePlayer } from "@/components/PlayersSo
 import { DateRangeFilter } from "@/components/DateRangeFilter";
 import { getDateRange } from "@/lib/date-range";
 import { parsePlayerPosition } from "@/lib/player-position";
-import { getPlayersWithStats } from "@/lib/stats";
+import { getPlayersWithStats } from "@/lib/stats-data";
 
 export const dynamic = "force-dynamic";
 

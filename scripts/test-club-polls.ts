@@ -1,0 +1,35 @@
+import assert from "node:assert/strict";
+import { legacyPollRules, parsePollInput, parsePollVoterName, pollIsClosed } from "../lib/poll-validation";
+import { adminLoginReturnPath, loginReturnPath } from "../lib/login-return";
+import { pollShareUrl } from "../lib/poll-share";
+
+const now = new Date("2026-10-24T00:00:00Z");
+assert.deepEqual(parsePollVoterName("  홍  길동  "), { name: "홍 길동", nameKey: "홍길동" });
+assert.equal(parsePollVoterName("ＨＯＮＧ").nameKey, parsePollVoterName("hong").nameKey);
+for (const name of [null, 123, "", "김", "가".repeat(41), "홍\u200b길동", "홍\u0000길동"]) assert.throws(() => parsePollVoterName(name));
+assert.equal(adminLoginReturnPath("/polls/new"), "/polls/new");
+for (const path of ["//evil.test", "/polls/../abcd", "/polls/%2F%2Fevil.test", "/polls/new?next=//evil.test", null]) assert.equal(adminLoginReturnPath(path), "/abcd");
+const valid = { title: " 다음 모임 일정 ", description: "설명", options: [" 토요일 ", "일요일"], closesAt: "2026-10-25T18:00:00+09:00" };
+assert.deepEqual(parsePollInput(valid, now), { title: "다음 모임 일정", description: "설명", options: ["토요일", "일요일"], closesAt: new Date("2026-10-25T09:00:00Z") });
+assert.equal(parsePollInput({ ...valid, closesAt: "" }, now).closesAt, null);
+for (const change of [{ title: " " }, { title: "x".repeat(121) }, { description: "x".repeat(2001) }, { options: ["하나"] }, { options: Array(11).fill("x") }, { options: ["YES", " yes "] }, { options: ["", "x"] }, { options: [1, "x"] }, { options: ["x".repeat(121), "y"] }, { closesAt: "2026-10-23T00:00:00Z" }, { closesAt: "2026-10-24T00:00:00Z" }, { closesAt: "2027-02-30T18:00:00+09:00" }, { closesAt: "2026-10-25T18:00" }, { closesAt: true }]) assert.throws(() => parsePollInput({ ...valid, ...change }, now));
+// Roster candidates and the larger option limit exist only for legacy polls.
+const roster = { ...valid, options: [{ playerId: 3 }, " 기권 ", { playerId: 5 }] };
+assert.deepEqual(parsePollInput(roster, now, legacyPollRules).options, [{ playerId: 3 }, "기권", { playerId: 5 }]);
+assert.throws(() => parsePollInput(roster, now));
+for (const option of [{ playerId: 0 }, { playerId: -1 }, { playerId: "3" }, { playerId: 1.5 }, [3], null]) assert.throws(() => parsePollInput({ ...valid, options: [option, "기권"] }, now, legacyPollRules));
+assert.throws(() => parsePollInput({ ...valid, options: [{ playerId: 3 }, { playerId: 3 }] }, now, legacyPollRules));
+const many = (count: number) => Array.from({ length: count }, (_, i) => `후보 ${i}`);
+assert.equal(parsePollInput({ ...valid, options: many(50) }, now, legacyPollRules).options.length, 50);
+assert.throws(() => parsePollInput({ ...valid, options: many(51) }, now, legacyPollRules));
+assert.equal(pollIsClosed({ closesAt: now, closedAt: null }, now), true);
+assert.equal(pollIsClosed({ closesAt: null, closedAt: now }, now), true);
+assert.equal(pollIsClosed({ closesAt: null, closedAt: null }, now), false);
+const path = "/t/arena-fc/polls/poll123";
+assert.equal(loginReturnPath(path), path);
+for (const value of ["//evil.test", "https://evil.test", "/\\evil.test", "/t/arena-fc/polls/../..", "/t/arena-fc/polls/%2f%2fevil.test", "/t/arena-fc/polls/x?next=//evil.test", [path], null]) assert.equal(loginReturnPath(value), "/teams?mine=1");
+assert.equal(pollShareUrl(path, "http://localhost:3002", "http://192.168.0.4:3002"), `http://192.168.0.4:3002${path}`);
+assert.equal(pollShareUrl(path, "https://club.example", "http://localhost:3000"), `https://club.example${path}`);
+assert.equal(pollShareUrl(path, "http://192.168.0.4:3002", "http://localhost:3000"), `http://192.168.0.4:3002${path}`);
+for (const config of ["not-a-url", "javascript:alert(1)", "https://user:pass@example.com", "http://localhost:3000"]) assert.equal(pollShareUrl(path, "http://localhost:3002", config), `http://localhost:3002${path}`);
+console.log("Club poll validation passed: choices, deadlines/KST, closed states, safe login return and share URLs.");

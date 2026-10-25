@@ -11,6 +11,7 @@ export const playerCardThemes = [
 
 export type PlayerCardTheme = (typeof playerCardThemes)[number]["id"];
 export type PlayerCardData = {
+  teamName?: string;
   id: number;
   name: string;
   nickname: string | null;
@@ -29,13 +30,13 @@ export type PlayerCardData = {
   periodLabel: string;
 };
 
-type PlayerCardSource = Omit<PlayerCardData, "photoUrl" | "attackPoints" | "periodLabel"> & { profileImageUrl: string | null };
+type PlayerCardSource = Omit<PlayerCardData, "photoUrl" | "attackPoints" | "periodLabel"> & { profileImageUrl: string | null; teamId?: number };
 
 export function buildPlayerCardData(player: PlayerCardSource, completedMatchDates: Date[]): PlayerCardData {
   const dates = completedMatchDates.map((date) => date.toISOString().slice(0, 10)).sort();
   return {
     id: player.id, name: player.name, nickname: player.nickname, position: player.position, number: player.number,
-    photoUrl: player.profileImageUrl || `/images/players/${player.id}.jpg`,
+    photoUrl: player.profileImageUrl || (player.teamId === undefined || player.teamId === 1 ? `/images/players/${player.id}.jpg` : ""),
     totalMatches: player.totalMatches, goals: player.goals, assists: player.assists, mvpCount: player.mvpCount,
     wins: player.wins, draws: player.draws, losses: player.losses, winRate: player.winRate,
     attackPoints: player.goals + player.assists,
@@ -46,7 +47,7 @@ export function buildPlayerCardData(player: PlayerCardSource, completedMatchDate
 /** Anonymous image loading keeps the exported canvas readable, including CORS-enabled remote photos. */
 export function loadPlayerCardPhoto(src: string, signal: AbortSignal): Promise<HTMLImageElement | null> {
   return new Promise((resolve) => {
-    if (signal.aborted) { resolve(null); return; }
+    if (signal.aborted || !src) { resolve(null); return; }
     const image = new Image();
     let finished = false;
     const timeout = window.setTimeout(() => finish(null), 8000);
@@ -153,7 +154,7 @@ export function drawPlayerCard(canvas: HTMLCanvasElement, data: PlayerCardData, 
   line(386, 184, 1004, 184, `${theme.accent}b3`, 3);
   line(1004, 184, 1004, 328, `${theme.accent}b3`, 3);
 
-  text("ARENA FC", 76, 96, 44, "#ffffff", 560, "left", 900);
+  text(data.teamName || "ARENA FC", 76, 96, 44, "#ffffff", 560, "left", 900);
   text("PLAYER CARD", 1004, 88, 21, theme.accent, 310, "right", 800);
   text("ALL-TIME RECORD", 1004, 118, 15, theme.muted, 310, "right", 500);
   line(76, 144, 1004, 144, `${theme.accent}40`);
@@ -164,7 +165,7 @@ export function drawPlayerCard(canvas: HTMLCanvasElement, data: PlayerCardData, 
   text("PLAY", 100, 582, 28, "#ffffff", 200, "left", 900);
   text("TOGETHER.", 100, 623, 28, "#ffffff", 200, "left", 900);
   text(data.name, 76, 782, 88, "#ffffff", 928, "left", 900);
-  text(data.nickname || "함께 뛰는 시간, 하나가 되는 ARENA FC", 80, 852, 27, theme.muted, 920, "left", 500);
+  text(data.nickname || `함께 뛰는 시간, 하나가 되는 ${data.teamName || "ARENA FC"}`, 80, 852, 27, theme.muted, 920, "left", 500);
 
   const metrics = [
     { label: "득점", value: String(data.goals) }, { label: "도움", value: String(data.assists) }, { label: "MOM", value: String(data.mvpCount) },
@@ -191,5 +192,5 @@ export function drawPlayerCard(canvas: HTMLCanvasElement, data: PlayerCardData, 
   text(data.periodLabel, 76, 1321, 23, theme.muted, 928, "left", 500);
   line(76, 1356, 1004, 1356, `${theme.accent}35`);
   text("완료된 경기 · 통산 기록", 76, 1383, 20, theme.muted, 650, "left", 500);
-  text("ARENA FC / MEMBER", 1004, 1383, 20, theme.accent, 300, "right", 800);
+  text(`${data.teamName || "ARENA FC"} / MEMBER`, 1004, 1383, 20, theme.accent, 300, "right", 800);
 }

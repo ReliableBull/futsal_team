@@ -29,9 +29,26 @@ export function middleware(request: NextRequest) {
 
   console.log(`[access] ${time} ${ip} ${request.method} ${pathname}${search}`);
 
-  return NextResponse.next();
+  const requestHeaders = new Headers(request.headers);
+  // Tenant identity must come from the URL, never a client-supplied header.
+  requestHeaders.delete("x-futsal-team");
+  requestHeaders.set("x-futsal-path", pathname);
+  const scoped = pathname.match(/^\/t\/([a-z0-9]+(?:-[a-z0-9]+)*)(\/.*)?$/);
+  if (scoped) {
+    requestHeaders.set("x-futsal-team", scoped[1]);
+    // NextURL normalizes 127.0.0.1 to localhost. Preserve the actual origin so
+    // this stays an internal rewrite instead of another HTTP request (which
+    // would correctly strip our tenant header as untrusted input).
+    const url = new URL(request.url);
+    url.pathname = scoped[2] || "/";
+    if (!/^\/(?:$|players(?:\/|$)|matches(?:\/|$)|polls(?:\/|$)|chemistry$|hall-of-fame$|abcd(?:\/|$)|api(?:\/|$))/.test(url.pathname)) {
+      return new NextResponse("Not found", { status: 404 });
+    }
+    return NextResponse.rewrite(url, { request: { headers: requestHeaders } });
+  }
+  return NextResponse.next({ request: { headers: requestHeaders } });
 }
 
 export const config = {
-  matcher: ["/((?!_next/static|_next/image|favicon.ico|images|api/access-log|.*\\..*).*)"]
+  matcher: ["/((?!_next/static|_next/image|favicon.ico|images/|uploads/).*)"]
 };

@@ -1,5 +1,5 @@
 import Image from "next/image";
-import Link from "next/link";
+import Link from "@/components/TeamLink";
 import { notFound } from "next/navigation";
 import { AdminMatchForm, type MatchFormInitialData } from "@/components/AdminMatchForm";
 import { DeletePosterButton } from "@/components/DeletePosterButton";
@@ -8,13 +8,14 @@ import { MomVoteResults } from "@/components/MomVoteResults";
 import { deleteMatchPoster, updateMatch, uploadMatchPoster } from "@/lib/actions";
 import { requireAdmin } from "@/lib/auth";
 import { matchInclude } from "@/lib/matches";
-import { prisma } from "@/lib/prisma";
+import { getTeamPrisma } from "@/lib/teams";
 
 function toInputDate(date: Date) {
   return date.toISOString().slice(0, 10);
 }
 
 export default async function EditMatchPage({ params }: { params: { id: string } }) {
+  const prisma = await getTeamPrisma();
   await requireAdmin();
 
   const matchId = Number(params.id);

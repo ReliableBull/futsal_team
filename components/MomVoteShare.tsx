@@ -1,13 +1,15 @@
 "use client";
+import { useTeamPath } from "@/components/TeamProvider";
 
-import Link from "next/link";
+import Link from "@/components/TeamLink";
 import { useEffect, useRef, useState } from "react";
 
 export function MomVoteShare({ matchId }: { matchId: number }) {
+  const scopedPath = useTeamPath();
   const [message, setMessage] = useState("");
   const [manualLink, setManualLink] = useState("");
   const input = useRef<HTMLInputElement>(null);
-  const path = `/matches/${matchId}/mom-vote`;
+  const path = scopedPath(`/matches/${matchId}/mom-vote`);
   useEffect(() => { if (manualLink) { input.current?.focus(); input.current?.select(); } }, [manualLink]);
 
   async function copyLink() {

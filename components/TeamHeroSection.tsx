@@ -1,5 +1,5 @@
 import Image from "next/image";
-import Link from "next/link";
+import Link from "@/components/TeamLink";
 import type { Match, MatchPlayer, Player } from "@prisma/client";
 import { WinnerBadge } from "@/components/WinnerBadge";
 import { formatDate, getMatchStatusLabel, getTeamMvpNames, matchStatus } from "@/lib/stats";
@@ -11,19 +11,19 @@ type HeroMatch = Pick<
   matchPlayers: Array<Pick<MatchPlayer, "teamName" | "isMvp"> & { player: Pick<Player, "name"> }>;
 };
 
-export function TeamHeroSection({ latestMatch }: { latestMatch?: HeroMatch }) {
+export function TeamHeroSection({ latestMatch, team }: { latestMatch?: HeroMatch; team: { name: string; slug: string; description: string; color: string } }) {
   return (
     <section className="arena-dark overflow-hidden border border-arena-line bg-arena-panel shadow-2xl shadow-black/20">
       <div className="grid lg:grid-cols-[minmax(0,1fr)_360px]">
         <div className="group relative min-h-[300px] overflow-hidden sm:min-h-[380px] lg:min-h-[440px]">
-          <Image
+          {team.slug === "arena-fc" ? <Image
             fill
             alt="ARENA FC team group photo"
             className="object-cover object-center transition duration-700 group-hover:scale-[1.015]"
             priority
             sizes="(max-width: 1024px) 100vw, 1050px"
             src="/images/arena-team.jpg"
-          />
+          /> : <div className="absolute inset-0" style={{ background: `linear-gradient(135deg, #10251f, ${team.color})` }}><div className="absolute inset-10 rounded-3xl border-2 border-white/20"><div className="absolute inset-y-0 left-1/2 border-l-2 border-white/20" /><div className="absolute left-1/2 top-1/2 h-32 w-32 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-white/20" /></div></div>}
           <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(5,6,7,0.88),rgba(5,6,7,0.28)_55%,rgba(5,6,7,0.08)),linear-gradient(0deg,rgba(5,6,7,0.88),transparent_55%)]" />
 
           <div className="absolute inset-x-0 bottom-0 p-5 sm:p-8 lg:p-10">
@@ -31,8 +31,8 @@ export function TeamHeroSection({ latestMatch }: { latestMatch?: HeroMatch }) {
               <span className="h-0.5 w-8 bg-arena-red" />
               Official Team Record
             </p>
-            <h1 className="mt-2 text-4xl font-black italic text-white sm:text-6xl lg:text-7xl">ARENA FC</h1>
-            <p className="mt-2 max-w-lg text-sm font-semibold text-slate-200 sm:text-base">함께 뛰는 순간, 하나가 되는 우리 팀의 경기 기록</p>
+            <h1 className="mt-2 text-4xl font-black italic text-white sm:text-6xl lg:text-7xl">{team.name}</h1>
+            <p className="mt-2 max-w-lg text-sm font-semibold text-slate-200 sm:text-base">{team.description || "함께 뛰는 순간, 하나가 되는 우리 팀의 경기 기록"}</p>
             <div className="mt-5 flex flex-wrap gap-x-5 gap-y-2 text-xs font-bold uppercase text-slate-300 sm:text-sm">
               <span><strong className="text-white">2026</strong> Season</span>
               <span><strong className="text-white">Weekly</strong> Match</span>

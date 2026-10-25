@@ -1,11 +1,14 @@
 "use client";
+import { useTeamPath } from "@/components/TeamProvider";
 
 import { usePathname } from "next/navigation";
 import { useEffect, useRef } from "react";
 
 /** Records one access log entry per page view, including client-side navigations. */
 export function AccessLogBeacon() {
+  const scopedPath = useTeamPath();
   const pathname = usePathname();
+  const endpoint = scopedPath("/api/access-log");
   const previousUrl = useRef<string | null>(null);
 
   useEffect(() => {
@@ -17,13 +20,13 @@ export function AccessLogBeacon() {
     const referrer = previousUrl.current ? `${window.location.origin}${previousUrl.current}` : document.referrer;
     previousUrl.current = path;
 
-    fetch("/api/access-log", {
+    fetch(endpoint, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ path, referrer }),
       keepalive: true
     }).catch(() => {});
-  }, [pathname]);
+  }, [pathname, endpoint]);
 
   return null;
 }

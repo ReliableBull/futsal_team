@@ -1,6 +1,9 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { getVoteClientIp, hashVoteIp } from "@/lib/mom-vote-ip";
 import { getMomPoll, MomVoteError, submitMomBallot } from "@/lib/mom-votes";
+import { getPagesTeam } from "@/lib/teams";
+import { scopeTeamDb } from "@/lib/team-db";
+import { prisma } from "@/lib/prisma";
 
 // Pages API provides the real TCP peer; App Router request headers alone cannot
 // distinguish a client-supplied X-Forwarded-For value from a trusted proxy value.
@@ -17,6 +20,9 @@ export default async function handler(request: NextApiRequest, response: NextApi
   const matchId = typeof rawId === "string" && /^[1-9]\d*$/.test(rawId) ? Number(rawId) : NaN;
   if (!Number.isSafeInteger(matchId) || matchId > 2147483647) return response.status(400).json({ error: "경기 ID가 올바르지 않습니다." });
   try {
+    const team = await getPagesTeam(request.headers["x-futsal-team"]);
+    if (!team) return response.status(404).json({ error: "팀을 찾을 수 없습니다." });
+    const database = scopeTeamDb(prisma, team.id);
     if (request.method === "POST") {
       // JSON-only requests and same-origin checks also prevent other websites
       // from silently consuming a visitor's one vote through a form submission.
@@ -32,8 +38,8 @@ export default async function handler(request: NextApiRequest, response: NextApi
     const ip = getVoteClientIp(request.socket.remoteAddress, request.headers["x-forwarded-for"]);
     if (!ip) throw new MomVoteError(503, "접속 정보를 확인하지 못했습니다. 잠시 후 다시 시도해주세요.");
     const voterHash = hashVoteIp(matchId, ip);
-    if (request.method === "GET") return response.status(200).json(await getMomPoll(matchId, voterHash));
-    await submitMomBallot(matchId, voterHash, request.body);
+    if (request.method === "GET") return response.status(200).json(await getMomPoll(matchId, voterHash, database));
+    await submitMomBallot(matchId, voterHash, request.body, database);
     return response.status(201).json({ hasVoted: true, message: "두 팀의 MOM 투표가 완료되었습니다." });
   } catch (error) {
     if (error instanceof MomVoteError) return response.status(error.status).json({ error: error.message });

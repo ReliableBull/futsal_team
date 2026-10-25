@@ -16,7 +16,7 @@ async function call(method: string, path: string, input?: unknown, expected = 20
 }
 async function main() {
   assert.equal(await db.admin.count(), 0, "The test database must be empty.");
-  const admin = await db.admin.create({data:{username:"mobile-test", passwordHash:hashPassword("test-password-123")}});
+  const admin = await db.admin.create({data:{username:"mobile-test", teams:{create:{teamId:1,role:"PRESIDENT"}}, passwordHash:hashPassword("test-password-123")}});
   try {
     await call("GET","health");
     await call("POST","players",{},401,false);

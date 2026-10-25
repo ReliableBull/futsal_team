@@ -1,8 +1,8 @@
-import Link from "next/link";
+import Link from "@/components/TeamLink";
 import type { Prisma } from "@prisma/client";
 import { describeIpScope, describeUserAgent, formatKstDateTime, getRetentionDays, startOfKstDay } from "@/lib/access-logs";
 import { requireAdmin } from "@/lib/auth";
-import { prisma } from "@/lib/prisma";
+import { getTeamPrisma } from "@/lib/teams";
 
 const pageSize = 50;
 const dayMs = 24 * 60 * 60 * 1000;
@@ -59,6 +59,7 @@ function buildHref(filters: Filters, overrides: Partial<Filters>) {
 }
 
 async function countVisitors(where: Prisma.AccessLogWhereInput) {
+  const prisma = await getTeamPrisma();
   const [views, visitors] = await Promise.all([prisma.accessLog.count({ where }), prisma.accessLog.groupBy({ by: ["ip"], where })]);
   return { views, visitors: visitors.length };
 }
@@ -74,6 +75,7 @@ function formatReferrer(referrer: string | null) {
 }
 
 export default async function AccessLogsPage({ searchParams }: { searchParams: SearchParams }) {
+  const prisma = await getTeamPrisma();
   await requireAdmin();
 
   const filters = parseFilters(searchParams);

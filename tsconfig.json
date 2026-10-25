@@ -33,7 +33,17 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    ".next-dev/types/**/*.ts"
+    ".next-dev/types/**/*.ts",
+    ".next-dev-platform/types/**/*.ts",
+    ".next-mobile-roles-check/types/**/*.ts",
+    ".next-mobile-polls-check/types/**/*.ts",
+    ".next-mobile-legacy-polls-check/types/**/*.ts",
+    ".next-mobile-legacy-polls-admin-only/types/**/*.ts",
+    ".next-mobile-legacy-polls-private-results/types/**/*.ts",
+    ".next-mobile-legacy-polls-turnout/types/**/*.ts",
+    ".next-mobile-legacy-polls-turnout-clean/types/**/*.ts",
+    ".next-mobile-legacy-polls-invalidate/types/**/*.ts",
+    ".next-mobile-legacy-polls-candidates/types/**/*.ts"
   ],
   "exclude": [
     "node_modules"
