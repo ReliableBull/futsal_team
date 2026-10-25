@@ -35,7 +35,7 @@ if [ ! -f .env ]; then
   echo "== Creating .env from .env.example =="
   cp .env.example .env
   AUTH_SECRET_VALUE="$(node -e "console.log(require('crypto').randomBytes(32).toString('hex'))")"
-  sed -i "s|AUTH_SECRET=\"change-this-local-secret\"|AUTH_SECRET=\"${AUTH_SECRET_VALUE}\"|g" .env
+  sed -i "s|AUTH_SECRET=\"replace-with-random-64-hex\"|AUTH_SECRET=\"${AUTH_SECRET_VALUE}\"|g" .env
 else
   echo "== Existing .env found. Keeping it unchanged. =="
 fi
